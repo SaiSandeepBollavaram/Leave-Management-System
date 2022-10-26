@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_dictionary action="DELETE" element="u_no_of_days" table="x_910737_timeoff_m_leave_requests">
+        <active>true</active>
+        <array>false</array>
+        <attributes/>
+        <audit>false</audit>
+        <calculation/>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label>No of days</column_label>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>u_no_of_days</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <internal_type display_value="Integer">integer</internal_type>
+        <mandatory>false</mandatory>
+        <max_length>40</max_length>
+        <name>x_910737_timeoff_m_leave_requests</name>
+        <next_element/>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_dictionary</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-24 10:27:35</sys_created_on>
+        <sys_id>e63ae22c2ff29110049f2d6df699b6ee</sys_id>
+        <sys_name>No of days</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_dictionary_x_910737_timeoff_m_leave_requests_u_no_of_days</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-10-24 10:36:51</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_dictionary>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</application>
+        <file_path/>
+        <instance_id>6bd0c059db0f17c00e785d00cf961942</instance_id>
+        <instance_name>dev63088</instance_name>
+        <name>sys_dictionary_x_910737_timeoff_m_leave_requests_u_no_of_days</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_dictionary action="INSERT_OR_UPDATE" element="u_no_of_days" table="x_910737_timeoff_m_leave_requests"><active>true</active><array>false</array><attributes/><audit>false</audit><calculation/><choice/><choice_field/><choice_table/><column_label>No of days</column_label><comments/><create_roles/><default_value/><defaultsort/><delete_roles/><dependent/><dependent_on_field/><display>false</display><dynamic_creation>false</dynamic_creation><dynamic_creation_script/><dynamic_default_value/><dynamic_ref_qual/><element>u_no_of_days</element><element_reference>false</element_reference><foreign_database/><formula/><function_definition/><function_field>false</function_field><internal_type display_value="Integer">integer</internal_type><mandatory>false</mandatory><max_length>40</max_length><name>x_910737_timeoff_m_leave_requests</name><next_element/><primary>false</primary><read_only>false</read_only><read_roles/><reference/><reference_cascade_rule/><reference_floats>false</reference_floats><reference_key/><reference_qual/><reference_qual_condition/><reference_type/><spell_check>false</spell_check><staged>false</staged><sys_class_name>sys_dictionary</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-10-24 10:27:35</sys_created_on><sys_id>e63ae22c2ff29110049f2d6df699b6ee</sys_id><sys_name>No of days</sys_name><sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package><sys_policy/><sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope><sys_update_name>sys_dictionary_x_910737_timeoff_m_leave_requests_u_no_of_days</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-10-24 10:36:51</sys_updated_on><table_reference>false</table_reference><text_index>false</text_index><unique>false</unique><use_dependent_field>false</use_dependent_field><use_dynamic_default>false</use_dynamic_default><use_reference_qualifier>simple</use_reference_qualifier><virtual>false</virtual><virtual_type>script</virtual_type><widget/><write_roles/><xml_view>false</xml_view></sys_dictionary></record_update>]]></payload>
+        <payload_hash>-2048778088</payload_hash>
+        <record_name>Leave requests.No of days</record_name>
+        <reverted_from/>
+        <source>0a951d082fb21110049f2d6df699b606</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-24 10:36:51</sys_created_on>
+        <sys_id>525c26ac2ff29110049f2d6df699b6a1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18409910d090000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-10-24 10:36:51</sys_updated_on>
+        <type>Dictionary</type>
+        <update_guid>9a5c26ac31f29110a907a877c7b7afa0</update_guid>
+        <update_guid_history>9a5c26ac31f29110a907a877c7b7afa0:-2048778088,714c66ac62f291105ad1fdcdac2be417:-2067442434,221c22acb4f291105d766acb83ccccb2:-1207072892,2e3a262c3cf291103efb2b48cd378f46:132630942,6e3a262c5af29110bd60bb8c9ceb7939:-250597859</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-24 13:47:54</sys_created_on>
+        <sys_db_object display_value="" name="sys_dictionary">sys_dictionary</sys_db_object>
+        <sys_id>16c3457cd6fe4c7ea59add2378667341</sys_id>
+        <sys_metadata>e63ae22c2ff29110049f2d6df699b6ee</sys_metadata>
+        <sys_name>No of days</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_parent display_value="">b2a8eaa82ff29110049f2d6df699b649</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_scope_delete display_value="">04429d6beac949fc8039d7754c36f6c4</sys_scope_delete>
+        <sys_update_name>sys_dictionary_x_910737_timeoff_m_leave_requests_u_no_of_days</sys_update_name>
+        <sys_update_version display_value="sys_dictionary_x_910737_timeoff_m_leave_requests_u_no_of_days">525c26ac2ff29110049f2d6df699b6a1</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

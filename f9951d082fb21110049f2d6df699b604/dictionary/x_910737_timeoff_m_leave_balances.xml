@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="54d5d9482fb21110049f2d6df699b65c" label="Leave balances" max_length="40" name="x_910737_timeoff_m_leave_balances" type="collection">
+        <element label="Casual Leaves" max_length="40" name="casual_leaves" type="integer"/>
+        <element label="Employee Name" mandatory="true" max_length="40" name="employee_name" reference="sys_user" type="reference"/>
+        <element label="Sick leaves" max_length="40" name="sick_leaves" type="integer"/>
+    </element>
+</database>

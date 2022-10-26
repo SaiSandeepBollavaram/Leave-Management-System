@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_910737_timeoff_m.LeaveBalanceReduction</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>LeaveBalanceReduction</name>
+        <script><![CDATA[var LeaveBalanceReduction = Class.create();
+LeaveBalanceReduction.prototype = {
+    initialize: function() {
+    },
+	temp: function(approvalGr, empLeaveReqGr){
+		var empId = empLeaveReqGr.getValue('employee_name');
+		var leavesApproved = empLeaveReqGr.getValue('no_of_days');
+		var leavesType = empLeaveReqGr.getValue('type');
+		var leaveBalanceGr = new GlideRecord('x_910737_timeoff_m_leave_balances');
+		leaveBalanceGr.addQuery('employee_name.sys_id', empId);
+		leaveBalanceGr.query();
+		if(leaveBalanceGr.next()){
+			if(leavesType == 'casual_leaves'){
+				leaveBalanceGr.casual_leaves = leaveBalanceGr.casual_leaves - leavesApproved;
+			}else if(leavesType == 'sick_leaves'){
+				leaveBalanceGr.sick_leaves = leaveBalanceGr.sick_leaves - leavesApproved;
+			}
+			leaveBalanceGr.update();
+		}
+	},
+
+    type: 'LeaveBalanceReduction'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-24 15:19:12</sys_created_on>
+        <sys_id>2dfbe72c2ff69110049f2d6df699b698</sys_id>
+        <sys_name>LeaveBalanceReduction</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_script_include_2dfbe72c2ff69110049f2d6df699b698</sys_update_name>
+    </sys_script_include>
+</record_update>

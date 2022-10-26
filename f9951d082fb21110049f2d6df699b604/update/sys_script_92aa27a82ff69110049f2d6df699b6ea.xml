@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>false</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_910737_timeoff_m_leave_approvals</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition table="x_910737_timeoff_m_leave_approvals">u_stateINapproved,rejected^EQ<item display_value="approved,rejected" endquery="false" field="u_state" goto="false" newquery="false" operator="IN" or="false" value="approved,rejected"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter_condition>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Leave Request Action</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+
+	// Add your code here
+	if(current.u_state == "approved"){
+		var empLeaveReqId = current.approving;
+		var empLeaveReqGr = new GlideRecord("x_910737_timeoff_m_employee_leave_requests");
+		empLeaveReqGr.addQuery('sys_id',empLeaveReqId);
+		empLeaveReqGr.query();
+		if(empLeaveReqGr.next()){
+			empLeaveReqGr.state = "approved";
+			empLeaveReqGr.update();
+			var leaveBalanceReduction = new LeaveBalanceReduction();
+			leaveBalanceReduction.temp(current, empLeaveReqGr);
+		}			
+	}else if(current.u_state == "rejected"){
+		
+	}
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-24 15:11:44</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>92aa27a82ff69110049f2d6df699b6ea</sys_id>
+        <sys_name>Leave Request Action</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_script_92aa27a82ff69110049f2d6df699b6ea</sys_update_name>
+        <template/>
+        <when>after</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=92aa27a82ff69110049f2d6df699b6ea"/>
+</record_update>

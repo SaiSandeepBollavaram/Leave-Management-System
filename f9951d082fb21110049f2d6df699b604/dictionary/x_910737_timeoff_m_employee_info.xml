@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="4fca50d42f7e1110049f2d6df699b609" label="Employee Info" max_length="40" name="x_910737_timeoff_m_employee_info" type="collection">
+        <element label="Date of joining" max_length="40" name="date_of_joining" type="glide_date"/>
+        <element label="Employee Name" max_length="32" name="employee_name" reference="sys_user" type="reference"/>
+        <index name="index">
+            <element name="employee_name"/>
+        </index>
+    </element>
+</database>

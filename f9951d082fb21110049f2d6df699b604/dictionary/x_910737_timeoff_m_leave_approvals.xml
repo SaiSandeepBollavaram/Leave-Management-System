@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="d8a48b642f769110049f2d6df699b690" label="Leave Approvals" max_length="40" name="x_910737_timeoff_m_leave_approvals" type="collection">
+        <element label="Approver" max_length="32" name="approver" reference="sys_user" type="reference"/>
+        <element attributes="encode_utf8=false" label="Approving" max_length="32" name="approving" reference="x_910737_timeoff_m_employee_leave_requests" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Comments" max_length="4000" name="u_comments" type="journal"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="State" max_length="40" name="u_state" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Requested" sequence="0" value="requested"/>
+                <element inactive_on_update="false" label="Approved" sequence="1" value="approved"/>
+                <element inactive_on_update="false" label="Rejected" sequence="2" value="rejected"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="approver"/>
+        </index>
+        <index name="index2">
+            <element name="approving"/>
+        </index>
+    </element>
+</database>
