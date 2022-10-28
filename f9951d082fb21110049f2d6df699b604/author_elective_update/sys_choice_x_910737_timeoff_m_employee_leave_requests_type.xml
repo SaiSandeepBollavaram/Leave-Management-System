@@ -17,7 +17,7 @@
             <element>type</element>
             <hint/>
             <inactive>false</inactive>
-            <label>casual leaves</label>
+            <label>Casual Leave</label>
             <language>en</language>
             <name>x_910737_timeoff_m_employee_leave_requests</name>
             <sequence>0</sequence>
@@ -33,7 +33,7 @@
             <element>type</element>
             <hint/>
             <inactive>false</inactive>
-            <label>sick leaves</label>
+            <label>Sick Leave</label>
             <language>en</language>
             <name>x_910737_timeoff_m_employee_leave_requests</name>
             <sequence>1</sequence>

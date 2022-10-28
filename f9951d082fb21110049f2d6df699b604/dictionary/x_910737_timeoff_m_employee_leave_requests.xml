@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="a22413642fb69110049f2d6df699b6c2" label="Employee leave requests" max_length="40" name="x_910737_timeoff_m_employee_leave_requests" type="collection">
         <element attributes="encode_utf8=false" label="Employee Name" max_length="32" name="employee_name" reference="sys_user" type="reference"/>
-        <element label="No of days" max_length="40" name="no_of_days" type="integer"/>
-        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
-        <element attributes="edge_encryption_enabled=true" choice="3" default="waiting for approval" label="State" max_length="40" name="state" type="string">
+        <element label="No of days" mandatory="true" max_length="40" name="no_of_days" type="integer"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" read_only="true" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="State" max_length="40" name="state" read_only="true" type="string">
             <choice>
-                <element inactive_on_update="false" label="Waiting for approval" sequence="0" value="waiting for approval"/>
-                <element inactive_on_update="false" label="Approved" sequence="1" value="approved"/>
-                <element inactive_on_update="false" label="rejected" sequence="2" value="rejected"/>
+                <element inactive_on_update="false" label="Waiting for approval" sequence="0" value="1"/>
+                <element inactive_on_update="false" label="Approved" sequence="1" value="2"/>
+                <element inactive_on_update="false" label="rejected" sequence="2" value="3"/>
+                <element inactive_on_update="false" label="Withdraw" sequence="3" value="4"/>
             </choice>
         </element>
         <element attributes="edge_encryption_enabled=true" choice="3" default="casual_leaves" label="Type" max_length="40" name="type" type="string">
             <choice>
-                <element inactive_on_update="false" label="casual leaves" sequence="0" value="casual_leaves"/>
-                <element inactive_on_update="false" label="sick leaves" sequence="1" value="sick_leaves"/>
+                <element inactive_on_update="false" label="Casual Leave" sequence="0" value="casual_leaves"/>
+                <element inactive_on_update="false" label="Sick Leave" sequence="1" value="sick_leaves"/>
             </choice>
         </element>
         <index name="index">

@@ -30,12 +30,23 @@
         <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
 
 	// Add your code here
-	var gr = new GlideRecord('x_910737_timeoff_m_leave_approvals');
-	gr.initialize();
-	gr.approver = current.employee_name.manager;
-	gr.approving = current.sys_id;
-	gr.u_state = "requested";
-	gr.insert();
+	var leaveRequestId = current.sys_id;
+	var leaveApprovalGr = new GlideRecord('x_910737_timeoff_m_leave_approvals');
+	leaveApprovalGr.addQuery('approving',leaveRequestId);
+	leaveApprovalGr.query();
+
+	if(leaveApprovalGr.next()){
+		if(current.state == '4'){
+			leaveApprovalGr.u_state = '4';
+			leaveApprovalGr.update();
+		}
+	}else{
+		leaveApprovalGr.initialize();
+		leaveApprovalGr.approver = current.employee_name.manager;
+		leaveApprovalGr.approving = current.sys_id;
+		leaveApprovalGr.u_state = '1';
+		leaveApprovalGr.insert();
+	}
 
 })(current, previous);]]></script>
         <sys_class_name>sys_script</sys_class_name>

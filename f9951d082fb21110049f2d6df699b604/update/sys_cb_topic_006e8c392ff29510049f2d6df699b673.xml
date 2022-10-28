@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic">
+    <sys_cb_topic action="INSERT_OR_UPDATE">
+        <applicability/>
+        <applicability_mode>query</applicability_mode>
+        <autopilot_topic>false</autopilot_topic>
+        <category/>
+        <channels/>
+        <connect_queue/>
+        <description>Topic allows Managers to view the existing leave approvals and reject or approve them</description>
+        <expose_on_palette>false</expose_on_palette>
+        <flexible_conversation_switching>false</flexible_conversation_switching>
+        <graph>{
+  "graph_api_version": "1.0.41",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "8afe713bfe1f46febf547f2ec82c06d9": {
+          "id": "8afe713bfe1f46febf547f2ec82c06d9",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "e98ab67c38664dce83cc090d33399d0f": {
+          "id": "e98ab67c38664dce83cc090d33399d0f",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Thank you"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          }
+        },
+        "0d5d702e34fc442fb5d8919c236dbd0c": {
+          "stepType": "ReferenceChoicePrompt",
+          "name": "Leave Approval Requests",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Select to open a approval request "
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "9d91e5dfaaef47b08ff216149fe2101d",
+          "id": "0d5d702e34fc442fb5d8919c236dbd0c",
+          "mode": "external",
+          "script": "(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n               var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n*/\n\n        var leaveApprovalGr = new GlideRecord('x_910737_timeoff_m_leave_approvals');\n        leaveApprovalGr.addQuery('approver',vaInputs.user);\n        leaveApprovalGr.addQuery('u_state','1');\n        leaveApprovalGr.query();\n\n\n\n        var options = [];\n        while(leaveApprovalGr.next()){\n            var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n            empLeaveReqGr.addQuery('sys_id',leaveApprovalGr.getValue('approving'));\n            empLeaveReqGr.query();\n            \n            if(empLeaveReqGr.next()){\n                options.push({ 'value': leaveApprovalGr.getValue('sys_id') , 'label': empLeaveReqGr.getDisplayValue('employee_name') \n               + \" requested for \\n\" + empLeaveReqGr.getDisplayValue('no_of_days') + \" days \"\n               + empLeaveReqGr.getDisplayValue('type') \n                  ,'render_style': 'data' });\n            }\n            gs.info(\"now2 \" + leaveApprovalGr.getValue('sys_id')); \n        }\n        return options;\n\n    /*\n    var options = []; // add options here...\n    return options;\n    */\n})()\n",
+          "metadataScript": "",
+          "cardData": {},
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "No records for you"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "condition": {
+            "value": "(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n               var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n*/\n\n        var leaveApprovalGr = new GlideRecord('x_910737_timeoff_m_leave_approvals');\n        leaveApprovalGr.addQuery('approver',vaInputs.user);\n        leaveApprovalGr.addQuery('u_state','1');\n        leaveApprovalGr.query();\n\n\n\n        var options = [];\n        while(leaveApprovalGr.next()){\n            var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n            empLeaveReqGr.addQuery('sys_id',leaveApprovalGr.getValue('approving'));\n            empLeaveReqGr.query();\n            \n            if(empLeaveReqGr.next()){\n                options.push({ 'value': leaveApprovalGr.getValue('sys_id') , 'label': empLeaveReqGr.getDisplayValue('employee_name') \n               + \" requested for \\n\" + empLeaveReqGr.getDisplayValue('no_of_days') + \" days \"\n               + empLeaveReqGr.getDisplayValue('type') \n                  ,'render_style': 'data' });\n            }\n            gs.info(\"now2 \" + leaveApprovalGr.getValue('sys_id')); \n        }\n        return options;\n\n    /*\n    var options = []; // add options here...\n    return options;\n    */\n})()\n",
+            "mode": "external_script"
+          },
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "ba13d93f00dc4b9eb1ff2f6c15b8af14": {
+          "id": "ba13d93f00dc4b9eb1ff2f6c15b8af14",
+          "stepType": "RecordOutput",
+          "name": "Leave request record",
+          "variableId": "",
+          "cardTemplate": "General",
+          "cardFields": {},
+          "mode": "script",
+          "tableName": "x_910737_timeoff_m_employee_leave_requests",
+          "fields": [
+            "employee_name",
+            "type",
+            "no_of_days"
+          ],
+          "cardDefinition": {
+            "name": "Record",
+            "value": "General"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "condition": {
+            "mode": "glide_scripted_query",
+            "value": "(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n    var empLeaveReqGr = new GlideRecord(table);\n    var leaveApprovalGr = new GlideRecord('x_910737_timeoff_m_leave_approvals');\n    leaveApprovalGr.addQuery('sys_id',vaInputs.leave_approval_requests);\n    leaveApprovalGr.query();\n    if(leaveApprovalGr.next()){\n       empLeaveReqGr.addQuery('sys_id',leaveApprovalGr.getValue('approving'));\n       empLeaveReqGr.query();\n       if(empLeaveReqGr.next()){\n           return empLeaveReqGr;\n       }\n    }\n\n\n})(table)\n"
+          }
+        },
+        "9ad0115ed3b24a528a70c36dc85a9856": {
+          "stepType": "ChoicePrompt",
+          "name": "Approve or Reject",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Approve or Reject the request ?"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "77926ea4ca3b42b8b9e4293e3f973d19",
+          "id": "9ad0115ed3b24a528a70c36dc85a9856",
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "d9b010ade9f74d9fa1463b0b48637cbe": {
+          "id": "d9b010ade9f74d9fa1463b0b48637cbe",
+          "stepType": "Decision",
+          "name": "Approve or reject ?"
+        },
+        "0128f07e93e4495c8330254057e4cce3": {
+          "id": "0128f07e93e4495c8330254057e4cce3",
+          "name": "Update Request state to approved",
+          "script": "(function execute() {\n    /* Code your scripted action here. For example, you might update a\n       record based on conditional logic:\n\n        if (vaVars.my_flag == 'say hello') {\n            gs.info('hi there');\n        } else {\n            gs.info('bye now');\n        }\n    */\n    var leaveApproveGr = new GlideRecord('x_910737_timeoff_m_leave_approvals');\n    leaveApproveGr.addQuery('sys_id',vaInputs.leave_approval_requests);\n    leaveApproveGr.query();\n    if(leaveApproveGr.next()){\n        leaveApproveGr.setValue('u_state','2');\n        leaveApproveGr.update();\n    }\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "18d250d1b4824857b88c703f077d043d": {
+          "id": "18d250d1b4824857b88c703f077d043d",
+          "stepType": "TextOutput",
+          "name": "Leave request approved successfully",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "Leave request approved successfully"
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "7e62f44ac23046c6b5496a83bd46f4a6"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "3425329f758d41f4bb3e054dc536a9f3": {
+          "id": "3425329f758d41f4bb3e054dc536a9f3",
+          "name": "Update Request state to rejected",
+          "script": "(function execute() {\n    /* Code your scripted action here. For example, you might update a\n       record based on conditional logic:\n\n        if (vaVars.my_flag == 'say hello') {\n            gs.info('hi there');\n        } else {\n            gs.info('bye now');\n        }\n    */\n        var leaveApproveGr = new GlideRecord('x_910737_timeoff_m_leave_approvals');\n    leaveApproveGr.addQuery('sys_id',vaInputs.leave_approval_requests);\n    leaveApproveGr.query();\n    if(leaveApproveGr.next()){\n        leaveApproveGr.setValue('u_state','3');\n        leaveApproveGr.update();\n    }\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "4f52417c07d24a2ab521350499491289": {
+          "id": "4f52417c07d24a2ab521350499491289",
+          "stepType": "TextOutput",
+          "name": "Leave request rejected successfully",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "Leave request rejected successfully"
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "07dcc5a78f574933a40207d8b947b0f3"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        }
+      },
+      "edges": [
+        {
+          "id": "d1456cc0ac9c47af91c935dafbd8b0e9",
+          "edgeType": "Edge",
+          "source": "8afe713bfe1f46febf547f2ec82c06d9",
+          "target": "0d5d702e34fc442fb5d8919c236dbd0c",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "d1876af871d84039820f8e669554902f",
+          "edgeType": "Edge",
+          "source": "0d5d702e34fc442fb5d8919c236dbd0c",
+          "target": "ba13d93f00dc4b9eb1ff2f6c15b8af14",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "65bc29774f354c6faf83fd0e0c9d9fa5",
+          "edgeType": "Edge",
+          "source": "ba13d93f00dc4b9eb1ff2f6c15b8af14",
+          "target": "9ad0115ed3b24a528a70c36dc85a9856",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "fd3f3f8b15384a50bf99d36a5cb59e94",
+          "edgeType": "Edge",
+          "source": "9ad0115ed3b24a528a70c36dc85a9856",
+          "target": "d9b010ade9f74d9fa1463b0b48637cbe",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "173746b40be4478c93772be959729428",
+          "edgeType": "Branch",
+          "source": "d9b010ade9f74d9fa1463b0b48637cbe",
+          "target": "0128f07e93e4495c8330254057e4cce3",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.approve_or_reject=approve",
+            "mode": "query"
+          },
+          "label": "Approve"
+        },
+        {
+          "id": "53533f9bb1a6460b9422473805410912",
+          "edgeType": "Edge",
+          "source": "0128f07e93e4495c8330254057e4cce3",
+          "target": "18d250d1b4824857b88c703f077d043d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "c6bb56428dda4ba18a313ed93dd61f32",
+          "edgeType": "Edge",
+          "source": "18d250d1b4824857b88c703f077d043d",
+          "target": "e98ab67c38664dce83cc090d33399d0f",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "9a2936def76044cd9f11b6b9a380badf",
+          "edgeType": "Branch",
+          "source": "d9b010ade9f74d9fa1463b0b48637cbe",
+          "target": "3425329f758d41f4bb3e054dc536a9f3",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.approve_or_reject=reject",
+            "mode": "query"
+          },
+          "label": "Reject"
+        },
+        {
+          "id": "8a1f329c077945d782485857ae25da76",
+          "edgeType": "Edge",
+          "source": "3425329f758d41f4bb3e054dc536a9f3",
+          "target": "4f52417c07d24a2ab521350499491289",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "361a2b1da9884093bb949db551a57950",
+          "edgeType": "Edge",
+          "source": "4f52417c07d24a2ab521350499491289",
+          "target": "e98ab67c38664dce83cc090d33399d0f",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "9d91e5dfaaef47b08ff216149fe2101d": {
+      "id": "9d91e5dfaaef47b08ff216149fe2101d",
+      "name": "leave_approval_requests",
+      "label": "Leave Approval Requests",
+      "varType": "reference",
+      "table": "",
+      "category": "vaInputs"
+    },
+    "77926ea4ca3b42b8b9e4293e3f973d19": {
+      "id": "77926ea4ca3b42b8b9e4293e3f973d19",
+      "name": "approve_or_reject",
+      "label": "Approve Or Reject",
+      "varType": "choice",
+      "choices": [
+        {
+          "label": "Approve",
+          "value": "approve"
+        },
+        {
+          "label": "Reject",
+          "value": "reject"
+        }
+      ],
+      "category": "vaInputs"
+    }
+  }
+}</graph>
+        <key_phrases>Approve or Reject Leaves,leave approval</key_phrases>
+        <library>false</library>
+        <live_agent>false</live_agent>
+        <name>Approve or Reject Leaves</name>
+        <nlu_intent/>
+        <nlu_intent_label/>
+        <nlu_model/>
+        <nlu_model_label/>
+        <nlu_provider/>
+        <palette_label/>
+        <roles/>
+        <secure_custom_input_control>false</secure_custom_input_control>
+        <source_topic_id/>
+        <sys_class_name>sys_cb_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-27 20:19:04</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>006e8c392ff29510049f2d6df699b673</sys_id>
+        <sys_name>Approve or Reject Leaves</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_cb_topic_006e8c392ff29510049f2d6df699b673</sys_update_name>
+        <triggerable_by_notification>false</triggerable_by_notification>
+        <type>STANDARD</type>
+        <variables/>
+    </sys_cb_topic>
+    <sys_variable_value action="delete_multiple" query="document_key=006e8c392ff29510049f2d6df699b673"/>
+</record_update>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_message">
+    <sys_ui_message action="INSERT_OR_UPDATE">
+        <application>Virtual Agent</application>
+        <code/>
+        <commented_message/>
+        <key>enter no. of days to change</key>
+        <language>en</language>
+        <message>Enter no. of days to change</message>
+        <sys_class_name>sys_ui_message</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-27 20:05:14</sys_created_on>
+        <sys_id>513b80b52ff29510049f2d6df699b6e8</sys_id>
+        <sys_name>enter no. of days to change</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_ui_message_513b80b52ff29510049f2d6df699b6e8</sys_update_name>
+    </sys_ui_message>
+</record_update>

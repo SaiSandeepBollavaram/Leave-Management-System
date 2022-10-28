@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="DELETE">
+        <active>true</active>
+        <admin_overrides>false</admin_overrides>
+        <advanced>true</advanced>
+        <condition/>
+        <description>Remove delete UI action from leave approval form.</description>
+        <name>x_910737_timeoff_m_leave_approvals</name>
+        <operation display_value="delete">delete</operation>
+        <script><![CDATA[answer = false;]]></script>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-26 19:37:58</sys_created_on>
+        <sys_id>409abad52f325510049f2d6df699b63c</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>x_910737_timeoff_m_leave_approvals</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_security_acl_409abad52f325510049f2d6df699b63c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-10-26 19:40:02</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</application>
+        <file_path/>
+        <instance_id>6bd0c059db0f17c00e785d00cf961942</instance_id>
+        <instance_name>dev63088</instance_name>
+        <name>sys_security_acl_409abad52f325510049f2d6df699b63c</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_security_acl"&gt;&lt;sys_security_acl action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;admin_overrides&gt;false&lt;/admin_overrides&gt;&lt;advanced&gt;true&lt;/advanced&gt;&lt;condition/&gt;&lt;description&gt;Remove delete UI action from leave approval form.&lt;/description&gt;&lt;name&gt;x_910737_timeoff_m_leave_approvals&lt;/name&gt;&lt;operation display_value="delete"&gt;delete&lt;/operation&gt;&lt;script&gt;&lt;![CDATA[answer = false;]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_security_acl&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-10-26 19:37:58&lt;/sys_created_on&gt;&lt;sys_id&gt;409abad52f325510049f2d6df699b63c&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;x_910737_timeoff_m_leave_approvals&lt;/sys_name&gt;&lt;sys_package display_value="Timeoff management system" source="x_910737_timeoff_m"&gt;f9951d082fb21110049f2d6df699b604&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Timeoff management system"&gt;f9951d082fb21110049f2d6df699b604&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_security_acl_409abad52f325510049f2d6df699b63c&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-10-26 19:40:02&lt;/sys_updated_on&gt;&lt;type display_value="record"&gt;record&lt;/type&gt;&lt;/sys_security_acl&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>316782030</payload_hash>
+        <record_name>x_910737_timeoff_m_leave_approvals</record_name>
+        <reverted_from/>
+        <source>25ea00552fb61510049f2d6df699b609</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-26 19:40:04</sys_created_on>
+        <sys_id>8bdbbe192f325510049f2d6df699b67e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18415cf17690000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-10-26 19:40:04</sys_updated_on>
+        <type>Access Control</type>
+        <update_guid>83dbbe199b325510209f683611989a7e</update_guid>
+        <update_guid_history>83dbbe199b325510209f683611989a7e:316782030,9c6bb61912325510a7b3928b56f4364c:1947722877</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-26 19:48:09</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl">sys_security_acl</sys_db_object>
+        <sys_id>1b8048dfcecc43b5ad313de45ceba619</sys_id>
+        <sys_metadata>409abad52f325510049f2d6df699b63c</sys_metadata>
+        <sys_name>x_910737_timeoff_m_leave_approvals</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_parent display_value="x_910737_timeoff_m_leave_approvals">5e2583a42f769110049f2d6df699b61b</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_scope_delete display_value="">04429d6beac949fc8039d7754c36f6c4</sys_scope_delete>
+        <sys_update_name>sys_security_acl_409abad52f325510049f2d6df699b63c</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_409abad52f325510049f2d6df699b63c">8bdbbe192f325510049f2d6df699b67e</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

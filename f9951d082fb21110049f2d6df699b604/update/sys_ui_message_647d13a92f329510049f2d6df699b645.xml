@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_message">
+    <sys_ui_message action="INSERT_OR_UPDATE">
+        <application>Virtual Agent</application>
+        <code/>
+        <commented_message/>
+        <key>what can i do for you ?</key>
+        <language>en</language>
+        <message>What can i do for you ?</message>
+        <sys_class_name>sys_ui_message</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-27 16:45:17</sys_created_on>
+        <sys_id>647d13a92f329510049f2d6df699b645</sys_id>
+        <sys_name>what can i do for you ?</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_ui_message_647d13a92f329510049f2d6df699b645</sys_update_name>
+    </sys_ui_message>
+</record_update>
