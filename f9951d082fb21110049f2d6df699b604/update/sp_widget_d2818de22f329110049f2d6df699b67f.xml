@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope,$rootScope) {
+  /* widget controller */
+	var c = this;
+	$rootScope.$on('selectApproval', function(event,data) { 
+		console.log('Listener caught NoteID: ' + $rootScope.approvalId); 
+		c.server.get({
+			action: 'getApprovalRequest',
+			approvalId: $rootScope.approvalId
+		}).then(function(r) {
+			c.data.employee_name = r.data.approval.employee_name;
+			console.log(c.data.employee_name);
+			c.data.type = r.data.approval.type;
+			c.data.no_of_days = r.data.approval.no_of_days;
+			c.approvalId = $rootScope.approvalId;
+		});
+
+	});
+
+	c.onApprove = function() {
+		c.server.get({
+			action: 'approveRequest',
+			approvalId: $rootScope.approvalId
+		}).then(function(r) {
+			 
+		});
+     
+	};
+	c.onReject = function() {
+		c.server.get({
+			action: 'rejectRequest',
+			approvalId: $rootScope.approvalId
+		}).then(function(r) {
+			 
+		});
+
+	};
+	
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>approve_or_reject</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Approve or Reject</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+	if (input && input.approvalId) {
+
+		var approvalGr = new GlideRecord('x_910737_timeoff_m_leave_approvals');
+		approvalGr.addQuery('sys_id',input.approvalId);
+		approvalGr.query();
+
+		if (approvalGr.next()) {
+			if (input.action == 'getApprovalRequest') {		
+
+				var leaveReqGR = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');
+				var approving = approvalGr.getValue('approving');
+				leaveReqGR.addQuery('sys_id',approving);
+				leaveReqGR.query();
+				if(leaveReqGR.next()){
+					data.approval = {};
+					$sp.getRecordDisplayValues(data.approval, leaveReqGR, 'employee_name,type,no_of_days');
+				}
+			}else if(input.action == 'approveRequest'){
+				gs.info('approved');
+				approvalGr.setValue('u_state','2');
+				approvalGr.update();
+			}else if(input.action == 'rejectRequest'){
+				gs.info('rejected');
+				approvalGr.setValue('u_state','3');
+				approvalGr.update();			
+			}
+		}
+	}
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-30 07:58:02</sys_created_on>
+        <sys_id>d2818de22f329110049f2d6df699b67f</sys_id>
+        <sys_name>Approve or Reject</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sp_widget_d2818de22f329110049f2d6df699b67f</sys_update_name>
+        <template><![CDATA[<div class="panel panel-default" ng-show="c.approvalId">
+    <div class="panel-body">
+      <h3  id="approval-employee" ng-model="c.data.employee_name" >
+       {{data.employee_name}} Requested for {{data.no_of_days}} of {{data.type}}
+      </h3>
+     <div class="text-right">
+      <button class="btn" ng-click="c.onReject()" type="button">${Reject}</button>
+      <button class="btn btn-primary" ng-click="c.onApprove()" type="button">${Approve}</button>
+    </div>
+    </div>
+  
+  </div>]]></template>
+    </sp_widget>
+</record_update>

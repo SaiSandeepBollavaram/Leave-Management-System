@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container">
+    <sp_container action="INSERT_OR_UPDATE">
+        <background_color/>
+        <background_image/>
+        <background_style>default</background_style>
+        <bootstrap_alt>false</bootstrap_alt>
+        <class_name/>
+        <container_class_name/>
+        <name>Approve or Reject - Test Page - Container 1</name>
+        <order>1</order>
+        <sp_page display_value="approve_or_reject">2a818de22f329110049f2d6df699b683</sp_page>
+        <subheader>false</subheader>
+        <sys_class_name>sp_container</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-30 07:58:04</sys_created_on>
+        <sys_id>f2814d262f329110049f2d6df699b626</sys_id>
+        <sys_name>Approve or Reject - Test Page - Container 1</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sp_container_f2814d262f329110049f2d6df699b626</sys_update_name>
+        <title/>
+        <width>container</width>
+    </sp_container>
+</record_update>

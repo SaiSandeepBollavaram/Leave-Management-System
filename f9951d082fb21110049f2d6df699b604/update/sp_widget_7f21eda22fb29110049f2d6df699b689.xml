@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($rootScope,$scope) {
+  /* widget controller */
+  var c = this;
+  c.selectItem = function(idx) {
+    var id = c.data.approvals[idx].approvalId;
+    console.log('Approval ID: ' + id);
+    $rootScope.approvalId = id;
+    $rootScope.$emit('selectApproval', id);
+  }
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>approvals_list</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Approvals list</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+	data.approvals = [];
+	var approvalGR = new GlideRecord('x_910737_timeoff_m_leave_approvals');
+	approvalGR.addQuery('approver',gs.getUser().getID());
+	approvalGR.addQuery('u_state','1');
+	approvalGR.query();
+	
+	while(approvalGR.next()){
+		var approving = approvalGR.getValue('approving');
+		var leaveReqGR = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');
+		leaveReqGR.addQuery('sys_id',approving);
+		leaveReqGR.query();
+		var approvalObj = {};
+		if(leaveReqGR.next()){
+			$sp.getRecordDisplayValues(approvalObj, leaveReqGR, 'employee_name,type');
+			approvalObj['approvalId'] = approvalGR.getValue('sys_id');
+			data.approvals.push(approvalObj);
+		}
+		
+	}
+	
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-30 10:16:18</sys_created_on>
+        <sys_id>7f21eda22fb29110049f2d6df699b689</sys_id>
+        <sys_name>Approvals list</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sp_widget_7f21eda22fb29110049f2d6df699b689</sys_update_name>
+        <template><![CDATA[<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <h1 class="panel-title pull-left">
+      ${My Approvals}
+    </h1>
+  </div>
+  <div class="list-group">
+    <a class="list-group-item" ng-click="c.selectItem($index)" ng-repeat="approval in data.approvals">
+      <p class="list-group-item-heading">
+        {{approval.employee_name}} requested for {{approval.type}}
+      </p>
+    </a>
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

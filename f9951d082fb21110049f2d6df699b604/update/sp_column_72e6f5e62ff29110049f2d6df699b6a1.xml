@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_column">
+    <sp_column action="INSERT_OR_UPDATE">
+        <class_name/>
+        <order>1</order>
+        <size>3</size>
+        <size_lg/>
+        <size_sm/>
+        <size_xs/>
+        <sp_row display_value="1">72e6f5e62ff29110049f2d6df699b69f</sp_row>
+        <sys_class_name>sp_column</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-30 11:51:16</sys_created_on>
+        <sys_id>72e6f5e62ff29110049f2d6df699b6a1</sys_id>
+        <sys_name>1</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sp_column_72e6f5e62ff29110049f2d6df699b6a1</sys_update_name>
+    </sp_column>
+</record_update>
