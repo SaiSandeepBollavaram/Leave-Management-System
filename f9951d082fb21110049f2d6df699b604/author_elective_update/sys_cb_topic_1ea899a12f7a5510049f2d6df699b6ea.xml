@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic">
+    <sys_cb_topic action="DELETE">
+        <applicability/>
+        <applicability_mode>query</applicability_mode>
+        <autopilot_topic>false</autopilot_topic>
+        <category/>
+        <channels/>
+        <connect_queue/>
+        <description>Topic allows employees to interact with timeoff system</description>
+        <expose_on_palette>false</expose_on_palette>
+        <flexible_conversation_switching>false</flexible_conversation_switching>
+        <graph>{
+  "graph_api_version": "1.0.41",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "87a1085ce4ff4a39a2b6cc56addbdecf": {
+          "id": "87a1085ce4ff4a39a2b6cc56addbdecf",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Hi I can help you see your leave requests"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          }
+        },
+        "56abfe90f67b4bd9867157e9bae9c127": {
+          "id": "56abfe90f67b4bd9867157e9bae9c127",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "6b12423342114b729c7e6b82d23e1847": {
+          "stepType": "ReferenceChoicePrompt",
+          "name": "My Leave Requests",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Select Leave request to view"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "ea8319e04bf6404cac850fb23133b039",
+          "id": "6b12423342114b729c7e6b82d23e1847",
+          "mode": "external",
+          "script": "(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name.sys_id',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({'value': empLeaveReqGr.getValue('sys_id'), \n        'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')});\n    }\n    \n    return options;\n})()\n",
+          "metadataScript": "",
+          "cardData": {},
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "No leave requests for you"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "condition": {
+            "value": "(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name.sys_id',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({'value': empLeaveReqGr.getValue('sys_id'), \n        'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')});\n    }\n    \n    return options;\n})()\n",
+            "mode": "external_script"
+          },
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "16f48fb64c5d4a2ba78fe616fd76d0e4": {
+          "id": "16f48fb64c5d4a2ba78fe616fd76d0e4",
+          "stepType": "RecordOutput",
+          "name": "Leave request record",
+          "variableId": "ea8319e04bf6404cac850fb23133b039",
+          "cardTemplate": "General",
+          "cardFields": {},
+          "mode": "variable",
+          "tableName": "x_910737_timeoff_m_employee_leave_requests",
+          "fields": [
+            "employee_name"
+          ],
+          "cardDefinition": {
+            "name": "Record",
+            "value": "General"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "condition": {
+            "mode": "glide_query",
+            "value": ""
+          }
+        }
+      },
+      "edges": [
+        {
+          "id": "b12e5f3c8d034caf976657140e1ddb57",
+          "edgeType": "Edge",
+          "source": "87a1085ce4ff4a39a2b6cc56addbdecf",
+          "target": "6b12423342114b729c7e6b82d23e1847",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6a59c09b6f56411887afed89da4847b3",
+          "edgeType": "Edge",
+          "source": "6b12423342114b729c7e6b82d23e1847",
+          "target": "16f48fb64c5d4a2ba78fe616fd76d0e4",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "43c1140e412a4e579439c5365b167c6c",
+          "edgeType": "Edge",
+          "source": "16f48fb64c5d4a2ba78fe616fd76d0e4",
+          "target": "56abfe90f67b4bd9867157e9bae9c127",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "ea8319e04bf6404cac850fb23133b039": {
+      "id": "ea8319e04bf6404cac850fb23133b039",
+      "name": "my_leave_requests",
+      "label": "My Leave Requests",
+      "varType": "reference",
+      "table": "x_910737_timeoff_m_employee_leave_requests",
+      "category": "vaInputs"
+    }
+  }
+}</graph>
+        <key_phrases>View Leave Requests,leave request</key_phrases>
+        <library>false</library>
+        <live_agent>false</live_agent>
+        <name>View Leave Requests</name>
+        <nlu_intent/>
+        <nlu_intent_label/>
+        <nlu_model/>
+        <nlu_model_label/>
+        <nlu_provider/>
+        <palette_label/>
+        <roles/>
+        <secure_custom_input_control>false</secure_custom_input_control>
+        <source_topic_id/>
+        <sys_class_name>sys_cb_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-10-27 07:05:08</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>1ea899a12f7a5510049f2d6df699b6ea</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>View Leave Requests</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_cb_topic_1ea899a12f7a5510049f2d6df699b6ea</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-11-06 12:14:00</sys_updated_on>
+        <triggerable_by_notification>false</triggerable_by_notification>
+        <type>STANDARD</type>
+        <variables/>
+    </sys_cb_topic>
+    <sys_variable_value action="DELETE" query="document_key=1ea899a12f7a5510049f2d6df699b6ea"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</application>
+        <file_path/>
+        <instance_id>6bd0c059db0f17c00e785d00cf961942</instance_id>
+        <instance_name>dev63088</instance_name>
+        <name>sys_cb_topic_1ea899a12f7a5510049f2d6df699b6ea</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic"><sys_cb_topic action="INSERT_OR_UPDATE"><applicability/><applicability_mode>query</applicability_mode><autopilot_topic>false</autopilot_topic><category/><channels/><connect_queue/><description>Topic allows employees to interact with timeoff system</description><expose_on_palette>false</expose_on_palette><flexible_conversation_switching>false</flexible_conversation_switching><graph>{
+  "graph_api_version": "1.0.41",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "87a1085ce4ff4a39a2b6cc56addbdecf": {
+          "id": "87a1085ce4ff4a39a2b6cc56addbdecf",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Hi I can help you see your leave requests"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          }
+        },
+        "56abfe90f67b4bd9867157e9bae9c127": {
+          "id": "56abfe90f67b4bd9867157e9bae9c127",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "6b12423342114b729c7e6b82d23e1847": {
+          "stepType": "ReferenceChoicePrompt",
+          "name": "My Leave Requests",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Select Leave request to view"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "ea8319e04bf6404cac850fb23133b039",
+          "id": "6b12423342114b729c7e6b82d23e1847",
+          "mode": "external",
+          "script": "(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name.sys_id',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({'value': empLeaveReqGr.getValue('sys_id'), \n        'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')});\n    }\n    \n    return options;\n})()\n",
+          "metadataScript": "",
+          "cardData": {},
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "No leave requests for you"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "condition": {
+            "value": "(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name.sys_id',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({'value': empLeaveReqGr.getValue('sys_id'), \n        'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')});\n    }\n    \n    return options;\n})()\n",
+            "mode": "external_script"
+          },
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "16f48fb64c5d4a2ba78fe616fd76d0e4": {
+          "id": "16f48fb64c5d4a2ba78fe616fd76d0e4",
+          "stepType": "RecordOutput",
+          "name": "Leave request record",
+          "variableId": "ea8319e04bf6404cac850fb23133b039",
+          "cardTemplate": "General",
+          "cardFields": {},
+          "mode": "variable",
+          "tableName": "x_910737_timeoff_m_employee_leave_requests",
+          "fields": [
+            "employee_name"
+          ],
+          "cardDefinition": {
+            "name": "Record",
+            "value": "General"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "condition": {
+            "mode": "glide_query",
+            "value": ""
+          }
+        }
+      },
+      "edges": [
+        {
+          "id": "b12e5f3c8d034caf976657140e1ddb57",
+          "edgeType": "Edge",
+          "source": "87a1085ce4ff4a39a2b6cc56addbdecf",
+          "target": "6b12423342114b729c7e6b82d23e1847",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6a59c09b6f56411887afed89da4847b3",
+          "edgeType": "Edge",
+          "source": "6b12423342114b729c7e6b82d23e1847",
+          "target": "16f48fb64c5d4a2ba78fe616fd76d0e4",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "43c1140e412a4e579439c5365b167c6c",
+          "edgeType": "Edge",
+          "source": "16f48fb64c5d4a2ba78fe616fd76d0e4",
+          "target": "56abfe90f67b4bd9867157e9bae9c127",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "ea8319e04bf6404cac850fb23133b039": {
+      "id": "ea8319e04bf6404cac850fb23133b039",
+      "name": "my_leave_requests",
+      "label": "My Leave Requests",
+      "varType": "reference",
+      "table": "x_910737_timeoff_m_employee_leave_requests",
+      "category": "vaInputs"
+    }
+  }
+}</graph><key_phrases>View Leave Requests,leave request</key_phrases><library>false</library><live_agent>false</live_agent><name>View Leave Requests</name><nlu_intent/><nlu_intent_label/><nlu_model/><nlu_model_label/><nlu_provider/><palette_label/><roles/><secure_custom_input_control>false</secure_custom_input_control><source_topic_id/><sys_class_name>sys_cb_topic</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-10-27 07:05:08</sys_created_on><sys_domain>global</sys_domain><sys_id>1ea899a12f7a5510049f2d6df699b6ea</sys_id><sys_mod_count>9</sys_mod_count><sys_name>View Leave Requests</sys_name><sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package><sys_policy/><sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope><sys_update_name>sys_cb_topic_1ea899a12f7a5510049f2d6df699b6ea</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-11-06 12:14:00</sys_updated_on><triggerable_by_notification>false</triggerable_by_notification><type>STANDARD</type><variables/></sys_cb_topic><sys_variable_value action="delete_multiple" query="document_key=1ea899a12f7a5510049f2d6df699b6ea"/></record_update>]]></payload>
+        <payload_hash>-2107952619</payload_hash>
+        <record_name>View Leave Requests</record_name>
+        <reverted_from/>
+        <source>25ea00552fb61510049f2d6df699b609</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-06 12:14:00</sys_created_on>
+        <sys_id>144f39782f031110049f2d6df699b6ed</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1844cdca9a50000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-11-06 12:14:00</sys_updated_on>
+        <type>Topic</type>
+        <update_guid>1c4f3978e5031110f4c59918e51d19ec</update_guid>
+        <update_guid_history>1c4f3978e5031110f4c59918e51d19ec:-2107952619,2dfef578e5031110d984aebcc08f9d2b:-1562582548,f54ef5785a0311109e711aa18e052f26:-1001513507,f6cdb1b4bb031110b4766cd6ae8bc1d7:723023873,b57db938a703111094bce792df2ba8f5:-110263568,64ec35b42a0311104688072f2828cf67:-561700280,681a3574b7031110aa739308dc5fefe2:963117420,1ab9bd348c031110c57fe47fb08a0bb6:1849805105,a97975343d03111083a0faf281fca1c9:-371045603,8ce763e14372951009a3aed8d4600fd7:-987818920,bce22fedb2329510a40bf50b4266d595:-1223530404,4fb2292d217a55102009175abf433ab8:751974586,434f55699a7a55105b3e71d1e83f4492:-1140621869,2cf899a10f7a551005dfb652eae639d6:-1221449564,17a89125e37a551030f37f15d79fc99e:1462992163</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-06 12:19:02</sys_created_on>
+        <sys_db_object display_value="" name="sys_cb_topic">sys_cb_topic</sys_db_object>
+        <sys_id>0e9c3cb3f15a46a68281af4a96cea424</sys_id>
+        <sys_metadata>1ea899a12f7a5510049f2d6df699b6ea</sys_metadata>
+        <sys_name>View Leave Requests</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_scope_delete display_value="">04429d6beac949fc8039d7754c36f6c4</sys_scope_delete>
+        <sys_update_name>sys_cb_topic_1ea899a12f7a5510049f2d6df699b6ea</sys_update_name>
+        <sys_update_version display_value="sys_cb_topic_1ea899a12f7a5510049f2d6df699b6ea">144f39782f031110049f2d6df699b6ed</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

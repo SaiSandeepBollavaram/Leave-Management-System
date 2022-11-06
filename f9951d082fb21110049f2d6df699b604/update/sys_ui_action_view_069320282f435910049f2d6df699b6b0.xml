@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_action_view">
+    <sys_ui_action_view action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_ui_action_view</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-05 10:55:03</sys_created_on>
+        <sys_id>069320282f435910049f2d6df699b6b0</sys_id>
+        <sys_name>Apply.Concourse Notification Preferences</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_ui_action display_value="Apply">bef0ac642f435910049f2d6df699b600</sys_ui_action>
+        <sys_ui_view display_value="Concourse Notification Preferences" name="concourse_notification_preferences">0b7792f27f932200348ef0d8adfa9147</sys_ui_view>
+        <sys_update_name>sys_ui_action_view_069320282f435910049f2d6df699b6b0</sys_update_name>
+        <visibility>include</visibility>
+    </sys_ui_action_view>
+</record_update>

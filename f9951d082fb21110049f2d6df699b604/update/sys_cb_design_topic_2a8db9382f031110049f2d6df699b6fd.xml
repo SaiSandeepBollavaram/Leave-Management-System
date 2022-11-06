@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic/>
+        <design_definition>{"type":"FlowTopic","type":"FlowTopic","triggers":[{"type":"Trigger","name":"2bc0a8b4dc0048ed9be318bddb2e4774","triggerType":"request","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"id":"2bc0a8b4dc0048ed9be318bddb2e4774"}],"goals":[{"name":"primary","trigger_id":"2bc0a8b4dc0048ed9be318bddb2e4774","nodes":[{"type":"StartGoal","type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Hi I can help you see your leave requests\", vaContext.getRequesterLang())"},"id":"87a1085ce4ff4a39a2b6cc56addbdecf","name":"Start"},{"type":"TerminateGoal","type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","type":"String","mode":"string","value":""},"id":"56abfe90f67b4bd9867157e9bae9c127","name":"End"},{"type":"ReferenceChoiceInputPrompt","type":"ReferenceChoiceInputPrompt","mode":"external","id":"6b12423342114b729c7e6b82d23e1847","name":"My Leave Requests","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"variable_id":"ea8319e04bf6404cac850fb23133b039","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Select Leave request to view\", vaContext.getRequesterLang())"},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"expression_mode":"script","script":"(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name.sys_id',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({'value': empLeaveReqGr.getValue('sys_id'), \n        'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')});\n    }\n    \n    return options;\n})()\n","metadataScript":"","cardName":"","cardFields":[],"no_options_found_message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"No leave requests for you\", vaContext.getRequesterLang())"},"condition":{"type":"Condition","mode":"external_script","value":"(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name.sys_id',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({'value': empLeaveReqGr.getValue('sys_id'), \n        'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')});\n    }\n    \n    return options;\n})()\n"}}],"edges":[{"type":"Edge","source_node_id":"6b12423342114b729c7e6b82d23e1847","target_node_id":"56abfe90f67b4bd9867157e9bae9c127","id":"6a59c09b6f56411887afed89da4847b3"},{"type":"Edge","source_node_id":"87a1085ce4ff4a39a2b6cc56addbdecf","target_node_id":"6b12423342114b729c7e6b82d23e1847","id":"b12e5f3c8d034caf976657140e1ddb57"}],"id":"primary"}],"script_variables":[],"glide_variables":[{"type":"Reference","type":"Reference","table":"sys_user","id":"current-user","name":"user","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Choice","type":"Choice","choices":[],"id":"ea8319e04bf6404cac850fb23133b039","name":"my_leave_requests","formatType":"text","secure":false,"sensitive":false,"list":false,"table":"x_910737_timeoff_m_employee_leave_requests"}],"applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"roles":[],"scope":"f9951d082fb21110049f2d6df699b604","domain":"global","topic_type":"STANDARD","channels":[],"id":"1ea899a12f7a5510049f2d6df699b6ea","name":"_PRVW__a28db93878031110ee631ef9050e42f9","key_phrases":["View Leave Requests","leave request"],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":false,"autopilot_topic":false,"design_categories":[],"triggerable_by_notification":false,"library":false,"readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>1ea899a12f7a5510049f2d6df699b6ea</design_topic_id>
+        <graph>{
+  "graph_api_version": "1.0.41",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "87a1085ce4ff4a39a2b6cc56addbdecf": {
+          "id": "87a1085ce4ff4a39a2b6cc56addbdecf",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Hi I can help you see your leave requests"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          }
+        },
+        "56abfe90f67b4bd9867157e9bae9c127": {
+          "id": "56abfe90f67b4bd9867157e9bae9c127",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "6b12423342114b729c7e6b82d23e1847": {
+          "stepType": "ReferenceChoicePrompt",
+          "name": "My Leave Requests",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Select Leave request to view"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "ea8319e04bf6404cac850fb23133b039",
+          "id": "6b12423342114b729c7e6b82d23e1847",
+          "mode": "external",
+          "script": "(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name.sys_id',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({'value': empLeaveReqGr.getValue('sys_id'), \n        'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')});\n    }\n    \n    return options;\n})()\n",
+          "metadataScript": "",
+          "cardData": {},
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "No leave requests for you"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "condition": {
+            "value": "(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name.sys_id',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({'value': empLeaveReqGr.getValue('sys_id'), \n        'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')});\n    }\n    \n    return options;\n})()\n",
+            "mode": "external_script"
+          },
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "445c00e2b30541ea914fc1d872f40fc8": {
+          "id": "445c00e2b30541ea914fc1d872f40fc8",
+          "stepType": "RecordOutput",
+          "name": "Leave Request Details",
+          "variableId": "ea8319e04bf6404cac850fb23133b039",
+          "cardTemplate": "General",
+          "cardFields": {},
+          "mode": "variable",
+          "tableName": "x_910737_timeoff_m_employee_leave_requests",
+          "fields": [
+            "employee_name",
+            "type",
+            "from_date",
+            "to_date",
+            "no_of_days",
+            "state"
+          ],
+          "cardDefinition": {
+            "name": "Record",
+            "value": "General"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "condition": {
+            "mode": "glide_query",
+            "value": ""
+          }
+        }
+      },
+      "edges": [
+        {
+          "id": "85c1e06853fc4673ac1d933176ac9406",
+          "edgeType": "Edge",
+          "source": "445c00e2b30541ea914fc1d872f40fc8",
+          "target": "56abfe90f67b4bd9867157e9bae9c127",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "b12e5f3c8d034caf976657140e1ddb57",
+          "edgeType": "Edge",
+          "source": "87a1085ce4ff4a39a2b6cc56addbdecf",
+          "target": "6b12423342114b729c7e6b82d23e1847",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6a59c09b6f56411887afed89da4847b3",
+          "edgeType": "Edge",
+          "source": "6b12423342114b729c7e6b82d23e1847",
+          "target": "445c00e2b30541ea914fc1d872f40fc8",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "ea8319e04bf6404cac850fb23133b039": {
+      "id": "ea8319e04bf6404cac850fb23133b039",
+      "name": "my_leave_requests",
+      "label": "My Leave Requests",
+      "varType": "reference",
+      "table": "x_910737_timeoff_m_employee_leave_requests",
+      "category": "vaInputs"
+    }
+  }
+}</graph>
+        <name>_PRVW__a28db93878031110ee631ef9050e42f9</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-06 12:06:31</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>2a8db9382f031110049f2d6df699b6fd</sys_id>
+        <sys_name>FlowTopic</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_cb_design_topic_2a8db9382f031110049f2d6df699b6fd</sys_update_name>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
+</record_update>

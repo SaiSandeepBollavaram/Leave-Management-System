@@ -26,8 +26,17 @@
           "stepType": "Start",
           "name": "Start",
           "greetingResponse": {
-            "mode": "simple",
-            "value": ""
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Hi I can help you approve or reject leave requests"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
           }
         },
         "e98ab67c38664dce83cc090d33399d0f": {
@@ -412,7 +421,7 @@
         <nlu_model_label/>
         <nlu_provider/>
         <palette_label/>
-        <roles/>
+        <roles>x_910737_timeoff_m.manager,x_910737_timeoff_m.admin</roles>
         <secure_custom_input_control>false</secure_custom_input_control>
         <source_topic_id/>
         <sys_class_name>sys_cb_topic</sys_class_name>

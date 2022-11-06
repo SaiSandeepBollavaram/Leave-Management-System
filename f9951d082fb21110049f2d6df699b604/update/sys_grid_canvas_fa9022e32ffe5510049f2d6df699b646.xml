@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_grid_canvas">
+    <sys_grid_canvas action="INSERT_OR_UPDATE">
+        <legacy_page display_value="PA My Leave Balances - New Tab">b69022e32ffe5510049f2d6df699b645</legacy_page>
+        <name>PA My Leave Balances - New Tab</name>
+        <sys_class_name>sys_grid_canvas</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-02 17:27:20</sys_created_on>
+        <sys_id>fa9022e32ffe5510049f2d6df699b646</sys_id>
+        <sys_name>PA My Leave Balances - New Tab</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_grid_canvas_fa9022e32ffe5510049f2d6df699b646</sys_update_name>
+    </sys_grid_canvas>
+</record_update>

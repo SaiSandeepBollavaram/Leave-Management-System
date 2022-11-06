@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic display_value="View Leave Requests">39914a3c2f031110049f2d6df699b61a</compiled_topic>
+        <design_definition>{"type":"FlowTopic","type":"FlowTopic","triggers":[{"type":"Trigger","name":"36e83a75553b4c399f0817c3ecdc0c86","triggerType":"request","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"id":"36e83a75553b4c399f0817c3ecdc0c86"}],"goals":[{"name":"primary","trigger_id":"36e83a75553b4c399f0817c3ecdc0c86","nodes":[{"type":"StartGoal","type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","type":"String","mode":"string","value":""},"id":"11b540825b704cd49d1c29d21fa86a63","name":"Start"},{"type":"TerminateGoal","type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","type":"String","mode":"string","value":""},"id":"cd0aa4b174924f1e9e7250b0d143f566","name":"End"},{"type":"ReferenceChoiceInputPrompt","type":"ReferenceChoiceInputPrompt","mode":"external","id":"d768ba2b9bf7484b8d8a58ff52e9d67c","name":"Select leave request","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"variable_id":"4c22152f24b84419a6c740cc92d9afc8","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Select to view leave request\", vaContext.getRequesterLang())"},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"expression_mode":"script","script":"(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({ 'value': empLeaveReqGr.getValue('sys_id') , 'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')\n                  ,'render_style': 'data' });\n    }\n    \n    return options;\n})()\n","metadataScript":"","cardName":"","cardFields":[],"no_options_found_message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"No leave request on your name\", vaContext.getRequesterLang())"},"condition":{"type":"Condition","mode":"external_script","value":"(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({ 'value': empLeaveReqGr.getValue('sys_id') , 'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')\n                  ,'render_style': 'data' });\n    }\n    \n    return options;\n})()\n"}},{"type":"RecordOutputPrompt","type":"RecordOutputPrompt","mode":"script","table":"x_910737_timeoff_m_employee_leave_requests","script":"(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n    var empLeaveReqGr = new GlideRecord(table);\n    empLeaveReqGr.addQuery('sys_id',vaInputs.select_leave_request);\n    empLeaveReqGr.query();\n    if(empLeaveReqGr.next()){\n        return empLeaveReqGr;\n    }\n})(table)\n","fields":["employee_name","from_date","to_date","no_of_days","type","state"],"id":"ca6aa63128eb4c3f975d44f936a3f7a2","name":"Leave request record","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"condition":{"type":"Condition","mode":"glide_scripted_query","value":"(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n    var empLeaveReqGr = new GlideRecord(table);\n    empLeaveReqGr.addQuery('sys_id',vaInputs.select_leave_request);\n    empLeaveReqGr.query();\n    if(empLeaveReqGr.next()){\n        return empLeaveReqGr;\n    }\n})(table)\n"}}],"edges":[{"type":"Edge","source_node_id":"11b540825b704cd49d1c29d21fa86a63","target_node_id":"d768ba2b9bf7484b8d8a58ff52e9d67c","id":"9f1506b4134648c7919fb983785bec95"},{"type":"Edge","source_node_id":"d768ba2b9bf7484b8d8a58ff52e9d67c","target_node_id":"ca6aa63128eb4c3f975d44f936a3f7a2","id":"b26cfaedd7a1493d82b0b8a2b56363a6"},{"type":"Edge","source_node_id":"ca6aa63128eb4c3f975d44f936a3f7a2","target_node_id":"cd0aa4b174924f1e9e7250b0d143f566","id":"fd47ffb5ba434c5e917aca3c55109ffa"}],"id":"primary"}],"script_variables":[],"glide_variables":[{"type":"Reference","type":"Reference","table":"sys_user","id":"current-user","name":"user","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Choice","type":"Choice","choices":[],"id":"4c22152f24b84419a6c740cc92d9afc8","name":"select_leave_request","formatType":"text","secure":false,"sensitive":false,"list":false,"table":""}],"applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"roles":[],"scope":"f9951d082fb21110049f2d6df699b604","domain":"global","topic_type":"STANDARD","channels":[],"id":"0380c6f82f031110049f2d6df699b615","name":"View Leave Requests","key_phrases":["View Leave Requests","leave request"],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":false,"autopilot_topic":false,"design_categories":[],"triggerable_by_notification":false,"library":false,"readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>0380c6f82f031110049f2d6df699b615</design_topic_id>
+        <graph>{
+  "graph_api_version": "1.0.41",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "11b540825b704cd49d1c29d21fa86a63": {
+          "id": "11b540825b704cd49d1c29d21fa86a63",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "cd0aa4b174924f1e9e7250b0d143f566": {
+          "id": "cd0aa4b174924f1e9e7250b0d143f566",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "d768ba2b9bf7484b8d8a58ff52e9d67c": {
+          "stepType": "ReferenceChoicePrompt",
+          "name": "Select leave request",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Select to view leave request"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "4c22152f24b84419a6c740cc92d9afc8",
+          "id": "d768ba2b9bf7484b8d8a58ff52e9d67c",
+          "mode": "external",
+          "script": "(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({ 'value': empLeaveReqGr.getValue('sys_id') , 'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')\n                  ,'render_style': 'data' });\n    }\n    \n    return options;\n})()\n",
+          "metadataScript": "",
+          "cardData": {},
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "No leave request on your name"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "condition": {
+            "value": "(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n    var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    empLeaveReqGr.addQuery('employee_name',vaInputs.user);\n    empLeaveReqGr.query();\n\n    var options = [];\n    while(empLeaveReqGr.next()){\n        options.push({ 'value': empLeaveReqGr.getValue('sys_id') , 'label': \"You have requested for \"+ empLeaveReqGr.getDisplayValue('no_of_days') + \" days of \" + empLeaveReqGr.getDisplayValue('type')\n                  ,'render_style': 'data' });\n    }\n    \n    return options;\n})()\n",
+            "mode": "external_script"
+          },
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "ca6aa63128eb4c3f975d44f936a3f7a2": {
+          "id": "ca6aa63128eb4c3f975d44f936a3f7a2",
+          "stepType": "RecordOutput",
+          "name": "Leave request record",
+          "variableId": "",
+          "cardTemplate": "General",
+          "cardFields": {},
+          "mode": "script",
+          "tableName": "x_910737_timeoff_m_employee_leave_requests",
+          "fields": [
+            "employee_name",
+            "from_date",
+            "to_date",
+            "no_of_days",
+            "type",
+            "state"
+          ],
+          "cardDefinition": {
+            "name": "Record",
+            "value": "General"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "condition": {
+            "mode": "glide_scripted_query",
+            "value": "(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n    var empLeaveReqGr = new GlideRecord(table);\n    empLeaveReqGr.addQuery('sys_id',vaInputs.select_leave_request);\n    empLeaveReqGr.query();\n    if(empLeaveReqGr.next()){\n        return empLeaveReqGr;\n    }\n})(table)\n"
+          }
+        }
+      },
+      "edges": [
+        {
+          "id": "9f1506b4134648c7919fb983785bec95",
+          "edgeType": "Edge",
+          "source": "11b540825b704cd49d1c29d21fa86a63",
+          "target": "d768ba2b9bf7484b8d8a58ff52e9d67c",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "b26cfaedd7a1493d82b0b8a2b56363a6",
+          "edgeType": "Edge",
+          "source": "d768ba2b9bf7484b8d8a58ff52e9d67c",
+          "target": "ca6aa63128eb4c3f975d44f936a3f7a2",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "fd47ffb5ba434c5e917aca3c55109ffa",
+          "edgeType": "Edge",
+          "source": "ca6aa63128eb4c3f975d44f936a3f7a2",
+          "target": "cd0aa4b174924f1e9e7250b0d143f566",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "4c22152f24b84419a6c740cc92d9afc8": {
+      "id": "4c22152f24b84419a6c740cc92d9afc8",
+      "name": "select_leave_request",
+      "label": "Select Leave Request",
+      "varType": "reference",
+      "table": "",
+      "category": "vaInputs"
+    }
+  }
+}</graph>
+        <name>View Leave Requests</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-06 12:24:13</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>39914a3c2f031110049f2d6df699b61e</sys_id>
+        <sys_name>FlowTopic</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_cb_design_topic_39914a3c2f031110049f2d6df699b61e</sys_update_name>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
+</record_update>

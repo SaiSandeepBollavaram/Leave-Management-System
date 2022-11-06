@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_grid_canvas_pane">
+    <sys_grid_canvas_pane action="INSERT_OR_UPDATE">
+        <grid_canvas display_value="PA My Leave Balances - New Tab">fa9022e32ffe5510049f2d6df699b646</grid_canvas>
+        <height>10</height>
+        <portal_widget display_value="Created 2022-11-02 10:27:51">2ab0aaa32ffe5510049f2d6df699b6ae</portal_widget>
+        <posx>3</posx>
+        <posy>0</posy>
+        <sys_class_name>sys_grid_canvas_pane</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-02 17:27:51</sys_created_on>
+        <sys_id>6eb0a2e32ffe5510049f2d6df699b65e</sys_id>
+        <sys_name>fa9022e32ffe5510049f2d6df699b646</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_grid_canvas_pane_6eb0a2e32ffe5510049f2d6df699b65e</sys_update_name>
+        <width>3</width>
+    </sys_grid_canvas_pane>
+</record_update>

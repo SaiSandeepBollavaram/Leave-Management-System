@@ -1,14 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic">
-    <sys_cb_topic action="INSERT_OR_UPDATE">
-        <applicability/>
-        <applicability_mode>query</applicability_mode>
-        <autopilot_topic>false</autopilot_topic>
-        <category/>
-        <channels/>
-        <connect_queue/>
-        <description>Topic allows employees to interact with timeoff system</description>
-        <expose_on_palette>false</expose_on_palette>
-        <flexible_conversation_switching>false</flexible_conversation_switching>
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic/>
+        <design_definition>{"type":"FlowTopic","type":"FlowTopic","triggers":[{"type":"Trigger","name":"6ddf709f7bd14ebf9b21f1091e39a17f","triggerType":"request","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"id":"6ddf709f7bd14ebf9b21f1091e39a17f"}],"goals":[{"name":"primary","trigger_id":"6ddf709f7bd14ebf9b21f1091e39a17f","nodes":[{"type":"StartGoal","type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Hi I can help you apply, withdraw leave and show leave balances\", vaContext.getRequesterLang())"},"id":"87a1085ce4ff4a39a2b6cc56addbdecf","name":"Start"},{"type":"TerminateGoal","type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","type":"String","mode":"string","value":""},"id":"56abfe90f67b4bd9867157e9bae9c127","name":"End"},{"type":"ChoiceInputPrompt","type":"ChoiceInputPrompt","expression_mode":"simple","metadataScript":"","cardName":"","cardFields":[],"id":"a6125679d2ca4f319fde767c41307cc4","name":"Main Menu","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"variable_id":"3141c9c213f44a588bdab12976a01128","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"What can i do for you ?\", vaContext.getRequesterLang())"},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true}},{"type":"ReferenceChoiceInputPrompt","type":"ReferenceChoiceInputPrompt","mode":"glide_record","id":"6b12423342114b729c7e6b82d23e1847","name":"My Leave Requests","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"variable_id":"ea8319e04bf6404cac850fb23133b039","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Select Leave request to view\", vaContext.getRequesterLang())"},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"expression_mode":"simple","metadataScript":"","cardName":"","cardFields":[],"no_options_found_message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"No leave requests for you\", vaContext.getRequesterLang())"},"condition":{"type":"Condition","mode":"glide_query","value":"employee_name={{vaInputs.user}}"}},{"type":"RecordOutputPrompt","type":"RecordOutputPrompt","mode":"variable","table":"x_910737_timeoff_m_employee_leave_requests","variable_id":"ea8319e04bf6404cac850fb23133b039","fields":["employee_name","type","no_of_days","state"],"id":"445c00e2b30541ea914fc1d872f40fc8","name":"Leave Request Details","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"condition":{"type":"Condition","mode":"glide_query","value":""}}],"edges":[{"type":"Edge","source_node_id":"a6125679d2ca4f319fde767c41307cc4","target_node_id":"56abfe90f67b4bd9867157e9bae9c127","id":"0162e1bbd5fb4b43971e887bcbbd6e63"},{"type":"Edge","source_node_id":"87a1085ce4ff4a39a2b6cc56addbdecf","target_node_id":"6b12423342114b729c7e6b82d23e1847","id":"b12e5f3c8d034caf976657140e1ddb57"},{"type":"Edge","source_node_id":"6b12423342114b729c7e6b82d23e1847","target_node_id":"445c00e2b30541ea914fc1d872f40fc8","id":"6a59c09b6f56411887afed89da4847b3"},{"type":"Edge","source_node_id":"445c00e2b30541ea914fc1d872f40fc8","target_node_id":"a6125679d2ca4f319fde767c41307cc4","id":"85c1e06853fc4673ac1d933176ac9406"}],"id":"primary"}],"script_variables":[],"glide_variables":[{"type":"Reference","type":"Reference","table":"sys_user","id":"current-user","name":"user","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Choice","type":"Choice","choices":[{"name":"Show Leave Balance","element":"show_leave_balance"},{"name":"Show Leave Request","element":"show_leave_request"},{"name":"End Conversation","element":"end_conversation"}],"id":"3141c9c213f44a588bdab12976a01128","name":"main_menu","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Reference","type":"Reference","table":"x_910737_timeoff_m_employee_leave_requests","reference_qualifier_condition":"employee_name={{vaInputs.user}}","id":"ea8319e04bf6404cac850fb23133b039","name":"my_leave_requests","formatType":"text","secure":false,"sensitive":false,"list":false}],"applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"roles":[],"scope":"f9951d082fb21110049f2d6df699b604","domain":"global","topic_type":"STANDARD","channels":[],"id":"1ea899a12f7a5510049f2d6df699b6ea","name":"_PRVW__5bc93174260311101a305274b990241d","key_phrases":["View Leave Requests","leave request"],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":false,"autopilot_topic":false,"design_categories":[],"triggerable_by_notification":false,"library":false,"readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>1ea899a12f7a5510049f2d6df699b6ea</design_topic_id>
         <graph>{
   "graph_api_version": "1.0.41",
   "goals": {
@@ -96,37 +90,6 @@
           },
           "withNluUserInput": false,
           "skipIfFulfilled": false
-        },
-        "0faf97b4fbcc45f29367a6746fa908d6": {
-          "id": "0faf97b4fbcc45f29367a6746fa908d6",
-          "stepType": "Decision",
-          "name": "Selected Option"
-        },
-        "3a637ba24ea4495698d77659640691b3": {
-          "id": "3a637ba24ea4495698d77659640691b3",
-          "stepType": "RecordOutput",
-          "name": "View Leave Balances",
-          "variableId": "",
-          "cardTemplate": "General",
-          "cardFields": {},
-          "mode": "script",
-          "tableName": "x_910737_timeoff_m_leave_balances",
-          "fields": [
-            "casual_leaves",
-            "sick_leaves"
-          ],
-          "cardDefinition": {
-            "name": "Record",
-            "value": "General"
-          },
-          "applicability": {
-            "value": "",
-            "mode": "query"
-          },
-          "condition": {
-            "mode": "glide_query",
-            "value": "employee_name={{vaInputs.user}}"
-          }
         },
         "6b12423342114b729c7e6b82d23e1847": {
           "stepType": "ReferenceChoicePrompt",
@@ -229,10 +192,10 @@
       },
       "edges": [
         {
-          "id": "f60ddde97c5043e184b06e4b05bbb91d",
+          "id": "0162e1bbd5fb4b43971e887bcbbd6e63",
           "edgeType": "Edge",
-          "source": "445c00e2b30541ea914fc1d872f40fc8",
-          "target": "a6125679d2ca4f319fde767c41307cc4",
+          "source": "a6125679d2ca4f319fde767c41307cc4",
+          "target": "56abfe90f67b4bd9867157e9bae9c127",
           "sourcePort": "",
           "targetPort": ""
         },
@@ -240,70 +203,23 @@
           "id": "b12e5f3c8d034caf976657140e1ddb57",
           "edgeType": "Edge",
           "source": "87a1085ce4ff4a39a2b6cc56addbdecf",
-          "target": "a6125679d2ca4f319fde767c41307cc4",
-          "sourcePort": "",
-          "targetPort": ""
-        },
-        {
-          "id": "0162e1bbd5fb4b43971e887bcbbd6e63",
-          "edgeType": "Edge",
-          "source": "a6125679d2ca4f319fde767c41307cc4",
-          "target": "0faf97b4fbcc45f29367a6746fa908d6",
-          "sourcePort": "",
-          "targetPort": ""
-        },
-        {
-          "id": "020dd5886a9d489098129cb906bd0cf9",
-          "edgeType": "Branch",
-          "source": "0faf97b4fbcc45f29367a6746fa908d6",
-          "target": "3a637ba24ea4495698d77659640691b3",
-          "sourcePort": "",
-          "targetPort": "",
-          "expression": {
-            "value": "vaInputs.main_menu=show_leave_balance",
-            "mode": "query"
-          },
-          "label": "Leave Balances"
-        },
-        {
-          "id": "70ec21927d124a92ac96fee64acfc718",
-          "edgeType": "Edge",
-          "source": "3a637ba24ea4495698d77659640691b3",
-          "target": "a6125679d2ca4f319fde767c41307cc4",
-          "sourcePort": "",
-          "targetPort": ""
-        },
-        {
-          "id": "365a47242f1e443eb367a05a6768ca09",
-          "edgeType": "Branch",
-          "source": "0faf97b4fbcc45f29367a6746fa908d6",
-          "target": "56abfe90f67b4bd9867157e9bae9c127",
-          "sourcePort": "",
-          "targetPort": "",
-          "expression": {
-            "value": "vaInputs.main_menu=end_conversation",
-            "mode": "query"
-          },
-          "label": "End Conversation"
-        },
-        {
-          "id": "508e716f259e4f0a8058335ab50a0c12",
-          "edgeType": "Branch",
-          "source": "0faf97b4fbcc45f29367a6746fa908d6",
           "target": "6b12423342114b729c7e6b82d23e1847",
           "sourcePort": "",
-          "targetPort": "",
-          "expression": {
-            "value": "vaInputs.main_menu=show_leave_request",
-            "mode": "query"
-          },
-          "label": "Show Leave Request"
+          "targetPort": ""
         },
         {
-          "id": "d7ebecbe5ee54c139eddc696fe605f21",
+          "id": "6a59c09b6f56411887afed89da4847b3",
           "edgeType": "Edge",
           "source": "6b12423342114b729c7e6b82d23e1847",
           "target": "445c00e2b30541ea914fc1d872f40fc8",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "85c1e06853fc4673ac1d933176ac9406",
+          "edgeType": "Edge",
+          "source": "445c00e2b30541ea914fc1d872f40fc8",
+          "target": "a6125679d2ca4f319fde767c41307cc4",
           "sourcePort": "",
           "targetPort": ""
         }
@@ -351,32 +267,17 @@
     }
   }
 }</graph>
-        <key_phrases>View Leave Balances and Requests,leave,leave balance,leave request</key_phrases>
-        <library>false</library>
-        <live_agent>false</live_agent>
-        <name>View Leave Balances and Requests</name>
-        <nlu_intent/>
-        <nlu_intent_label/>
-        <nlu_model/>
-        <nlu_model_label/>
-        <nlu_provider/>
-        <palette_label/>
-        <roles/>
-        <secure_custom_input_control>false</secure_custom_input_control>
-        <source_topic_id/>
-        <sys_class_name>sys_cb_topic</sys_class_name>
+        <name>_PRVW__5bc93174260311101a305274b990241d</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2022-10-27 07:05:08</sys_created_on>
+        <sys_created_on>2022-11-06 11:50:11</sys_created_on>
         <sys_domain>global</sys_domain>
-        <sys_id>1ea899a12f7a5510049f2d6df699b6ea</sys_id>
-        <sys_name>View Leave Balances and Requests</sys_name>
+        <sys_id>9bc931742f031110049f2d6df699b621</sys_id>
+        <sys_name>FlowTopic</sys_name>
         <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
         <sys_policy/>
         <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
-        <sys_update_name>sys_cb_topic_1ea899a12f7a5510049f2d6df699b6ea</sys_update_name>
-        <triggerable_by_notification>false</triggerable_by_notification>
-        <type>STANDARD</type>
-        <variables/>
-    </sys_cb_topic>
-    <sys_variable_value action="delete_multiple" query="document_key=1ea899a12f7a5510049f2d6df699b6ea"/>
+        <sys_update_name>sys_cb_design_topic_9bc931742f031110049f2d6df699b621</sys_update_name>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
 </record_update>

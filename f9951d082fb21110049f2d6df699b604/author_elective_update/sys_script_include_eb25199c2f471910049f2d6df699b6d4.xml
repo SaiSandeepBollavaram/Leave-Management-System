@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="DELETE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_910737_timeoff_m.ClientDateTimeUtils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>ClientDateTimeUtils</name>
+        <script><![CDATA[var ClientDateTimeUtils = Class.create();
+ClientDateTimeUtils.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+isPublic:function(){return true;},
+//Takes a Single Date/Time Field and returns its time difference from nowDateTime().
+//params = sysparm_fdt (the first date/time field), sysparm_difftype (time based format to return result. See "_calcDateDiff" function comments)
+getNowDateTimeDiff: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var diffTYPE = this.getParameter('sysparm_difftype'); // Date-Time Type to return the answer as. Can be second, minute, hour, day
+var diff = gs.dateDiff(gs.nowDateTime(), firstDT, true);
+var timediff = this._calcDateDiff(diffTYPE, diff);
+//return "getNowDateTimeDiff: FIRST DT: " + firstDT + " -DIFFTYPE: " + diffTYPE + " -TIME DIFF: " + timediff;
+return timediff;
+},
+	
+
+//Diff the amount of time between two different Date/Time fields
+//params = sysparm_fdt (the first date/time field), sysparm_sdt (second date/time field), sysparm_difftype (time based format to return result. See "_calcDateDiff" function comments)
+getDateTimeDiff: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var secondDT = this.getParameter('sysparm_sdt'); // Second Date-Time Field
+var diffTYPE = this.getParameter('sysparm_difftype'); // Date-Time Type to return the answer as. Can be second, minute, hour, day
+var diff = gs.dateDiff(firstDT, secondDT, true);
+var timediff = this._calcDateDiff(diffTYPE, diff);
+//return "getDateTimeDiff: FIRST DT: " + firstDT + " -SECOND DT: " + secondDT + " -DIFFTYPE: " + diffTYPE + " -TIME DIFF: " + timediff;
+return timediff;
+},
+
+//Takes your date/time field and returns the amount of time before now. A positive is time before now, a negative number is after now.
+//params = sysparm_fdt (the first date/time field), sysparm_difftype (time based format to return result. See "_calcDateDiff" function comments)
+getDateTimeBeforeNow: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var diffTYPE = this.getParameter('sysparm_difftype'); // Date-Time Type to return the answer as. Can be second, minute, hour, day
+var diff = gs.dateDiff(firstDT, gs.nowDateTime(), true);
+var timediff = this._calcDateDiff(diffTYPE, diff);
+//return "getDateTimeBeforeNow: FIRST DT: " + firstDT + " -DIFFTYPE: " + diffTYPE + " -TIME DIFF: " + timediff;
+return timediff;
+},
+
+//Returns true if it is before now, and false if it is after now.
+//params = sysparm_fdt (the first date/time field)
+getDateTimeBeforeNowBool: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var diff = gs.dateDiff(firstDT, gs.nowDateTime(), true);
+var answer = '';
+if (diff >= 0){answer = 'true';}
+else {answer = 'false';}
+return answer;
+},
+
+//Returns the Date/Time of right now.
+getNowDateTime: function(){
+var now = gs.nowDateTime(); //Now Date/Time
+return now;
+},
+
+//Returns the Date right now.
+getNowDate: function(){
+var now = GlideDate(); //Now Date
+return now.getLocalDate();
+},
+
+//Returns the Time of right now.
+getNowTime: function(){
+var now = GlideTime(); //Now Time
+var modnow = now.getLocalTime().toString().split(' ');
+return modnow[1];
+},
+
+//Takes a date/time field and adds time to it.
+//params = sysparm_fdt (the first date/time field), sysparm_addtype (type of time to add - second, minute, hour, day, week, month, year), sysparm_addtime (amount of time to add based on the type).
+addDateTimeAmount: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var addTYPE = this.getParameter('sysparm_addtype'); //What to add - second (addSeconds()), minute (need to add conversion), hour (need to add conversion), day (addDays()), week (addWeeks()), month (addMonths()), year (addYears())
+var addTIME = this.getParameter('sysparm_addtime'); //How much time to add
+var day = GlideDateTime(firstDT);
+
+if(addTYPE == 'second'){day.addSeconds(addTIME);}
+else if (addTYPE == 'minute'){day.addSeconds(addTIME*60);}
+else if (addTYPE == 'hour'){day.addSeconds(addTIME*(60*60));}
+else if (addTYPE == 'day'){day.addDays(addTIME);}
+else if (addTYPE == 'week'){day.addWeeks(addTIME);}
+else if (addTYPE == 'month'){day.addMonths(addTIME);}
+else if (addTYPE == 'year'){day.addYears(addTIME);}
+else {day.addDays(addTIME);}
+
+//return "First Date: " + firstDT + " -Time to Add: " + addTIME + " -Add Type: " + addTYPE + " -Added Time: " + day;
+return day;
+},
+
+//Takes a glide date field and adds time to it.
+//params = sysparm_fdt (the first date/time field), sysparm_addtype (type of time to add - day, week, month, year),sysparm_addtime (amount of time to add based on the type).
+addDateAmount: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date Field
+var addTYPE = this.getParameter('sysparm_addtype'); //What to add - day (addDays()), week (addWeeks()), month (addMonths()), year (addYears())
+var addTIME = this.getParameter('sysparm_addtime'); //How much time to add
+var day = GlideDate();
+day.setValue(firstDT);
+
+if(addTYPE == 'day'){day.addDays(addTIME);}
+else if (addTYPE == 'week'){day.addWeeks(addTIME);}
+else if (addTYPE == 'month'){day.addMonths(addTIME);}
+else if (addTYPE == 'year'){day.addYears(addTIME);}
+else {day.addDays(addTIME);}
+
+//return "First Date: " + firstDT + " -Time to Add: " + addTIME + " -Add Type: " + addTYPE + " -Added Time: " + day;
+return day;
+},
+
+addTimeAmount: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var addTYPE = this.getParameter('sysparm_addtype'); //What
+var addTIME = this.getParameter('sysparm_addtime'); //How much time to add
+var time = GlideTime();
+time.setValue(firstDT);
+
+if(addTYPE == 'second'){time.addSeconds(addTIME);}
+else if (addTYPE == 'minute'){time.addSeconds(addTIME*60);}
+else if (addTYPE == 'hour'){time.addSeconds(addTIME*(60*60));}
+else {time.addSeconds(addTIME);}
+
+var modtime = time.toString().split(' ');
+//return "First Date: " + firstDT + " -Time to Add: " + addTIME + " -Add Type: " + addTYPE + " -Added Time: " + time;
+return modtime[1];
+},
+
+//Private function to calculate the date difference return result in second, minute, hour, day.
+_calcDateDiff: function(diffTYPE, seconds){
+var thisdiff;
+if (diffTYPE == "day"){thisdiff = seconds/86400;}
+else if (diffTYPE == "hour"){thisdiff = seconds/3600;}
+else if (diffTYPE == "minute"){thisdiff = seconds/60;}
+else if (diffTYPE == "second"){thisdiff = seconds;}
+else {thisdiff = seconds;}
+return thisdiff;
+}
+
+
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-04 19:55:21</sys_created_on>
+        <sys_id>eb25199c2f471910049f2d6df699b6d4</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>ClientDateTimeUtils</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_script_include_eb25199c2f471910049f2d6df699b6d4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-11-04 19:56:44</sys_updated_on>
+    </sys_script_include>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</application>
+        <file_path/>
+        <instance_id>6bd0c059db0f17c00e785d00cf961942</instance_id>
+        <instance_name>dev63088</instance_name>
+        <name>sys_script_include_eb25199c2f471910049f2d6df699b6d4</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;package_private&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;x_910737_timeoff_m.ClientDateTimeUtils&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;false&lt;/client_callable&gt;&lt;description/&gt;&lt;name&gt;ClientDateTimeUtils&lt;/name&gt;&lt;script&gt;&lt;![CDATA[var ClientDateTimeUtils = Class.create();
+ClientDateTimeUtils.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+isPublic:function(){return true;},
+//Takes a Single Date/Time Field and returns its time difference from nowDateTime().
+//params = sysparm_fdt (the first date/time field), sysparm_difftype (time based format to return result. See "_calcDateDiff" function comments)
+getNowDateTimeDiff: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var diffTYPE = this.getParameter('sysparm_difftype'); // Date-Time Type to return the answer as. Can be second, minute, hour, day
+var diff = gs.dateDiff(gs.nowDateTime(), firstDT, true);
+var timediff = this._calcDateDiff(diffTYPE, diff);
+//return "getNowDateTimeDiff: FIRST DT: " + firstDT + " -DIFFTYPE: " + diffTYPE + " -TIME DIFF: " + timediff;
+return timediff;
+},
+	
+
+//Diff the amount of time between two different Date/Time fields
+//params = sysparm_fdt (the first date/time field), sysparm_sdt (second date/time field), sysparm_difftype (time based format to return result. See "_calcDateDiff" function comments)
+getDateTimeDiff: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var secondDT = this.getParameter('sysparm_sdt'); // Second Date-Time Field
+var diffTYPE = this.getParameter('sysparm_difftype'); // Date-Time Type to return the answer as. Can be second, minute, hour, day
+var diff = gs.dateDiff(firstDT, secondDT, true);
+var timediff = this._calcDateDiff(diffTYPE, diff);
+//return "getDateTimeDiff: FIRST DT: " + firstDT + " -SECOND DT: " + secondDT + " -DIFFTYPE: " + diffTYPE + " -TIME DIFF: " + timediff;
+return timediff;
+},
+
+//Takes your date/time field and returns the amount of time before now. A positive is time before now, a negative number is after now.
+//params = sysparm_fdt (the first date/time field), sysparm_difftype (time based format to return result. See "_calcDateDiff" function comments)
+getDateTimeBeforeNow: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var diffTYPE = this.getParameter('sysparm_difftype'); // Date-Time Type to return the answer as. Can be second, minute, hour, day
+var diff = gs.dateDiff(firstDT, gs.nowDateTime(), true);
+var timediff = this._calcDateDiff(diffTYPE, diff);
+//return "getDateTimeBeforeNow: FIRST DT: " + firstDT + " -DIFFTYPE: " + diffTYPE + " -TIME DIFF: " + timediff;
+return timediff;
+},
+
+//Returns true if it is before now, and false if it is after now.
+//params = sysparm_fdt (the first date/time field)
+getDateTimeBeforeNowBool: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var diff = gs.dateDiff(firstDT, gs.nowDateTime(), true);
+var answer = '';
+if (diff &gt;= 0){answer = 'true';}
+else {answer = 'false';}
+return answer;
+},
+
+//Returns the Date/Time of right now.
+getNowDateTime: function(){
+var now = gs.nowDateTime(); //Now Date/Time
+return now;
+},
+
+//Returns the Date right now.
+getNowDate: function(){
+var now = GlideDate(); //Now Date
+return now.getLocalDate();
+},
+
+//Returns the Time of right now.
+getNowTime: function(){
+var now = GlideTime(); //Now Time
+var modnow = now.getLocalTime().toString().split(' ');
+return modnow[1];
+},
+
+//Takes a date/time field and adds time to it.
+//params = sysparm_fdt (the first date/time field), sysparm_addtype (type of time to add - second, minute, hour, day, week, month, year), sysparm_addtime (amount of time to add based on the type).
+addDateTimeAmount: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var addTYPE = this.getParameter('sysparm_addtype'); //What to add - second (addSeconds()), minute (need to add conversion), hour (need to add conversion), day (addDays()), week (addWeeks()), month (addMonths()), year (addYears())
+var addTIME = this.getParameter('sysparm_addtime'); //How much time to add
+var day = GlideDateTime(firstDT);
+
+if(addTYPE == 'second'){day.addSeconds(addTIME);}
+else if (addTYPE == 'minute'){day.addSeconds(addTIME*60);}
+else if (addTYPE == 'hour'){day.addSeconds(addTIME*(60*60));}
+else if (addTYPE == 'day'){day.addDays(addTIME);}
+else if (addTYPE == 'week'){day.addWeeks(addTIME);}
+else if (addTYPE == 'month'){day.addMonths(addTIME);}
+else if (addTYPE == 'year'){day.addYears(addTIME);}
+else {day.addDays(addTIME);}
+
+//return "First Date: " + firstDT + " -Time to Add: " + addTIME + " -Add Type: " + addTYPE + " -Added Time: " + day;
+return day;
+},
+
+//Takes a glide date field and adds time to it.
+//params = sysparm_fdt (the first date/time field), sysparm_addtype (type of time to add - day, week, month, year),sysparm_addtime (amount of time to add based on the type).
+addDateAmount: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date Field
+var addTYPE = this.getParameter('sysparm_addtype'); //What to add - day (addDays()), week (addWeeks()), month (addMonths()), year (addYears())
+var addTIME = this.getParameter('sysparm_addtime'); //How much time to add
+var day = GlideDate();
+day.setValue(firstDT);
+
+if(addTYPE == 'day'){day.addDays(addTIME);}
+else if (addTYPE == 'week'){day.addWeeks(addTIME);}
+else if (addTYPE == 'month'){day.addMonths(addTIME);}
+else if (addTYPE == 'year'){day.addYears(addTIME);}
+else {day.addDays(addTIME);}
+
+//return "First Date: " + firstDT + " -Time to Add: " + addTIME + " -Add Type: " + addTYPE + " -Added Time: " + day;
+return day;
+},
+
+addTimeAmount: function(){
+var firstDT = this.getParameter('sysparm_fdt'); //First Date-Time Field
+var addTYPE = this.getParameter('sysparm_addtype'); //What
+var addTIME = this.getParameter('sysparm_addtime'); //How much time to add
+var time = GlideTime();
+time.setValue(firstDT);
+
+if(addTYPE == 'second'){time.addSeconds(addTIME);}
+else if (addTYPE == 'minute'){time.addSeconds(addTIME*60);}
+else if (addTYPE == 'hour'){time.addSeconds(addTIME*(60*60));}
+else {time.addSeconds(addTIME);}
+
+var modtime = time.toString().split(' ');
+//return "First Date: " + firstDT + " -Time to Add: " + addTIME + " -Add Type: " + addTYPE + " -Added Time: " + time;
+return modtime[1];
+},
+
+//Private function to calculate the date difference return result in second, minute, hour, day.
+_calcDateDiff: function(diffTYPE, seconds){
+var thisdiff;
+if (diffTYPE == "day"){thisdiff = seconds/86400;}
+else if (diffTYPE == "hour"){thisdiff = seconds/3600;}
+else if (diffTYPE == "minute"){thisdiff = seconds/60;}
+else if (diffTYPE == "second"){thisdiff = seconds;}
+else {thisdiff = seconds;}
+return thisdiff;
+}
+
+
+});]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-11-04 19:55:21&lt;/sys_created_on&gt;&lt;sys_id&gt;eb25199c2f471910049f2d6df699b6d4&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;ClientDateTimeUtils&lt;/sys_name&gt;&lt;sys_package display_value="Timeoff management system" source="x_910737_timeoff_m"&gt;f9951d082fb21110049f2d6df699b604&lt;/sys_package&gt;&lt;sys_policy&gt;read&lt;/sys_policy&gt;&lt;sys_scope display_value="Timeoff management system"&gt;f9951d082fb21110049f2d6df699b604&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_eb25199c2f471910049f2d6df699b6d4&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-11-04 19:56:44&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>2040203722</payload_hash>
+        <record_name>ClientDateTimeUtils</record_name>
+        <reverted_from/>
+        <source>25ea00552fb61510049f2d6df699b609</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-04 19:56:45</sys_created_on>
+        <sys_id>cbf5d5502f871910049f2d6df699b682</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>184443798a30000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-11-04 19:56:45</sys_updated_on>
+        <type>Script Include</type>
+        <update_guid>c3f5d55027871910ad5a2f78f79e4f82</update_guid>
+        <update_guid_history>c3f5d55027871910ad5a2f78f79e4f82:2040203722,3ea5d91042871910d95e0610b3c8475d:-2062627122</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-04 19:58:22</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_include">sys_script_include</sys_db_object>
+        <sys_id>22016870b8d541438ebe602b110ead89</sys_id>
+        <sys_metadata>eb25199c2f471910049f2d6df699b6d4</sys_metadata>
+        <sys_name>ClientDateTimeUtils</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_parent/>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_scope_delete display_value="">04429d6beac949fc8039d7754c36f6c4</sys_scope_delete>
+        <sys_update_name>sys_script_include_eb25199c2f471910049f2d6df699b6d4</sys_update_name>
+        <sys_update_version display_value="sys_script_include_eb25199c2f471910049f2d6df699b6d4">cbf5d5502f871910049f2d6df699b682</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

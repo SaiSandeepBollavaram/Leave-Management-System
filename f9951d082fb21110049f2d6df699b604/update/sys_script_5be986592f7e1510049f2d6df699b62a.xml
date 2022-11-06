@@ -30,7 +30,7 @@
         <rest_variables/>
         <role_conditions/>
         <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
-
+    var toUtils = new TOUtils();
 	// Add your code here
 	var empLeaveReqId = current.approving;
 	var empLeaveReqGr = new GlideRecord("x_910737_timeoff_m_employee_leave_requests");
@@ -41,8 +41,7 @@
 		if(empLeaveReqGr.next()){
 			empLeaveReqGr.state = '2';
 			empLeaveReqGr.update();
-			var leaveBalanceReduction = new LeaveBalanceReduction();
-			leaveBalanceReduction.temp(current, empLeaveReqGr);
+			toUtils.leaveBalanceReduction(current, empLeaveReqGr);
 		}			
 	}else if(current.u_state == '3'){ // leave rejected case.
 		if(empLeaveReqGr.next()){

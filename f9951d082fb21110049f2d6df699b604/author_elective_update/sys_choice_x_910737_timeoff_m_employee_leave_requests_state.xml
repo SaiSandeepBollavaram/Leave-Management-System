@@ -49,7 +49,7 @@
             <element>state</element>
             <hint/>
             <inactive>false</inactive>
-            <label>rejected</label>
+            <label>Rejected</label>
             <language>en</language>
             <name>x_910737_timeoff_m_employee_leave_requests</name>
             <sequence>2</sequence>

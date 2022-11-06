@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic">
+    <sys_cb_topic action="INSERT_OR_UPDATE">
+        <applicability/>
+        <applicability_mode>query</applicability_mode>
+        <autopilot_topic>false</autopilot_topic>
+        <category/>
+        <channels/>
+        <connect_queue/>
+        <description>Topic allows managers to view employee leave balances and theirs and for employees only their balances</description>
+        <expose_on_palette>false</expose_on_palette>
+        <flexible_conversation_switching>false</flexible_conversation_switching>
+        <graph>{
+  "graph_api_version": "1.0.41",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "f3564f7d9d1a453eb7559cbedbdc7e70": {
+          "id": "f3564f7d9d1a453eb7559cbedbdc7e70",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "0cfcd36050584c2a932c4f4f60bbf306": {
+          "id": "0cfcd36050584c2a932c4f4f60bbf306",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Thank you"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          }
+        },
+        "8023424fe34943fb96ab369f21301bf0": {
+          "id": "8023424fe34943fb96ab369f21301bf0",
+          "stepType": "Decision",
+          "name": "is Manager ?"
+        },
+        "43a34deb8f76485c87fc7a601758fce3": {
+          "stepType": "ChoicePrompt",
+          "name": "choice_manager_or_employee",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Choose to select either your leave balance or your employees."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "31fb00f257c64908a2dd0e5bb5bbf666",
+          "id": "43a34deb8f76485c87fc7a601758fce3",
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "5ce0f60b073b4aeaa233999d21e6bbd0": {
+          "id": "5ce0f60b073b4aeaa233999d21e6bbd0",
+          "stepType": "Decision",
+          "name": "employees or self leave balance ?"
+        },
+        "cbbb9c9c87464718a76611cdfb903601": {
+          "id": "cbbb9c9c87464718a76611cdfb903601",
+          "stepType": "TableOutput",
+          "name": "Employee Leave Balances",
+          "header": {
+            "value": "",
+            "mode": "simple"
+          },
+          "displayColumnHeaders": true,
+          "dataSourceType": "script",
+          "script": "(function execute() {\n    /* Code your script logic here. For example, you might want to call an external web service\n    to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n    to populate a rows array.\n        var headers = [\n          'Name',        // Column 1 header\n          'Description'  // Column 2 header\n        ];\n        var rows = [];\n        rows.push([                                        // Row 1\n          'De Napoli',                                     // Column 1 value\n          gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang())    // Column 2 value\n        ]);\n        rows.push([                                        // Row 2\n          'Albertos',                                      // Column 1 value\n          gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang())  // Column 2 value\n        ]);\n        return {\n            columnHeaders: headers,\n            columnValues: rows\n        };\n    */\n    var headers = ['Employee Name', 'Casual Leave','Sick Leave'];\n    var rows = [];\n    var userGr = new GlideRecord('user');    var userGr = new GlideRecord('sys_user');\n    userGr.addQuery('manager',vaInputs.user);\n    userGr.query();\n    \n    while(userGr.next()){\n        var empLeaveBalanceGr = new GlideRecord('x_910737_timeoff_m_leave_balances');\n        empLeaveBalanceGr.addQuery('employee_name',userGr.getValue('sys_id'));\n        empLeaveBalanceGr.query();\n        if(empLeaveBalanceGr.next()){\n            rows.push([empLeaveBalanceGr.getDisplayValue('employee_name'),\n                      empLeaveBalanceGr.getValue('casual_leaves'),\n                      empLeaveBalanceGr.getValue('sick_leaves')]);\n        }\n    }\n\n    return {\n        columnHeaders: headers,\n        columnValues: rows\n    };\n})()\n",
+          "tableName": "",
+          "sortByColumns": [],
+          "tableCondition": {
+            "value": "",
+            "mode": "glide_query"
+          },
+          "columns": [
+            {
+              "key": "",
+              "value": "",
+              "label": ""
+            }
+          ],
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "No employee leave balances found"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "95f544d2778845019b072842e88162cf": {
+          "id": "95f544d2778845019b072842e88162cf",
+          "stepType": "RecordOutput",
+          "name": "Self Leave Balance",
+          "variableId": "",
+          "cardTemplate": "General",
+          "cardFields": {},
+          "mode": "script",
+          "tableName": "x_910737_timeoff_m_leave_balances",
+          "fields": [
+            "employee_name",
+            "casual_leaves",
+            "sick_leaves"
+          ],
+          "cardDefinition": {
+            "name": "Record",
+            "value": "General"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "condition": {
+            "mode": "glide_query",
+            "value": "employee_name={{vaInputs.user}}"
+          }
+        },
+        "d048da23729c41449905e4ccb68b6bd5": {
+          "id": "d048da23729c41449905e4ccb68b6bd5",
+          "stepType": "RecordOutput",
+          "name": "Self Leave Balance",
+          "variableId": "",
+          "cardTemplate": "General",
+          "cardFields": {},
+          "mode": "script",
+          "tableName": "x_910737_timeoff_m_leave_balances",
+          "fields": [
+            "employee_name",
+            "casual_leaves",
+            "sick_leaves"
+          ],
+          "cardDefinition": {
+            "name": "Record",
+            "value": "General"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "condition": {
+            "mode": "glide_query",
+            "value": "employee_name={{vaInputs.user}}"
+          }
+        }
+      },
+      "edges": [
+        {
+          "id": "a73292b14fab42368fcca1ebaa2455da",
+          "edgeType": "Edge",
+          "source": "cbbb9c9c87464718a76611cdfb903601",
+          "target": "0cfcd36050584c2a932c4f4f60bbf306",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "d864e5bdbb684d01b48387b19db493ba",
+          "edgeType": "Branch",
+          "source": "5ce0f60b073b4aeaa233999d21e6bbd0",
+          "target": "cbbb9c9c87464718a76611cdfb903601",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.choice_manager_or_employee=employee_leave_balance",
+            "mode": "query"
+          },
+          "label": "Employees"
+        },
+        {
+          "id": "f14c81691bd44848b1dbf1234e0762bd",
+          "edgeType": "Branch",
+          "source": "8023424fe34943fb96ab369f21301bf0",
+          "target": "43a34deb8f76485c87fc7a601758fce3",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var userRoleGr = new GlideRecord('sys_user_has_role');\n    gs.info(vaInputs.user.getValue('sys_id'));\n    userRoleGr.addQuery('user',vaInputs.user.getValue('sys_id'));\n    userRoleGr.addQuery('role.name','x_910737_timeoff_m.manager');\n    userRoleGr.query();\n    //var currentUser = gs.getUser();\n    //gs.info(currentUser.hasRole('x_910737_timeoff_m.manager'));\n    if(userRoleGr.next()){\n        gs.info(\"hi from yes\");\n        return true;\n    }else{\n        return false;\n    }\n    \n})()\n"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "8d091e7c79a94fd289ae68a1e82e763d",
+          "edgeType": "Edge",
+          "source": "f3564f7d9d1a453eb7559cbedbdc7e70",
+          "target": "8023424fe34943fb96ab369f21301bf0",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "b1e6f2f0427845c1b543f440e8cd6395",
+          "edgeType": "Edge",
+          "source": "43a34deb8f76485c87fc7a601758fce3",
+          "target": "5ce0f60b073b4aeaa233999d21e6bbd0",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6252834b94f04ab1b098896ee92455e6",
+          "edgeType": "Branch",
+          "source": "5ce0f60b073b4aeaa233999d21e6bbd0",
+          "target": "95f544d2778845019b072842e88162cf",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.choice_manager_or_employee=my_leave_balance",
+            "mode": "query"
+          },
+          "label": "Self"
+        },
+        {
+          "id": "74ad932c0cc74adaa5265265175910b2",
+          "edgeType": "Edge",
+          "source": "95f544d2778845019b072842e88162cf",
+          "target": "0cfcd36050584c2a932c4f4f60bbf306",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "311ed36408714b1196cc1c2c1d1d8b4f",
+          "edgeType": "Branch",
+          "source": "8023424fe34943fb96ab369f21301bf0",
+          "target": "d048da23729c41449905e4ccb68b6bd5",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n\n    var userRoleGr = new GlideRecord('sys_user_has_role');\n    gs.info(vaInputs.user.getValue('sys_id'));\n    userRoleGr.addQuery('user',vaInputs.user.getValue('sys_id'));\n    userRoleGr.addQuery('role.name','x_910737_timeoff_m.manager');\n    userRoleGr.query();\n\n    //var currentUser = gs.getUser();\n    //gs.info(currentUser.hasRole('x_910737_timeoff_m.manager'));\n    if(userRoleGr.next()){\n        gs.info(\"hi from no\");\n        return false;\n    }else{\n        return true;\n    }\n\n/*\n    var currentUser = gs.getUser(); \n    gs.info(currentUser.hasRole('x_910737_timeoff_m.manager'));\n    if(currentUser.hasRole('x_910737_timeoff_m.manager')){\n        return false;\n    }else{\n        return true;\n    }*/\n})()\n"
+          },
+          "label": "No"
+        },
+        {
+          "id": "dc265e2711bf40b6a66aa1840fb07756",
+          "edgeType": "Edge",
+          "source": "d048da23729c41449905e4ccb68b6bd5",
+          "target": "0cfcd36050584c2a932c4f4f60bbf306",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "31fb00f257c64908a2dd0e5bb5bbf666": {
+      "id": "31fb00f257c64908a2dd0e5bb5bbf666",
+      "name": "choice_manager_or_employee",
+      "label": "Choice_manager_or_employee",
+      "varType": "choice",
+      "choices": [
+        {
+          "label": "My Leave balance",
+          "value": "my_leave_balance"
+        },
+        {
+          "label": "Employees Leave balance",
+          "value": "employee_leave_balance"
+        }
+      ],
+      "category": "vaInputs"
+    }
+  }
+}</graph>
+        <key_phrases>View Leave Balances</key_phrases>
+        <library>false</library>
+        <live_agent>false</live_agent>
+        <name>View Leave Balances</name>
+        <nlu_intent/>
+        <nlu_intent_label/>
+        <nlu_model/>
+        <nlu_model_label/>
+        <nlu_provider/>
+        <palette_label/>
+        <roles/>
+        <secure_custom_input_control>false</secure_custom_input_control>
+        <source_topic_id/>
+        <sys_class_name>sys_cb_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-01 10:07:51</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>d362bfcb2fb61510049f2d6df699b603</sys_id>
+        <sys_name>View Leave Balances</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_cb_topic_d362bfcb2fb61510049f2d6df699b603</sys_update_name>
+        <triggerable_by_notification>false</triggerable_by_notification>
+        <type>STANDARD</type>
+        <variables/>
+    </sys_cb_topic>
+    <sys_variable_value action="delete_multiple" query="document_key=d362bfcb2fb61510049f2d6df699b603"/>
+</record_update>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_policy">
+    <sys_ui_policy action="INSERT_OR_UPDATE">
+        <active>false</active>
+        <conditions table="x_910737_timeoff_m_employee_leave_requests">from_dateISNOTEMPTY^to_dateISNOTEMPTY^NQfrom_dateNSAMEASfrom_date@hour^EQ<item endquery="false" field="from_date" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="to_date" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="from_date" goto="false" newquery="true" operator="NSAMEAS" or="false" value="from_date@hour"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description/>
+        <global>true</global>
+        <inherit>false</inherit>
+        <isolate_script>true</isolate_script>
+        <model_id/>
+        <model_table/>
+        <on_load>false</on_load>
+        <order>100</order>
+        <reverse_if_false>false</reverse_if_false>
+        <run_scripts>true</run_scripts>
+        <script_false><![CDATA[function onCondition() {
+
+}]]></script_false>
+        <script_true><![CDATA[function onCondition() {
+	var from_date = g_form.getValue('from_date'); //First Date/Time field
+	var to_date = g_form.getValue('to_date'); //Second Date/Time field
+	
+	var ajax = new GlideAjax('GetNoOfDaysFromDates');
+	ajax.addParam('sysparm_name','getDays');
+	ajax.addParam('sysparm_from_date', from_date);
+	ajax.addParam('sysparm_to_date', to_date);
+	ajax.getXML(doSomething);
+
+	function doSomething(response){
+		var answer = response.responseXML.documentElement.getAttribute("answer");
+		alert(answer);
+		g_form.setValue('no_of_days', parseInt(answer));
+	}
+}]]></script_true>
+        <set_values/>
+        <short_description>Calculate no of days</short_description>
+        <sys_class_name>sys_ui_policy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-04 19:40:55</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>982fc1d82f471910049f2d6df699b6e8</sys_id>
+        <sys_name>Calculate no of days</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_ui_policy_982fc1d82f471910049f2d6df699b6e8</sys_update_name>
+        <table>x_910737_timeoff_m_employee_leave_requests</table>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_ui_policy>
+</record_update>
