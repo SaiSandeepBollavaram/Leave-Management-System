@@ -3,7 +3,7 @@
         <assignable_by/>
         <can_delegate>true</can_delegate>
         <description/>
-        <elevated_privilege>true</elevated_privilege>
+        <elevated_privilege>false</elevated_privilege>
         <grantable>true</grantable>
         <includes_roles/>
         <name>x_910737_timeoff_m.admin</name>

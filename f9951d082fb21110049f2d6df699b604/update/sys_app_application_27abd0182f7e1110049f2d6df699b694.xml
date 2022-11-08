@@ -7,7 +7,7 @@
         <hint/>
         <name>Employee Info</name>
         <order>100</order>
-        <roles>x_910737_timeoff_m.employee_info_user</roles>
+        <roles>x_910737_timeoff_m.admin</roles>
         <sys_class_name>sys_app_application</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-10-23 05:26:19</sys_created_on>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-02 19:36:34</sys_created_on>
+        <sys_id>f30ebeaf2f329510049f2d6df699b61f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_910737_timeoff_m_leave_balances.x_910737_timeoff_m.employee</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_security_acl display_value="x_910737_timeoff_m_leave_balances">bf3711c82fb21110049f2d6df699b63e</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_f30ebeaf2f329510049f2d6df699b61f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-11-02 19:36:34</sys_updated_on>
+        <sys_user_role display_value="x_910737_timeoff_m.employee" name="x_910737_timeoff_m.employee">60e795e12f7a5510049f2d6df699b67a</sys_user_role>
+        <transaction_id/>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</application>
+        <file_path/>
+        <instance_id>6bd0c059db0f17c00e785d00cf961942</instance_id>
+        <instance_name>dev63088</instance_name>
+        <name>sys_security_acl_role_f30ebeaf2f329510049f2d6df699b61f</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-11-02 19:36:34</sys_created_on><sys_id>f30ebeaf2f329510049f2d6df699b61f</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_910737_timeoff_m_leave_balances.x_910737_timeoff_m.employee</sys_name><sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package><sys_policy/><sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope><sys_security_acl display_value="x_910737_timeoff_m_leave_balances">bf3711c82fb21110049f2d6df699b63e</sys_security_acl><sys_update_name>sys_security_acl_role_f30ebeaf2f329510049f2d6df699b61f</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-11-02 19:36:34</sys_updated_on><sys_user_role display_value="x_910737_timeoff_m.employee" name="x_910737_timeoff_m.employee">60e795e12f7a5510049f2d6df699b67a</sys_user_role><transaction_id/></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>979859946</payload_hash>
+        <record_name>x_910737_timeoff_m_leave_balances.x_910737_timeoff_m.employee</record_name>
+        <reverted_from/>
+        <source>25ea00552fb61510049f2d6df699b609</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-02 19:36:34</sys_created_on>
+        <sys_id>c43eb2ef2f329510049f2d6df699b661</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18439d8698d0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-11-02 19:36:34</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>003eb2ef34329510031b0deb82307661</update_guid>
+        <update_guid_history>003eb2ef34329510031b0deb82307661:979859946</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="x_910737_timeoff_m_leave_balances.x_910737_timeoff_m.employee">18c906742f431110049f2d6df699b6a4</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-06 12:59:53</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>ba9737fdb5634f9cafcfca6f3f1b69b9</sys_id>
+        <sys_metadata>f30ebeaf2f329510049f2d6df699b61f</sys_metadata>
+        <sys_name>x_910737_timeoff_m_leave_balances.x_910737_timeoff_m.employee</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_parent display_value="x_910737_timeoff_m_leave_balances">bf3711c82fb21110049f2d6df699b63e</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_scope_delete display_value="">04429d6beac949fc8039d7754c36f6c4</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_f30ebeaf2f329510049f2d6df699b61f</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_f30ebeaf2f329510049f2d6df699b61f">c43eb2ef2f329510049f2d6df699b661</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

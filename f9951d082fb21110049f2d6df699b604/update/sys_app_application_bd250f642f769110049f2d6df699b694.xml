@@ -7,7 +7,7 @@
         <hint/>
         <name>Leave Approvals</name>
         <order>100</order>
-        <roles>x_910737_timeoff_m.leave_approvals_user</roles>
+        <roles>x_910737_timeoff_m.manager,x_910737_timeoff_m.admin</roles>
         <sys_class_name>sys_app_application</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-10-24 12:25:14</sys_created_on>

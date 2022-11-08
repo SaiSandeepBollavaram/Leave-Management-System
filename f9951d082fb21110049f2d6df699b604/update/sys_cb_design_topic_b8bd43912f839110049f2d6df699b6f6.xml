@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic display_value="_PRVW__b8bd8b9164439110a763c4bc9682f7c7">b4bd43912f839110049f2d6df699b6f3</compiled_topic>
+        <design_definition>{"type":"FlowTopic","type":"FlowTopic","triggers":[{"type":"Trigger","name":"020471751b26404ea95d8d14d704d17e","triggerType":"request","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"id":"020471751b26404ea95d8d14d704d17e"}],"goals":[{"name":"primary","trigger_id":"020471751b26404ea95d8d14d704d17e","nodes":[{"type":"StartGoal","type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","type":"String","mode":"script","value":"(function execute() {\n    /* Return a quoted string.  For example:\n\n       if (vaInputs.first_name == 'Bill') {\n           return gs.getMessageLang(\"hi there {0}\", vaContext.getRequesterLang(), [vaInputs.first_name]);\n       } else {\n           return gs.getMessageLang(\"how are you {0}\", vaContext.getRequesterLang(), [vaInputs.last_name]);\n       }\n    */\n    return gs.getMessageLang(\"hi {0} I can help you apply new leave request\", vaContext.getRequesterLang(), [vaInputs.user.first_name]);\n})()\n"},"id":"c03145463aaa4b0288449e3be6ef4985","name":"Start"},{"type":"TerminateGoal","type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Thank you.\", vaContext.getRequesterLang())"},"id":"d5472309c11a4aa48c07ca12921f8be9","name":"End"},{"type":"ChoiceInputPrompt","type":"ChoiceInputPrompt","expression_mode":"simple","metadataScript":"","cardName":"","cardFields":[],"id":"37b8f6e6eee640059830ae12c876d3a0","name":"leave request type","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"variable_id":"1dbaa226c4e14fe1ad5b4f3cd71b2d8b","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Select type of leave request\", vaContext.getRequesterLang())"},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true}},{"type":"Decision","type":"Decision","name":"Leave request Already Exits?","branches":[{"type":"Branch","type":"Branch","label":"Record exists","expression":{"type":"Applicability","type":"Applicability","mode":"query","value":"look_for_existing_requestsISNOTEMPTY"},"id":"288095f3b6c144c2a33da2edd5f8bfcb","name":"Record exists"},{"type":"Branch","type":"Branch","label":"No Record","expression":{"type":"Applicability","type":"Applicability","mode":"query","value":"look_for_existing_requestsISEMPTY"},"id":"2cf7324ad941492ba4fe9738646e6648","name":"No Record"}],"id":"655f120d442c49a2a5c71efb5a9fb533","goal_id":"primary"},{"type":"CRUDAction","type":"CRUDAction","mode":"read","read_mode":"variable","query":"employee_name={{vaInputs.user}}^type={{vaInputs.leave_request_type}}^state!=4","variable_id":"385b9847c21845a6a0d4007cdf9d6553","id":"470339318bef417f92f73ae454d60f07","name":"Look for existing requests","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"condition":{"type":"Condition","mode":"glide_query","value":"employee_name={{vaInputs.user}}^type={{vaInputs.leave_request_type}}^state!=4"}},{"type":"RecordOutputPrompt","type":"RecordOutputPrompt","mode":"variable","table":"x_910737_timeoff_m_employee_leave_requests","variable_id":"385b9847c21845a6a0d4007cdf9d6553","fields":["employee_name","type","no_of_days"],"id":"b5febe100ea2495d9e04b3f48e15cf6a","name":"Leave request record","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"condition":{"type":"Condition","mode":"glide_query","value":""}},{"type":"InputPrompt","type":"InputPrompt","variable_id":"231d7979e0fb42659f2df4d51f5d1b93","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Want to change no of days ?\", vaContext.getRequesterLang())"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"id":"8069c444c324488eb6996cf92bcfdcfe","name":"change no of days","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"}},{"type":"Decision","type":"Decision","name":"Decision","branches":[{"type":"Branch","type":"Branch","label":"No","expression":{"type":"Applicability","type":"Applicability","mode":"script","value":"(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var applies = vaInputs.change_no_of_days ? false : true;\n    return applies;\n})()\n"},"id":"f9ac489b6fa04c37b20d214e747912ed","name":"No"},{"type":"Branch","type":"Branch","label":"Yes","expression":{"type":"Applicability","type":"Applicability","mode":"script","value":"(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var applies = vaInputs.change_no_of_days ? true : false;\n    return applies;\n})()\n"},"id":"f936b40a14fe481fa0593e729ee889bd","name":"Yes"}],"id":"07150c7859654f6191a814d1b17d693a","goal_id":"primary"},{"type":"RecordOutputPrompt","type":"RecordOutputPrompt","mode":"script","table":"x_910737_timeoff_m_employee_leave_requests","script":"(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n       var gr = new GlideRecord(table);\n       gr.addQuery('employee_name',vaInputs.user);\n       gr.addQuery('type',vaInputs.leave_request_type);\n       gr.query();\n       if(gr.next()) {\n          return gr;\n       }\n})(table)\n","fields":["employee_name","type","state"],"id":"4bd50128549445efbba3143733cfd2bf","name":"New Leave Request","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"condition":{"type":"Condition","mode":"glide_scripted_query","value":"(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n       var gr = new GlideRecord(table);\n       gr.addQuery('employee_name',vaInputs.user);\n       gr.addQuery('type',vaInputs.leave_request_type);\n       gr.query();\n       if(gr.next()) {\n          return gr;\n       }\n})(table)\n"}},{"type":"TextOutputPrompt","type":"TextOutputPrompt","value":[{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"New Record is created\", vaContext.getRequesterLang())"}],"id":"0e65593adbb14969aebb160d78de9067","name":"New record created","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"secure":false},{"type":"InputPrompt","type":"InputPrompt","variable_id":"93e6e211d6744fce8b5e2f57fc987791","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Enter no. of days to change\", vaContext.getRequesterLang())"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"id":"fdcb4395f17841ddaed40314899713c0","name":"No of change days","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"formatType":"Text","validationScript":""},{"type":"TextOutputPrompt","type":"TextOutputPrompt","value":[{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Record Updated\", vaContext.getRequesterLang())"}],"id":"3c1b44fb84a24e7bbc4999059e2c2db7","name":"Record Updated Message","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"secure":false},{"type":"RecordOutputPrompt","type":"RecordOutputPrompt","mode":"query","table":"x_910737_timeoff_m_employee_leave_requests","fields":["employee_name","type","no_of_days"],"id":"cd3d737049754ed9904ecea3174997f8","name":"Updated Record - Card","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"reference_qualifier_condition":"employee_name={{vaInputs.user}}^type={{vaInputs.leave_request_type}}","condition":{"type":"Condition","mode":"glide_query","value":"employee_name={{vaInputs.user}}^type={{vaInputs.leave_request_type}}"}},{"type":"ScriptedAction","type":"ScriptedAction","script":"(function execute() {\n    /* Code your scripted action here. For example, you might update a\n       record based on conditional logic:\n\n        if (vaVars.my_flag == 'say hello') {\n            gs.info('hi there');\n        } else {\n            gs.info('bye now');\n        }\n    */\n    var gr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    gr.addQuery('employee_name',vaInputs.user);\n    gr.addQuery('type',vaInputs.leave_request_type);\n    gr.query();\n    var new_no_of_days = parseInt(vaInputs.no_of_change_days);\n    if(gr.next()){\n        gr.setValue('no_of_days',new_no_of_days);\n        gr.update();\n    }\n})()\n","id":"596609a2e0c5475fbca4e1511890cff2","name":"Updating Request Record","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"}},{"type":"TextOutputPrompt","type":"TextOutputPrompt","value":[{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Leave Request of same type already exists\", vaContext.getRequesterLang())"}],"id":"aebdfa50a9214d69920d85636cb04816","name":"Record exists message","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"secure":false},{"type":"ScriptedAction","type":"ScriptedAction","script":"(function execute() {\n    var gr = new GlideRecord(\"x_910737_timeoff_m_employee_leave_requests\");\n    gr.initialize();\n    gr.employee_name = vaInputs.user;\n    gr.type = vaInputs.leave_request_type;\n    gr.from_date = vaInputs.from_date;\n    gr.to_date = vaInputs.to_date;\n    gr.no_of_days = 1;\n    gr.state = '1';\n    gr.insert();\n})()\n","id":"13e0433c876642609a950e516de6a27d","name":"Create New Leave Request","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"}},{"type":"InputPrompt","type":"InputPrompt","variable_id":"a13d4da662714880879469aa7f0d66b5","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Pick From date\", vaContext.getRequesterLang())"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"id":"b5d84bd0235f44899be9be3867b1dfdc","name":"From date","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"}},{"type":"InputPrompt","type":"InputPrompt","variable_id":"a7b30e14c8ce479280ea2b4e96ccc910","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Pick To Date\", vaContext.getRequesterLang())"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"id":"970088166f754e2586673a7f3fb00602","name":"To date","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"}}],"edges":[{"type":"Edge","source_node_id":"13e0433c876642609a950e516de6a27d","target_node_id":"0e65593adbb14969aebb160d78de9067","id":"261d44109df44887aee526b2c273db1d"},{"type":"Edge","source_node_id":"37b8f6e6eee640059830ae12c876d3a0","target_node_id":"470339318bef417f92f73ae454d60f07","id":"8a68cc531a3f47bd86c59344aab48765"},{"type":"Edge","source_node_id":"b5febe100ea2495d9e04b3f48e15cf6a","target_node_id":"8069c444c324488eb6996cf92bcfdcfe","id":"4d5d695f85d742008faf0190cd1ada95"},{"type":"Edge","source_node_id":"c03145463aaa4b0288449e3be6ef4985","target_node_id":"37b8f6e6eee640059830ae12c876d3a0","id":"2c5c9499ed934289b5039111bba97809"},{"type":"Edge","source_node_id":"470339318bef417f92f73ae454d60f07","target_node_id":"655f120d442c49a2a5c71efb5a9fb533","id":"6c91da6db7af463689f788d3cd5875b8"},{"type":"Edge","source_node_id":"8069c444c324488eb6996cf92bcfdcfe","target_node_id":"07150c7859654f6191a814d1b17d693a","id":"f8ded79039ab4ce79b0a4b15b636de3d"},{"type":"Edge","source_node_id":"4bd50128549445efbba3143733cfd2bf","target_node_id":"d5472309c11a4aa48c07ca12921f8be9","id":"7d06cc17ce744ad0bfb6c9fc1570e203"},{"type":"Edge","source_node_id":"0e65593adbb14969aebb160d78de9067","target_node_id":"4bd50128549445efbba3143733cfd2bf","id":"c4170f6ea3f14df6a39bcbf6b16abdca"},{"type":"Edge","source_node_id":"07150c7859654f6191a814d1b17d693a","target_node_id":"d5472309c11a4aa48c07ca12921f8be9","branch_id":"f9ac489b6fa04c37b20d214e747912ed","id":"bab7c7ccbb164c498701e15a9fa7fdd3","name":"f9ac489b6fa04c37b20d214e747912ed"},{"type":"Edge","source_node_id":"07150c7859654f6191a814d1b17d693a","target_node_id":"fdcb4395f17841ddaed40314899713c0","branch_id":"f936b40a14fe481fa0593e729ee889bd","id":"e590d6a39ff34d1cab443823e1a5317d","name":"f936b40a14fe481fa0593e729ee889bd"},{"type":"Edge","source_node_id":"3c1b44fb84a24e7bbc4999059e2c2db7","target_node_id":"cd3d737049754ed9904ecea3174997f8","id":"d12f6ded40084da1a8f52f97d30e1e9a"},{"type":"Edge","source_node_id":"cd3d737049754ed9904ecea3174997f8","target_node_id":"d5472309c11a4aa48c07ca12921f8be9","id":"1b730c7f56824d27a4677c1e794c3353"},{"type":"Edge","source_node_id":"fdcb4395f17841ddaed40314899713c0","target_node_id":"596609a2e0c5475fbca4e1511890cff2","id":"18c083a332104558953b6e52beeab4fd"},{"type":"Edge","source_node_id":"596609a2e0c5475fbca4e1511890cff2","target_node_id":"3c1b44fb84a24e7bbc4999059e2c2db7","id":"e6ddceac983a4bde881b0bfa0e5db6d2"},{"type":"Edge","source_node_id":"655f120d442c49a2a5c71efb5a9fb533","target_node_id":"aebdfa50a9214d69920d85636cb04816","branch_id":"288095f3b6c144c2a33da2edd5f8bfcb","id":"0325683c35cf4cff9762cdb0fa9ca03c","name":"288095f3b6c144c2a33da2edd5f8bfcb"},{"type":"Edge","source_node_id":"aebdfa50a9214d69920d85636cb04816","target_node_id":"b5febe100ea2495d9e04b3f48e15cf6a","id":"a0170b097f2d4ae7be7103b610f2e48a"},{"type":"Edge","source_node_id":"655f120d442c49a2a5c71efb5a9fb533","target_node_id":"b5d84bd0235f44899be9be3867b1dfdc","branch_id":"2cf7324ad941492ba4fe9738646e6648","id":"427ba2bd35804c47bb65ea7969fc1ec7","name":"2cf7324ad941492ba4fe9738646e6648"},{"type":"Edge","source_node_id":"b5d84bd0235f44899be9be3867b1dfdc","target_node_id":"970088166f754e2586673a7f3fb00602","id":"efbb244fefb54c9eab87706a0abe57a6"},{"type":"Edge","source_node_id":"970088166f754e2586673a7f3fb00602","target_node_id":"13e0433c876642609a950e516de6a27d","id":"f05a2e0233de453095eca90ca600864e"}],"id":"primary"}],"script_variables":[{"type":"VariableDto","type":"String","name":"no_of_change_days","value":{"type":"String","type":"String","mode":"string"},"list":false,"id":"2775dddb83744afc9a06b2cee2fe8926","formatType":"text","secure":false,"sensitive":false},{"type":"VariableDto","type":"String","name":"no_of_days","value":{"type":"String","type":"String","mode":"string"},"list":false,"id":"1db3a85b89f44ff9b63bf5b11d48b9a9","formatType":"text","secure":false,"sensitive":false}],"glide_variables":[{"type":"Reference","type":"Reference","table":"sys_user","id":"current-user","name":"user","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Choice","type":"Choice","choices":[{"name":"Sick Leave","element":"sick_leaves"},{"name":"Casual Leave","element":"casual_leaves"}],"id":"1dbaa226c4e14fe1ad5b4f3cd71b2d8b","name":"leave_request_type","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Reference","type":"Reference","table":"x_910737_timeoff_m_employee_leave_requests","id":"385b9847c21845a6a0d4007cdf9d6553","name":"look_for_existing_requests","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"True/False","type":"True/False","id":"231d7979e0fb42659f2df4d51f5d1b93","name":"change_no_of_days","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"VariableDto","type":"String","name":"no_of_change_days","list":false,"id":"93e6e211d6744fce8b5e2f57fc987791","formatType":"Text","validationScript":"","secure":false,"sensitive":false},{"type":"Date/Time","type":"Date/Time","mode":"date","id":"a13d4da662714880879469aa7f0d66b5","name":"from_date","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Date/Time","type":"Date/Time","mode":"date","id":"a7b30e14c8ce479280ea2b4e96ccc910","name":"to_date","formatType":"text","secure":false,"sensitive":false,"list":false}],"applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"roles":[],"scope":"f9951d082fb21110049f2d6df699b604","domain":"global","topic_type":"STANDARD","channels":[],"id":"6b986f652f729510049f2d6df699b66d","name":"_PRVW__b8bd8b9164439110a763c4bc9682f7c7","key_phrases":["Apply leave","apply"],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":false,"autopilot_topic":false,"design_categories":[],"triggerable_by_notification":false,"library":false,"readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>6b986f652f729510049f2d6df699b66d</design_topic_id>
+        <graph>{
+  "graph_api_version": "1.0.41",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "c03145463aaa4b0288449e3be6ef4985": {
+          "id": "c03145463aaa4b0288449e3be6ef4985",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "value": "(function execute() {\n    /* Return a quoted string.  For example:\n\n       if (vaInputs.first_name == 'Bill') {\n           return gs.getMessageLang(\"hi there {0}\", vaContext.getRequesterLang(), [vaInputs.first_name]);\n       } else {\n           return gs.getMessageLang(\"how are you {0}\", vaContext.getRequesterLang(), [vaInputs.last_name]);\n       }\n    */\n    return gs.getMessageLang(\"hi {0} I can help you apply new leave request\", vaContext.getRequesterLang(), [vaInputs.user.first_name]);\n})()\n",
+            "mode": "script"
+          }
+        },
+        "d5472309c11a4aa48c07ca12921f8be9": {
+          "id": "d5472309c11a4aa48c07ca12921f8be9",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Thank you."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          }
+        },
+        "37b8f6e6eee640059830ae12c876d3a0": {
+          "stepType": "ChoicePrompt",
+          "name": "leave request type",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Select type of leave request"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "1dbaa226c4e14fe1ad5b4f3cd71b2d8b",
+          "id": "37b8f6e6eee640059830ae12c876d3a0",
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "655f120d442c49a2a5c71efb5a9fb533": {
+          "id": "655f120d442c49a2a5c71efb5a9fb533",
+          "stepType": "Decision",
+          "name": "Leave request Already Exits?"
+        },
+        "470339318bef417f92f73ae454d60f07": {
+          "id": "470339318bef417f92f73ae454d60f07",
+          "stepType": "LookupRecord",
+          "name": "Look for existing requests",
+          "condition": {
+            "mode": "glide_query",
+            "value": "employee_name={{vaInputs.user}}^type={{vaInputs.leave_request_type}}^state!=4"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "variableId": "385b9847c21845a6a0d4007cdf9d6553"
+        },
+        "b5febe100ea2495d9e04b3f48e15cf6a": {
+          "id": "b5febe100ea2495d9e04b3f48e15cf6a",
+          "stepType": "RecordOutput",
+          "name": "Leave request record",
+          "variableId": "385b9847c21845a6a0d4007cdf9d6553",
+          "cardTemplate": "General",
+          "cardFields": {},
+          "mode": "variable",
+          "tableName": "x_910737_timeoff_m_employee_leave_requests",
+          "fields": [
+            "employee_name",
+            "type",
+            "no_of_days"
+          ],
+          "cardDefinition": {
+            "name": "Record",
+            "value": "General"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "condition": {
+            "mode": "glide_query",
+            "value": ""
+          }
+        },
+        "8069c444c324488eb6996cf92bcfdcfe": {
+          "id": "8069c444c324488eb6996cf92bcfdcfe",
+          "stepType": "Prompt",
+          "name": "change no of days",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Want to change no of days ?"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "231d7979e0fb42659f2df4d51f5d1b93"
+        },
+        "07150c7859654f6191a814d1b17d693a": {
+          "id": "07150c7859654f6191a814d1b17d693a",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "4bd50128549445efbba3143733cfd2bf": {
+          "id": "4bd50128549445efbba3143733cfd2bf",
+          "stepType": "RecordOutput",
+          "name": "New Leave Request",
+          "variableId": "",
+          "cardTemplate": "General",
+          "cardFields": {},
+          "mode": "script",
+          "tableName": "x_910737_timeoff_m_employee_leave_requests",
+          "fields": [
+            "employee_name",
+            "type",
+            "state"
+          ],
+          "cardDefinition": {
+            "name": "Record",
+            "value": "General"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "condition": {
+            "mode": "glide_scripted_query",
+            "value": "(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n       var gr = new GlideRecord(table);\n       gr.addQuery('employee_name',vaInputs.user);\n       gr.addQuery('type',vaInputs.leave_request_type);\n       gr.query();\n       if(gr.next()) {\n          return gr;\n       }\n})(table)\n"
+          }
+        },
+        "0e65593adbb14969aebb160d78de9067": {
+          "id": "0e65593adbb14969aebb160d78de9067",
+          "stepType": "TextOutput",
+          "name": "New record created",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "New Record is created"
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "3dbf5301eaf24a9eb910500b2726c3e8"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "fdcb4395f17841ddaed40314899713c0": {
+          "id": "fdcb4395f17841ddaed40314899713c0",
+          "stepType": "Prompt",
+          "name": "No of change days",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Enter no. of days to change"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "93e6e211d6744fce8b5e2f57fc987791",
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          }
+        },
+        "3c1b44fb84a24e7bbc4999059e2c2db7": {
+          "id": "3c1b44fb84a24e7bbc4999059e2c2db7",
+          "stepType": "TextOutput",
+          "name": "Record Updated Message",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "Record Updated"
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "8c4e3f68ede54ffcb90bd91791a4c42e"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "cd3d737049754ed9904ecea3174997f8": {
+          "id": "cd3d737049754ed9904ecea3174997f8",
+          "stepType": "RecordOutput",
+          "name": "Updated Record - Card",
+          "variableId": "",
+          "cardTemplate": "General",
+          "cardFields": {},
+          "mode": "script",
+          "tableName": "x_910737_timeoff_m_employee_leave_requests",
+          "fields": [
+            "employee_name",
+            "type",
+            "no_of_days"
+          ],
+          "cardDefinition": {
+            "name": "Record",
+            "value": "General"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "condition": {
+            "mode": "glide_query",
+            "value": "employee_name={{vaInputs.user}}^type={{vaInputs.leave_request_type}}"
+          }
+        },
+        "596609a2e0c5475fbca4e1511890cff2": {
+          "id": "596609a2e0c5475fbca4e1511890cff2",
+          "name": "Updating Request Record",
+          "script": "(function execute() {\n    /* Code your scripted action here. For example, you might update a\n       record based on conditional logic:\n\n        if (vaVars.my_flag == 'say hello') {\n            gs.info('hi there');\n        } else {\n            gs.info('bye now');\n        }\n    */\n    var gr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    gr.addQuery('employee_name',vaInputs.user);\n    gr.addQuery('type',vaInputs.leave_request_type);\n    gr.query();\n    var new_no_of_days = parseInt(vaInputs.no_of_change_days);\n    if(gr.next()){\n        gr.setValue('no_of_days',new_no_of_days);\n        gr.update();\n    }\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "aebdfa50a9214d69920d85636cb04816": {
+          "id": "aebdfa50a9214d69920d85636cb04816",
+          "stepType": "TextOutput",
+          "name": "Record exists message",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "Leave Request of same type already exists"
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "546d5cb321144d9ca39d21d46cbfd9f2"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "13e0433c876642609a950e516de6a27d": {
+          "id": "13e0433c876642609a950e516de6a27d",
+          "name": "Create New Leave Request",
+          "script": "(function execute() {\n    var gr = new GlideRecord(\"x_910737_timeoff_m_employee_leave_requests\");\n    gr.initialize();\n    gr.employee_name = vaInputs.user;\n    gr.type = vaInputs.leave_request_type;\n    gr.from_date = vaInputs.from_date;\n    gr.to_date = vaInputs.to_date;\n    gr.no_of_days = 1;\n    gr.state = '1';\n    gr.insert();\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "b5d84bd0235f44899be9be3867b1dfdc": {
+          "id": "b5d84bd0235f44899be9be3867b1dfdc",
+          "stepType": "Prompt",
+          "name": "From date",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Pick From date"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "a13d4da662714880879469aa7f0d66b5"
+        },
+        "970088166f754e2586673a7f3fb00602": {
+          "id": "970088166f754e2586673a7f3fb00602",
+          "stepType": "Prompt",
+          "name": "To date",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Pick To Date"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "a7b30e14c8ce479280ea2b4e96ccc910"
+        }
+      },
+      "edges": [
+        {
+          "id": "261d44109df44887aee526b2c273db1d",
+          "edgeType": "Edge",
+          "source": "13e0433c876642609a950e516de6a27d",
+          "target": "0e65593adbb14969aebb160d78de9067",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "8a68cc531a3f47bd86c59344aab48765",
+          "edgeType": "Edge",
+          "source": "37b8f6e6eee640059830ae12c876d3a0",
+          "target": "470339318bef417f92f73ae454d60f07",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "4d5d695f85d742008faf0190cd1ada95",
+          "edgeType": "Edge",
+          "source": "b5febe100ea2495d9e04b3f48e15cf6a",
+          "target": "8069c444c324488eb6996cf92bcfdcfe",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "2c5c9499ed934289b5039111bba97809",
+          "edgeType": "Edge",
+          "source": "c03145463aaa4b0288449e3be6ef4985",
+          "target": "37b8f6e6eee640059830ae12c876d3a0",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6c91da6db7af463689f788d3cd5875b8",
+          "edgeType": "Edge",
+          "source": "470339318bef417f92f73ae454d60f07",
+          "target": "655f120d442c49a2a5c71efb5a9fb533",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "f8ded79039ab4ce79b0a4b15b636de3d",
+          "edgeType": "Edge",
+          "source": "8069c444c324488eb6996cf92bcfdcfe",
+          "target": "07150c7859654f6191a814d1b17d693a",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "7d06cc17ce744ad0bfb6c9fc1570e203",
+          "edgeType": "Edge",
+          "source": "4bd50128549445efbba3143733cfd2bf",
+          "target": "d5472309c11a4aa48c07ca12921f8be9",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "c4170f6ea3f14df6a39bcbf6b16abdca",
+          "edgeType": "Edge",
+          "source": "0e65593adbb14969aebb160d78de9067",
+          "target": "4bd50128549445efbba3143733cfd2bf",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "bab7c7ccbb164c498701e15a9fa7fdd3",
+          "edgeType": "Branch",
+          "source": "07150c7859654f6191a814d1b17d693a",
+          "target": "d5472309c11a4aa48c07ca12921f8be9",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var applies = vaInputs.change_no_of_days ? false : true;\n    return applies;\n})()\n"
+          },
+          "label": "No"
+        },
+        {
+          "id": "e590d6a39ff34d1cab443823e1a5317d",
+          "edgeType": "Branch",
+          "source": "07150c7859654f6191a814d1b17d693a",
+          "target": "fdcb4395f17841ddaed40314899713c0",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var applies = vaInputs.change_no_of_days ? true : false;\n    return applies;\n})()\n"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "d12f6ded40084da1a8f52f97d30e1e9a",
+          "edgeType": "Edge",
+          "source": "3c1b44fb84a24e7bbc4999059e2c2db7",
+          "target": "cd3d737049754ed9904ecea3174997f8",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "1b730c7f56824d27a4677c1e794c3353",
+          "edgeType": "Edge",
+          "source": "cd3d737049754ed9904ecea3174997f8",
+          "target": "d5472309c11a4aa48c07ca12921f8be9",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "18c083a332104558953b6e52beeab4fd",
+          "edgeType": "Edge",
+          "source": "fdcb4395f17841ddaed40314899713c0",
+          "target": "596609a2e0c5475fbca4e1511890cff2",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "e6ddceac983a4bde881b0bfa0e5db6d2",
+          "edgeType": "Edge",
+          "source": "596609a2e0c5475fbca4e1511890cff2",
+          "target": "3c1b44fb84a24e7bbc4999059e2c2db7",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "0325683c35cf4cff9762cdb0fa9ca03c",
+          "edgeType": "Branch",
+          "source": "655f120d442c49a2a5c71efb5a9fb533",
+          "target": "aebdfa50a9214d69920d85636cb04816",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.look_for_existing_requestsISNOTEMPTY",
+            "mode": "query"
+          },
+          "label": "Record exists"
+        },
+        {
+          "id": "a0170b097f2d4ae7be7103b610f2e48a",
+          "edgeType": "Edge",
+          "source": "aebdfa50a9214d69920d85636cb04816",
+          "target": "b5febe100ea2495d9e04b3f48e15cf6a",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "427ba2bd35804c47bb65ea7969fc1ec7",
+          "edgeType": "Branch",
+          "source": "655f120d442c49a2a5c71efb5a9fb533",
+          "target": "b5d84bd0235f44899be9be3867b1dfdc",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.look_for_existing_requestsISEMPTY",
+            "mode": "query"
+          },
+          "label": "No Record"
+        },
+        {
+          "id": "efbb244fefb54c9eab87706a0abe57a6",
+          "edgeType": "Edge",
+          "source": "b5d84bd0235f44899be9be3867b1dfdc",
+          "target": "970088166f754e2586673a7f3fb00602",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "f05a2e0233de453095eca90ca600864e",
+          "edgeType": "Edge",
+          "source": "970088166f754e2586673a7f3fb00602",
+          "target": "13e0433c876642609a950e516de6a27d",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "1dbaa226c4e14fe1ad5b4f3cd71b2d8b": {
+      "id": "1dbaa226c4e14fe1ad5b4f3cd71b2d8b",
+      "name": "leave_request_type",
+      "label": "Leave Request Type",
+      "varType": "choice",
+      "choices": [
+        {
+          "label": "Sick Leave",
+          "value": "sick_leaves"
+        },
+        {
+          "label": "Casual Leave",
+          "value": "casual_leaves"
+        }
+      ],
+      "category": "vaInputs"
+    },
+    "385b9847c21845a6a0d4007cdf9d6553": {
+      "id": "385b9847c21845a6a0d4007cdf9d6553",
+      "name": "look_for_existing_requests",
+      "label": "Look For Existing Requests",
+      "varType": "reference",
+      "table": "x_910737_timeoff_m_employee_leave_requests",
+      "category": "vaInputs"
+    },
+    "231d7979e0fb42659f2df4d51f5d1b93": {
+      "id": "231d7979e0fb42659f2df4d51f5d1b93",
+      "name": "change_no_of_days",
+      "label": "Change No Of Days",
+      "varType": "boolean",
+      "secure": false,
+      "category": "vaInputs"
+    },
+    "93e6e211d6744fce8b5e2f57fc987791": {
+      "id": "93e6e211d6744fce8b5e2f57fc987791",
+      "name": "no_of_change_days",
+      "label": "No Of Change Days",
+      "varType": "string",
+      "secure": false,
+      "category": "vaInputs",
+      "encryptionHashFunction": "SHA-256",
+      "encryptionSalt": {
+        "value": "MTY2Njg5ODcwNjYwOSBWQSBEZXNpZ25lciBpcyBhd2Vzb21l",
+        "mode": "simple"
+      }
+    },
+    "2775dddb83744afc9a06b2cee2fe8926": {
+      "id": "2775dddb83744afc9a06b2cee2fe8926",
+      "value": {
+        "mode": "simple",
+        "value": ""
+      },
+      "name": "no_of_change_days",
+      "label": "no_of_change_days",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "1db3a85b89f44ff9b63bf5b11d48b9a9": {
+      "id": "1db3a85b89f44ff9b63bf5b11d48b9a9",
+      "value": {
+        "value": "",
+        "mode": "simple"
+      },
+      "name": "no_of_days",
+      "label": "no_of_days",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "a13d4da662714880879469aa7f0d66b5": {
+      "id": "a13d4da662714880879469aa7f0d66b5",
+      "name": "from_date",
+      "label": "From Date",
+      "varType": "date_time",
+      "secure": false,
+      "category": "vaInputs",
+      "mode": "date"
+    },
+    "a7b30e14c8ce479280ea2b4e96ccc910": {
+      "id": "a7b30e14c8ce479280ea2b4e96ccc910",
+      "name": "to_date",
+      "label": "To Date",
+      "varType": "date_time",
+      "secure": false,
+      "category": "vaInputs",
+      "mode": "date"
+    }
+  }
+}</graph>
+        <name>_PRVW__b8bd8b9164439110a763c4bc9682f7c7</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-08 07:13:42</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>b8bd43912f839110049f2d6df699b6f6</sys_id>
+        <sys_name>FlowTopic</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_cb_design_topic_b8bd43912f839110049f2d6df699b6f6</sys_update_name>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
+</record_update>

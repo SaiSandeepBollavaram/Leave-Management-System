@@ -7,7 +7,7 @@
 
 }]]></client_script_v2>
         <comments>Withdraw UI action for leave request form</comments>
-        <condition>current.state == '1'</condition>
+        <condition>current.state == '1'  &amp;&amp; current.employee_name == gs.getUserID()</condition>
         <form_action>true</form_action>
         <form_button>true</form_button>
         <form_button_v2>false</form_button_v2>

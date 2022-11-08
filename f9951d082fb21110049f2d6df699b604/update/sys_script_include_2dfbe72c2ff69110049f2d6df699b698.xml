@@ -44,6 +44,18 @@ TOUtils.prototype = {
 			leaveBalanceGr.update();
 		}
 	},
+	getDays: function(from_date,to_date){
+		var fdt = new GlideDateTime(from_date);
+		var tdt = new GlideDateTime(to_date);
+		var dur = GlideDateTime.subtract(fdt,tdt);
+		var duration = dur.getNumericValue();
+		var durationSeconds = (duration/1000);
+		var durationDays = (durationSeconds/86400);
+		gs.info(dur.getDisplayValue());
+		gs.info(durationDays);
+		
+		return durationDays;
+	},
 
 	type: 'TOUtils'
 };]]></script>

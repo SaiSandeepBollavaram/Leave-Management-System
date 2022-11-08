@@ -28,7 +28,7 @@
         <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
         <sys_update_name>sys_db_object_4fca50d42f7e1110049f2d6df699b609</sys_update_name>
         <update_access>false</update_access>
-        <user_role display_value="x_910737_timeoff_m.employee_info_user" name="x_910737_timeoff_m.employee_info_user">53abdcd42f7e1110049f2d6df699b680</user_role>
+        <user_role display_value="x_910737_timeoff_m.admin" name="x_910737_timeoff_m.admin">00c711c82fb21110049f2d6df699b6d0</user_role>
         <ws_access>true</ws_access>
     </sys_db_object>
 </record_update>

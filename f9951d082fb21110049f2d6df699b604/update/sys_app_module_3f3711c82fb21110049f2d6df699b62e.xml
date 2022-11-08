@@ -17,7 +17,7 @@
         <override_menu_roles>false</override_menu_roles>
         <query/>
         <report/>
-        <roles>admin</roles>
+        <roles>admin,x_910737_timeoff_m.manager,x_910737_timeoff_m.employee,x_910737_timeoff_m.admin</roles>
         <sys_class_name>sys_app_module</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-10-22 15:08:05</sys_created_on>

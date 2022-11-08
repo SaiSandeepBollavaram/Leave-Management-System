@@ -128,7 +128,10 @@
           "fields": [
             "employee_name",
             "type",
-            "no_of_days"
+            "from_date",
+            "to_date",
+            "no_of_days",
+            "state"
           ],
           "cardDefinition": {
             "name": "Record",
@@ -146,14 +149,14 @@
         "8069c444c324488eb6996cf92bcfdcfe": {
           "id": "8069c444c324488eb6996cf92bcfdcfe",
           "stepType": "Prompt",
-          "name": "change no of days",
+          "name": "want to update record",
           "prompt": {
             "value": [
               {
                 "type": "paragraph",
                 "children": [
                   {
-                    "text": "Want to change no of days ?"
+                    "text": "Want to update the request ?"
                   }
                 ]
               }
@@ -189,16 +192,6 @@
           "stepType": "Decision",
           "name": "Decision"
         },
-        "3299143da4b24500bc5b8f347feab8af": {
-          "id": "3299143da4b24500bc5b8f347feab8af",
-          "name": "Create New Leave Request",
-          "script": "(function execute() {\n    var gr = new GlideRecord(\"x_910737_timeoff_m_employee_leave_requests\");\n    gr.newRecord();\n    gr.setValue('employee_name', vaInputs.user);\n    gr.setValue('type', vaInputs.leave_request_type);\n    gr.setValue('no_of_days', vaInputs.no_of_days);\n    gr.setValue('state', '1');\n    gr.insert();\n\n    \n    /* Code your scripted action here. For example, you might update a\n       record based on conditional logic:\n\n        if (vaVars.my_flag == 'say hello') {\n            gs.info('hi there');\n        } else {\n            gs.info('bye now');\n        }\n    */\n})()\n\n",
-          "stepType": "ScriptAction",
-          "applicability": {
-            "value": "",
-            "mode": "query"
-          }
-        },
         "4bd50128549445efbba3143733cfd2bf": {
           "id": "4bd50128549445efbba3143733cfd2bf",
           "stepType": "RecordOutput",
@@ -211,90 +204,38 @@
           "fields": [
             "employee_name",
             "type",
-            "no_of_days"
+            "from_date",
+            "to_date",
+            "no_of_days",
+            "state"
           ],
           "cardDefinition": {
             "name": "Record",
             "value": "General"
           },
           "applicability": {
-            "value": "",
-            "mode": "query"
+            "mode": "script",
+            "value": "(function execute() {\n       var applicability = vaVars.not_inserted == false ? true : false;\n       return applicability;\n})()\n"
           },
           "condition": {
             "mode": "glide_scripted_query",
-            "value": "(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n           var gr = new GlideRecord(table);\n       gr.addQuery('employee_name',vaInputs.user);\n       gr.addQuery('type',vaInputs.leave_request_type);\n       gr.addQuery('no_of_days',vaInputs.no_of_days);\n       gr.query();\n       if(gr.next()) {\n          return gr;\n       }\n})(table)\n"
+            "value": "(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n       var gr = new GlideRecord(table);\n       gr.addQuery('employee_name',vaInputs.user);\n       gr.addQuery('type',vaInputs.leave_request_type);\n       gr.query();\n       if(gr.next()) {\n          return gr;\n       }\n})(table)\n"
           }
         },
         "0e65593adbb14969aebb160d78de9067": {
           "id": "0e65593adbb14969aebb160d78de9067",
           "stepType": "TextOutput",
-          "name": "New record created",
+          "name": "Request response",
           "secure": false,
           "value": [
             {
-              "value": [
-                {
-                  "type": "paragraph",
-                  "children": [
-                    {
-                      "text": "New Record is created"
-                    }
-                  ]
-                }
-              ],
-              "mode": "simple",
-              "_key": "3dbf5301eaf24a9eb910500b2726c3e8"
+              "value": "(function execute() {\n    if(vaVars.not_inserted == true){\n        return 'Request not submitted due to insufficient leave balances';\n    }else{\n        return 'Request submitted successfully';\n    }\n})()\n",
+              "mode": "script"
             }
           ],
           "applicability": {
-            "value": "",
-            "mode": "query"
-          }
-        },
-        "fdcb4395f17841ddaed40314899713c0": {
-          "id": "fdcb4395f17841ddaed40314899713c0",
-          "stepType": "Prompt",
-          "name": "No of change days",
-          "prompt": {
-            "value": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "text": "Enter no. of days to change"
-                  }
-                ]
-              }
-            ],
-            "mode": "simple"
-          },
-          "confirmMessage": {
-            "value": "",
-            "mode": "simple"
-          },
-          "acknowledgeMsg": {
-            "value": "",
-            "mode": "simple"
-          },
-          "applicability": {
-            "value": "",
-            "mode": "query"
-          },
-          "skippable": {
-            "value": "",
-            "mode": "query"
-          },
-          "defaultValue": {
-            "value": "",
-            "mode": "simple"
-          },
-          "withNluUserInput": false,
-          "skipIfFulfilled": false,
-          "variableId": "93e6e211d6744fce8b5e2f57fc987791",
-          "inputType": {
-            "format": "Text",
-            "script": ""
+            "mode": "query",
+            "value": ""
           }
         },
         "3c1b44fb84a24e7bbc4999059e2c2db7": {
@@ -304,18 +245,8 @@
           "secure": false,
           "value": [
             {
-              "value": [
-                {
-                  "type": "paragraph",
-                  "children": [
-                    {
-                      "text": "Record Updated"
-                    }
-                  ]
-                }
-              ],
-              "mode": "simple",
-              "_key": "8c4e3f68ede54ffcb90bd91791a4c42e"
+              "value": "(function execute() {\n    if(vaVars.not_updated == false){\n        return \"Request updated successfully\";\n    }else{\n        return \"Request not updated due to insufficient leave balances\";\n    }\n})()\n",
+              "mode": "script"
             }
           ],
           "applicability": {
@@ -335,15 +266,18 @@
           "fields": [
             "employee_name",
             "type",
-            "no_of_days"
+            "from_date",
+            "to_date",
+            "no_of_days",
+            "state"
           ],
           "cardDefinition": {
             "name": "Record",
             "value": "General"
           },
           "applicability": {
-            "value": "",
-            "mode": "query"
+            "mode": "script",
+            "value": "(function execute() {\n\n       var applicability = vaVars.not_updated == false ? true : false;\n       return applicability;\n})()\n"
           },
           "condition": {
             "mode": "glide_query",
@@ -353,7 +287,7 @@
         "596609a2e0c5475fbca4e1511890cff2": {
           "id": "596609a2e0c5475fbca4e1511890cff2",
           "name": "Updating Request Record",
-          "script": "(function execute() {\n    /* Code your scripted action here. For example, you might update a\n       record based on conditional logic:\n\n        if (vaVars.my_flag == 'say hello') {\n            gs.info('hi there');\n        } else {\n            gs.info('bye now');\n        }\n    */\n    var gr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    gr.addQuery('employee_name',vaInputs.user);\n    gr.addQuery('type',vaInputs.leave_request_type);\n    gr.query();\n    var new_no_of_days = parseInt(vaInputs.no_of_change_days);\n    if(gr.next()){\n        gr.setValue('no_of_days',new_no_of_days);\n        gr.update();\n    }\n})()\n",
+          "script": "(function execute() {\n    /* Code your scripted action here. For example, you might update a\n       record based on conditional logic:\n\n        if (vaVars.my_flag == 'say hello') {\n            gs.info('hi there');\n        } else {\n            gs.info('bye now');\n        }\n    */\n    var gr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');\n    gr.addQuery('employee_name',vaInputs.user);\n    gr.addQuery('type',vaInputs.leave_request_type);\n    gr.query();\n    var new_no_of_days = parseInt(new TOUtils().getDays(vaInputs.change_from_date,vaInputs.change_to_date));\n    if(gr.next()){\n        gr.setValue('from_date',vaInputs.change_from_date);\n        gr.setValue('to_date',vaInputs.change_to_date);\n        gr.setValue('no_of_days',new_no_of_days);\n        var updated = gr.update();\n        if(updated == null){\n            vaVars.not_updated = true;\n        }\n    }\n})()\n",
           "stepType": "ScriptAction",
           "applicability": {
             "value": "",
@@ -386,17 +320,27 @@
             "mode": "query"
           }
         },
-        "fd959800fa3047b7aee92c97019561e3": {
-          "id": "fd959800fa3047b7aee92c97019561e3",
+        "13e0433c876642609a950e516de6a27d": {
+          "id": "13e0433c876642609a950e516de6a27d",
+          "name": "Create New Leave Request",
+          "script": "(function execute() {\n    var gr = new GlideRecord(\"x_910737_timeoff_m_employee_leave_requests\");\n    \n    var days = parseInt(new TOUtils().getDays(vaInputs.from_date,vaInputs.to_date));\n    \n    gr.initialize();\n    gr.employee_name = vaInputs.user;\n    gr.type = vaInputs.leave_request_type;\n    gr.from_date = vaInputs.from_date;\n    gr.to_date = vaInputs.to_date;\n    gr.no_of_days = days;\n    gr.state = '1';\n    var inserted = gr.insert();\n    if(inserted == null){\n        vaVars.not_inserted = true;\n    }\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "b5d84bd0235f44899be9be3867b1dfdc": {
+          "id": "b5d84bd0235f44899be9be3867b1dfdc",
           "stepType": "Prompt",
-          "name": "No of days",
+          "name": "From date",
           "prompt": {
             "value": [
               {
                 "type": "paragraph",
                 "children": [
                   {
-                    "text": "Enter number of days"
+                    "text": "Pick From date"
                   }
                 ]
               }
@@ -425,14 +369,149 @@
           },
           "withNluUserInput": false,
           "skipIfFulfilled": false,
-          "variableId": "db0eb5aef2f54d358d80e07cc5e0d979",
-          "inputType": {
-            "format": "Text",
-            "script": ""
-          }
+          "variableId": "a13d4da662714880879469aa7f0d66b5"
+        },
+        "970088166f754e2586673a7f3fb00602": {
+          "id": "970088166f754e2586673a7f3fb00602",
+          "stepType": "Prompt",
+          "name": "To date",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Pick To Date"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "a7b30e14c8ce479280ea2b4e96ccc910"
+        },
+        "30df47f7812e4ddbb33eaa251d04a3b2": {
+          "id": "30df47f7812e4ddbb33eaa251d04a3b2",
+          "stepType": "Prompt",
+          "name": "change From date",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Enter from date"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "f435847f508342bbb58520cbc361c1f8"
+        },
+        "c6e62ccf1f714ec6a5bd7fe61bf81c8a": {
+          "id": "c6e62ccf1f714ec6a5bd7fe61bf81c8a",
+          "stepType": "Prompt",
+          "name": "Change To date",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Enter To Date"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "6a32cd8063974ac5921f9d77063fe07e"
         }
       },
       "edges": [
+        {
+          "id": "68c054d99adb4a539c35d567b6f39487",
+          "edgeType": "Edge",
+          "source": "c6e62ccf1f714ec6a5bd7fe61bf81c8a",
+          "target": "596609a2e0c5475fbca4e1511890cff2",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "261d44109df44887aee526b2c273db1d",
+          "edgeType": "Edge",
+          "source": "13e0433c876642609a950e516de6a27d",
+          "target": "0e65593adbb14969aebb160d78de9067",
+          "sourcePort": "",
+          "targetPort": ""
+        },
         {
           "id": "8a68cc531a3f47bd86c59344aab48765",
           "edgeType": "Edge",
@@ -482,14 +561,6 @@
           "targetPort": ""
         },
         {
-          "id": "3a09124c046549ed9c7063a80a1342e3",
-          "edgeType": "Edge",
-          "source": "3299143da4b24500bc5b8f347feab8af",
-          "target": "0e65593adbb14969aebb160d78de9067",
-          "sourcePort": "",
-          "targetPort": ""
-        },
-        {
           "id": "c4170f6ea3f14df6a39bcbf6b16abdca",
           "edgeType": "Edge",
           "source": "0e65593adbb14969aebb160d78de9067",
@@ -506,22 +577,9 @@
           "targetPort": "",
           "expression": {
             "mode": "script",
-            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var applies = vaInputs.change_no_of_days ? false : true;\n    return applies;\n})()\n"
+            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var applies = vaInputs.want_to_update_record ? false : true;\n    return applies;\n})()\n"
           },
           "label": "No"
-        },
-        {
-          "id": "e590d6a39ff34d1cab443823e1a5317d",
-          "edgeType": "Branch",
-          "source": "07150c7859654f6191a814d1b17d693a",
-          "target": "fdcb4395f17841ddaed40314899713c0",
-          "sourcePort": "",
-          "targetPort": "",
-          "expression": {
-            "mode": "script",
-            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var applies = vaInputs.change_no_of_days ? true : false;\n    return applies;\n})()\n"
-          },
-          "label": "Yes"
         },
         {
           "id": "d12f6ded40084da1a8f52f97d30e1e9a",
@@ -536,14 +594,6 @@
           "edgeType": "Edge",
           "source": "cd3d737049754ed9904ecea3174997f8",
           "target": "d5472309c11a4aa48c07ca12921f8be9",
-          "sourcePort": "",
-          "targetPort": ""
-        },
-        {
-          "id": "18c083a332104558953b6e52beeab4fd",
-          "edgeType": "Edge",
-          "source": "fdcb4395f17841ddaed40314899713c0",
-          "target": "596609a2e0c5475fbca4e1511890cff2",
           "sourcePort": "",
           "targetPort": ""
         },
@@ -580,7 +630,7 @@
           "id": "427ba2bd35804c47bb65ea7969fc1ec7",
           "edgeType": "Branch",
           "source": "655f120d442c49a2a5c71efb5a9fb533",
-          "target": "fd959800fa3047b7aee92c97019561e3",
+          "target": "b5d84bd0235f44899be9be3867b1dfdc",
           "sourcePort": "",
           "targetPort": "",
           "expression": {
@@ -590,10 +640,39 @@
           "label": "No Record"
         },
         {
-          "id": "44f9c5396ac44ebaab12694c35c72f48",
+          "id": "efbb244fefb54c9eab87706a0abe57a6",
           "edgeType": "Edge",
-          "source": "fd959800fa3047b7aee92c97019561e3",
-          "target": "3299143da4b24500bc5b8f347feab8af",
+          "source": "b5d84bd0235f44899be9be3867b1dfdc",
+          "target": "970088166f754e2586673a7f3fb00602",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "f05a2e0233de453095eca90ca600864e",
+          "edgeType": "Edge",
+          "source": "970088166f754e2586673a7f3fb00602",
+          "target": "13e0433c876642609a950e516de6a27d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "e590d6a39ff34d1cab443823e1a5317d",
+          "edgeType": "Branch",
+          "source": "07150c7859654f6191a814d1b17d693a",
+          "target": "30df47f7812e4ddbb33eaa251d04a3b2",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var applies = vaInputs.want_to_update_record ? true : false;\n    return applies;\n})()\n"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "73940a888f2246c799698eea18714834",
+          "edgeType": "Edge",
+          "source": "30df47f7812e4ddbb33eaa251d04a3b2",
+          "target": "c6e62ccf1f714ec6a5bd7fe61bf81c8a",
           "sourcePort": "",
           "targetPort": ""
         }
@@ -626,19 +705,6 @@
       ],
       "category": "vaInputs"
     },
-    "db0eb5aef2f54d358d80e07cc5e0d979": {
-      "id": "db0eb5aef2f54d358d80e07cc5e0d979",
-      "name": "no_of_days",
-      "label": "No Of Days",
-      "varType": "string",
-      "secure": false,
-      "category": "vaInputs",
-      "encryptionHashFunction": "SHA-256",
-      "encryptionSalt": {
-        "value": "MTY2Njg5MjI1OTI2NCBWQSBEZXNpZ25lciBpcyBhd2Vzb21l",
-        "mode": "simple"
-      }
-    },
     "385b9847c21845a6a0d4007cdf9d6553": {
       "id": "385b9847c21845a6a0d4007cdf9d6553",
       "name": "look_for_existing_requests",
@@ -649,24 +715,11 @@
     },
     "231d7979e0fb42659f2df4d51f5d1b93": {
       "id": "231d7979e0fb42659f2df4d51f5d1b93",
-      "name": "change_no_of_days",
-      "label": "Change No Of Days",
+      "name": "want_to_update_record",
+      "label": "Want To Update Record",
       "varType": "boolean",
       "secure": false,
       "category": "vaInputs"
-    },
-    "93e6e211d6744fce8b5e2f57fc987791": {
-      "id": "93e6e211d6744fce8b5e2f57fc987791",
-      "name": "no_of_change_days",
-      "label": "No Of Change Days",
-      "varType": "string",
-      "secure": false,
-      "category": "vaInputs",
-      "encryptionHashFunction": "SHA-256",
-      "encryptionSalt": {
-        "value": "MTY2Njg5ODcwNjYwOSBWQSBEZXNpZ25lciBpcyBhd2Vzb21l",
-        "mode": "simple"
-      }
     },
     "2775dddb83744afc9a06b2cee2fe8926": {
       "id": "2775dddb83744afc9a06b2cee2fe8926",
@@ -676,6 +729,75 @@
       },
       "name": "no_of_change_days",
       "label": "no_of_change_days",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "1db3a85b89f44ff9b63bf5b11d48b9a9": {
+      "id": "1db3a85b89f44ff9b63bf5b11d48b9a9",
+      "value": {
+        "value": "",
+        "mode": "simple"
+      },
+      "name": "no_of_days",
+      "label": "no_of_days",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "a13d4da662714880879469aa7f0d66b5": {
+      "id": "a13d4da662714880879469aa7f0d66b5",
+      "name": "from_date",
+      "label": "From Date",
+      "varType": "date_time",
+      "secure": false,
+      "category": "vaInputs",
+      "mode": "date"
+    },
+    "a7b30e14c8ce479280ea2b4e96ccc910": {
+      "id": "a7b30e14c8ce479280ea2b4e96ccc910",
+      "name": "to_date",
+      "label": "To Date",
+      "varType": "date_time",
+      "secure": false,
+      "category": "vaInputs",
+      "mode": "date"
+    },
+    "f435847f508342bbb58520cbc361c1f8": {
+      "id": "f435847f508342bbb58520cbc361c1f8",
+      "name": "change_from_date",
+      "label": "Change From Date",
+      "varType": "date_time",
+      "secure": false,
+      "category": "vaInputs",
+      "mode": "date"
+    },
+    "6a32cd8063974ac5921f9d77063fe07e": {
+      "id": "6a32cd8063974ac5921f9d77063fe07e",
+      "name": "change_to_date",
+      "label": "Change To Date",
+      "varType": "date_time",
+      "secure": false,
+      "category": "vaInputs",
+      "mode": "date"
+    },
+    "583116535b9145e19e77afb1f441c87b": {
+      "id": "583116535b9145e19e77afb1f441c87b",
+      "value": {
+        "mode": "simple",
+        "value": "false"
+      },
+      "name": "not_inserted",
+      "label": "not_inserted",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "2d8d15cf1ae94443b6bf1042f7b5e920": {
+      "id": "2d8d15cf1ae94443b6bf1042f7b5e920",
+      "value": {
+        "mode": "simple",
+        "value": "false"
+      },
+      "name": "not_updated",
+      "label": "not_updated",
       "varType": "script",
       "category": "vaVars"
     }

@@ -7,7 +7,7 @@
         <hint/>
         <name>Leave balances</name>
         <order>100</order>
-        <roles>admin</roles>
+        <roles>admin,x_910737_timeoff_m.manager,x_910737_timeoff_m.employee,x_910737_timeoff_m.admin</roles>
         <sys_class_name>sys_app_application</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-10-22 15:08:04</sys_created_on>
