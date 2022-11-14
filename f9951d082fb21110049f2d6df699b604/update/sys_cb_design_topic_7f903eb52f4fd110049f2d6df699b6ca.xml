@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic display_value="Apply for leave">7f9036f12f4fd110049f2d6df699b65e</compiled_topic>
+        <design_definition>{"type":"FlowTopic","type":"FlowTopic","triggers":[{"type":"Trigger","name":"ff755510efdd45058ca05c63f6374fdd","triggerType":"request","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"id":"ff755510efdd45058ca05c63f6374fdd"}],"goals":[{"name":"primary","trigger_id":"ff755510efdd45058ca05c63f6374fdd","nodes":[{"type":"StartGoal","type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","type":"String","mode":"script","value":"(function execute() {\n    /* Return a quoted string.  For example:\n\n       if (vaInputs.first_name == 'Bill') {\n           return gs.getMessageLang(\"hi there {0}\", vaContext.getRequesterLang(), [vaInputs.first_name]);\n       } else {\n           return gs.getMessageLang(\"how are you {0}\", vaContext.getRequesterLang(), [vaInputs.last_name]);\n       }\n    */\n    return gs.getMessageLang(\"hi {0} I can help you apply new leave request\", vaContext.getRequesterLang(), [vaInputs.user.first_name]);\n})()\n"},"id":"85e9814d8ada43be9411a0ce03b6ba32","name":"Start"},{"type":"TerminateGoal","type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Thank you.\", vaContext.getRequesterLang())"},"id":"fdf4af2c504e40e281eb387136063568","name":"End"},{"type":"ChoiceInputPrompt","type":"ChoiceInputPrompt","expression_mode":"simple","metadataScript":"","cardName":"","cardFields":[],"id":"f273ec14596d4e56bf00a3d0d706e1a2","name":"leave request type","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"variable_id":"6fa52cc44c344c89ad773e1ea5cc4b75","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Select type of leave request\", vaContext.getRequesterLang())"},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true}},{"type":"RecordOutputPrompt","type":"RecordOutputPrompt","mode":"script","table":"x_910737_timeoff_m_employee_leave_requests","script":"(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n       var gr = new GlideRecord(table);\n       gr.addQuery('employee_name',vaInputs.user);\n       gr.addQuery('type',vaInputs.leave_request_type);\n       gr.addQuery('from_date',vaInputs.from_date);\n       gr.addQuery('to_date',vaInputs.to_date);\n       gr.query();\n       if(gr.next()) {\n          return gr;\n       }\n})(table)\n","fields":["employee_name","type","from_date","to_date","no_of_days","state"],"id":"a534c8dbc56d4395915755538438fcb6","name":"New Leave Request","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"(function execute() {\n       var applicability = vaVars.not_inserted == false ? true : false;\n       return applicability;\n})()\n"},"condition":{"type":"Condition","mode":"glide_scripted_query","value":"(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n       var gr = new GlideRecord(table);\n       gr.addQuery('employee_name',vaInputs.user);\n       gr.addQuery('type',vaInputs.leave_request_type);\n       gr.addQuery('from_date',vaInputs.from_date);\n       gr.addQuery('to_date',vaInputs.to_date);\n       gr.query();\n       if(gr.next()) {\n          return gr;\n       }\n})(table)\n"}},{"type":"TextOutputPrompt","type":"TextOutputPrompt","value":[{"type":"String","type":"String","mode":"script","value":"(function execute() {\n    if(vaVars.not_inserted == true){\n        return 'Request not submitted due to insufficient leave balances (or) due to previously applied leave requests crossing your total leave balances';\n    }else{\n        return 'Request submitted successfully';\n    }\n})()\n"}],"id":"4092cca3b6fc46ada3b3d43df905f680","name":"Request response","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"secure":false},{"type":"ScriptedAction","type":"ScriptedAction","script":"(function execute() {\n    var gr = new GlideRecord(\"x_910737_timeoff_m_employee_leave_requests\");\n    \n    var days = parseInt(new TOUtils().getDays(vaInputs.from_date,vaInputs.to_date));\n    \n    gr.initialize();\n    gr.employee_name = vaInputs.user;\n    gr.type = vaInputs.leave_request_type;\n    gr.from_date = vaInputs.from_date;\n    gr.to_date = vaInputs.to_date;\n    gr.no_of_days = days;\n    gr.state = '1';\n    var inserted = gr.insert();\n    if(inserted == null){\n        vaVars.not_inserted = true;\n    }\n})()\n","id":"491f5f2d64ba4b44a5d5e9f820001fd1","name":"Create New Leave Request","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"}},{"type":"InputPrompt","type":"InputPrompt","variable_id":"1629d3eede8e44afb14bea5f923a3863","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Pick From date\", vaContext.getRequesterLang())"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"id":"e76f5a7af1214a41be0257f53879ce5e","name":"From date","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"}},{"type":"InputPrompt","type":"InputPrompt","variable_id":"fda7055046f2481e85a8fa80592c40f9","message":{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"Pick To Date\", vaContext.getRequesterLang())"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"skippable":{"type":"Applicability","type":"Applicability","mode":"script","value":"false"},"id":"14eb8b72565c440da73413ca26a065a3","name":"To date","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"}},{"type":"TextOutputPrompt","type":"TextOutputPrompt","value":[{"type":"String","type":"String","mode":"string","value":"gs.getMessageLang(\"va:topic:719fd2f52f0fd110049f2d6df699b606:node:2de82a53dd0040608abcca41cf61e708:field:0\", vaContext.getRequesterLang())"}],"id":"2de82a53dd0040608abcca41cf61e708","name":"Pick proper dates","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"secure":false},{"type":"Decision","type":"Decision","name":"Decision","branches":[{"type":"Branch","type":"Branch","label":"Valid dates","expression":{"type":"Applicability","type":"Applicability","mode":"script","value":"(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n\n    */\n       var applies = vaVars.valid_dates == true ? true : false;\n       return applies;\n})()\n"},"id":"dbf33175521b4ca8b1ec42cd9a65d932","name":"Valid dates"},{"type":"Branch","type":"Branch","label":"Not Valid Dates","expression":{"type":"Applicability","type":"Applicability","mode":"script","value":"(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n\n    */\n       var applies = vaVars.valid_dates == true ? false : true;\n       return applies;\n})()\n"},"id":"d2fb18b0c30642d1a5c4207d5c2cfd65","name":"Not Valid Dates"}],"id":"d8df1740a01d4891ba6912144859d420","goal_id":"primary"},{"type":"ScriptedAction","type":"ScriptedAction","script":"(function execute() {\n    vaVars.valid_dates = true;\n    var toUtils = new TOUtils();\n    var days = parseInt(toUtils.getDays(vaInputs.from_date,vaInputs.to_date));\n    \n    if(days &lt;= 0){\n       vaVars.valid_dates = false;\n    }\n\n    var right_now = new GlideDateTime();\n    days = parseInt(toUtils.getDays(right_now.getDate(),vaInputs.to_date));\n    if(days &lt;= 0){\n       vaVars.valid_dates = false;\n    }\n\n    days = parseInt(toUtils.getDays(right_now.getDate(),vaInputs.from_date));\n    if(days &lt;= 0){\n       vaVars.valid_dates = false;\n    }\n\n\n})()\n","id":"7fbb5893fdba454492c5b479d91cab3d","name":"Validate From and To dates","goal_id":"primary","applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"}}],"edges":[{"type":"Edge","source_node_id":"d8df1740a01d4891ba6912144859d420","target_node_id":"491f5f2d64ba4b44a5d5e9f820001fd1","branch_id":"dbf33175521b4ca8b1ec42cd9a65d932","id":"25f247d2f03d441e8ea05ccadbfb558a","name":"dbf33175521b4ca8b1ec42cd9a65d932"},{"type":"Edge","source_node_id":"491f5f2d64ba4b44a5d5e9f820001fd1","target_node_id":"4092cca3b6fc46ada3b3d43df905f680","id":"2665b48f830d410682a59d889b76dc3b"},{"type":"Edge","source_node_id":"85e9814d8ada43be9411a0ce03b6ba32","target_node_id":"f273ec14596d4e56bf00a3d0d706e1a2","id":"fa074faca8c34e909a4bb42277d2502f"},{"type":"Edge","source_node_id":"a534c8dbc56d4395915755538438fcb6","target_node_id":"fdf4af2c504e40e281eb387136063568","id":"7faf624b816f49519e4ea65dbf28cc88"},{"type":"Edge","source_node_id":"4092cca3b6fc46ada3b3d43df905f680","target_node_id":"a534c8dbc56d4395915755538438fcb6","id":"f5f8ee46e897457b9ad3b3e615eba0b5"},{"type":"Edge","source_node_id":"e76f5a7af1214a41be0257f53879ce5e","target_node_id":"14eb8b72565c440da73413ca26a065a3","id":"ed12b64ee5d14106b96578eb8e4d7fe6"},{"type":"Edge","source_node_id":"f273ec14596d4e56bf00a3d0d706e1a2","target_node_id":"2de82a53dd0040608abcca41cf61e708","id":"2b9341af31a44e6b92ae7f557380f0b1"},{"type":"Edge","source_node_id":"2de82a53dd0040608abcca41cf61e708","target_node_id":"e76f5a7af1214a41be0257f53879ce5e","id":"4e32050a4ee54126a780274f05ee35cd"},{"type":"Edge","source_node_id":"14eb8b72565c440da73413ca26a065a3","target_node_id":"7fbb5893fdba454492c5b479d91cab3d","id":"98739910d8e7404bb729db3124f66f25"},{"type":"Edge","source_node_id":"7fbb5893fdba454492c5b479d91cab3d","target_node_id":"d8df1740a01d4891ba6912144859d420","id":"0275469273cc4d8f87ff8800a6f255ae"},{"type":"Edge","source_node_id":"d8df1740a01d4891ba6912144859d420","target_node_id":"2de82a53dd0040608abcca41cf61e708","branch_id":"d2fb18b0c30642d1a5c4207d5c2cfd65","id":"9e2650b26d5c4e0a92c17a0461ffb996","name":"d2fb18b0c30642d1a5c4207d5c2cfd65"}],"id":"primary"}],"script_variables":[{"type":"VariableDto","type":"String","name":"no_of_days","value":{"type":"String","type":"String","mode":"string"},"list":false,"id":"2dc1bcf110d647f9afd9318f2d24a6ba","formatType":"text","secure":false,"sensitive":false},{"type":"VariableDto","type":"String","name":"not_inserted","value":{"type":"String","type":"String","mode":"string","value":"false"},"list":false,"id":"6a99c52c38724b78a94002a808090499","formatType":"text","secure":false,"sensitive":false},{"type":"VariableDto","type":"String","name":"not_updated","value":{"type":"String","type":"String","mode":"string","value":"false"},"list":false,"id":"bc3ae56950da4656af40cd5ec59aa3e7","formatType":"text","secure":false,"sensitive":false},{"type":"VariableDto","type":"String","name":"valid_dates","value":{"type":"String","type":"String","mode":"string"},"list":false,"id":"e37cd4253aac47939af06c1a60b9aec8","formatType":"text","secure":false,"sensitive":false}],"glide_variables":[{"type":"Reference","type":"Reference","table":"sys_user","id":"f258f0af560f47b19d4507c68c79d71f","name":"user","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Choice","type":"Choice","choices":[{"name":"Sick Leave","element":"sick_leaves"},{"name":"Casual Leave","element":"casual_leaves"}],"id":"6fa52cc44c344c89ad773e1ea5cc4b75","name":"leave_request_type","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Date/Time","type":"Date/Time","mode":"date","id":"1629d3eede8e44afb14bea5f923a3863","name":"from_date","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Date/Time","type":"Date/Time","mode":"date","id":"fda7055046f2481e85a8fa80592c40f9","name":"to_date","formatType":"text","secure":false,"sensitive":false,"list":false}],"applicability":{"type":"Applicability","type":"Applicability","mode":"script","value":"true"},"roles":[],"scope":"f9951d082fb21110049f2d6df699b604","domain":"global","topic_type":"STANDARD","channels":[],"id":"719fd2f52f0fd110049f2d6df699b606","name":"Apply for leave","key_phrases":["Apply for leave","Apply leave","apply","leave"],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":false,"autopilot_topic":false,"design_categories":[],"triggerable_by_notification":false,"library":false,"readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>719fd2f52f0fd110049f2d6df699b606</design_topic_id>
+        <graph>{
+  "graph_api_version": "1.0.41",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "85e9814d8ada43be9411a0ce03b6ba32": {
+          "id": "85e9814d8ada43be9411a0ce03b6ba32",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "value": "(function execute() {\n    /* Return a quoted string.  For example:\n\n       if (vaInputs.first_name == 'Bill') {\n           return gs.getMessageLang(\"hi there {0}\", vaContext.getRequesterLang(), [vaInputs.first_name]);\n       } else {\n           return gs.getMessageLang(\"how are you {0}\", vaContext.getRequesterLang(), [vaInputs.last_name]);\n       }\n    */\n    return gs.getMessageLang(\"hi {0} I can help you apply new leave request\", vaContext.getRequesterLang(), [vaInputs.user.first_name]);\n})()\n",
+            "mode": "script"
+          }
+        },
+        "fdf4af2c504e40e281eb387136063568": {
+          "id": "fdf4af2c504e40e281eb387136063568",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Thank you."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          }
+        },
+        "f273ec14596d4e56bf00a3d0d706e1a2": {
+          "stepType": "ChoicePrompt",
+          "name": "leave request type",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Select type of leave request"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "6fa52cc44c344c89ad773e1ea5cc4b75",
+          "id": "f273ec14596d4e56bf00a3d0d706e1a2",
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "a534c8dbc56d4395915755538438fcb6": {
+          "id": "a534c8dbc56d4395915755538438fcb6",
+          "stepType": "RecordOutput",
+          "name": "New Leave Request",
+          "variableId": "",
+          "cardTemplate": "General",
+          "cardFields": {},
+          "mode": "script",
+          "tableName": "x_910737_timeoff_m_employee_leave_requests",
+          "fields": [
+            "employee_name",
+            "type",
+            "from_date",
+            "to_date",
+            "no_of_days",
+            "state"
+          ],
+          "cardDefinition": {
+            "name": "Record",
+            "value": "General"
+          },
+          "applicability": {
+            "mode": "script",
+            "value": "(function execute() {\n       var applicability = vaVars.not_inserted == false ? true : false;\n       return applicability;\n})()\n"
+          },
+          "condition": {
+            "mode": "glide_scripted_query",
+            "value": "(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n       var gr = new GlideRecord(table);\n       gr.addQuery('employee_name',vaInputs.user);\n       gr.addQuery('type',vaInputs.leave_request_type);\n       gr.addQuery('from_date',vaInputs.from_date);\n       gr.addQuery('to_date',vaInputs.to_date);\n       gr.query();\n       if(gr.next()) {\n          return gr;\n       }\n})(table)\n"
+          }
+        },
+        "4092cca3b6fc46ada3b3d43df905f680": {
+          "id": "4092cca3b6fc46ada3b3d43df905f680",
+          "stepType": "TextOutput",
+          "name": "Request response",
+          "secure": false,
+          "value": [
+            {
+              "value": "(function execute() {\n    if(vaVars.not_inserted == true){\n        return 'Request not submitted due to insufficient leave balances (or) due to previously applied leave requests crossing your total leave balances';\n    }else{\n        return 'Request submitted successfully';\n    }\n})()\n",
+              "mode": "script"
+            }
+          ],
+          "applicability": {
+            "mode": "query",
+            "value": ""
+          }
+        },
+        "491f5f2d64ba4b44a5d5e9f820001fd1": {
+          "id": "491f5f2d64ba4b44a5d5e9f820001fd1",
+          "name": "Create New Leave Request",
+          "script": "(function execute() {\n    var gr = new GlideRecord(\"x_910737_timeoff_m_employee_leave_requests\");\n    \n    var days = parseInt(new TOUtils().getDays(vaInputs.from_date,vaInputs.to_date));\n    \n    gr.initialize();\n    gr.employee_name = vaInputs.user;\n    gr.type = vaInputs.leave_request_type;\n    gr.from_date = vaInputs.from_date;\n    gr.to_date = vaInputs.to_date;\n    gr.no_of_days = days;\n    gr.state = '1';\n    var inserted = gr.insert();\n    if(inserted == null){\n        vaVars.not_inserted = true;\n    }\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "e76f5a7af1214a41be0257f53879ce5e": {
+          "id": "e76f5a7af1214a41be0257f53879ce5e",
+          "stepType": "Prompt",
+          "name": "From date",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Pick From date"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "1629d3eede8e44afb14bea5f923a3863"
+        },
+        "14eb8b72565c440da73413ca26a065a3": {
+          "id": "14eb8b72565c440da73413ca26a065a3",
+          "stepType": "Prompt",
+          "name": "To date",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Pick To Date"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "fda7055046f2481e85a8fa80592c40f9"
+        },
+        "2de82a53dd0040608abcca41cf61e708": {
+          "id": "2de82a53dd0040608abcca41cf61e708",
+          "stepType": "TextOutput",
+          "name": "Pick proper dates",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "Choose proper From and To dates"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "From and To dates cannot be in past."
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "To date cannot be before From date."
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "_key": "f20e501f68d542c09f5862b6d3eb468f"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "d8df1740a01d4891ba6912144859d420": {
+          "id": "d8df1740a01d4891ba6912144859d420",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "7fbb5893fdba454492c5b479d91cab3d": {
+          "id": "7fbb5893fdba454492c5b479d91cab3d",
+          "name": "Validate From and To dates",
+          "script": "(function execute() {\n    vaVars.valid_dates = true;\n    var toUtils = new TOUtils();\n    var days = parseInt(toUtils.getDays(vaInputs.from_date,vaInputs.to_date));\n    \n    if(days &lt;= 0){\n       vaVars.valid_dates = false;\n    }\n\n    var right_now = new GlideDateTime();\n    days = parseInt(toUtils.getDays(right_now.getDate(),vaInputs.to_date));\n    if(days &lt;= 0){\n       vaVars.valid_dates = false;\n    }\n\n    days = parseInt(toUtils.getDays(right_now.getDate(),vaInputs.from_date));\n    if(days &lt;= 0){\n       vaVars.valid_dates = false;\n    }\n\n\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        }
+      },
+      "edges": [
+        {
+          "id": "25f247d2f03d441e8ea05ccadbfb558a",
+          "edgeType": "Branch",
+          "source": "d8df1740a01d4891ba6912144859d420",
+          "target": "491f5f2d64ba4b44a5d5e9f820001fd1",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n\n    */\n       var applies = vaVars.valid_dates == true ? true : false;\n       return applies;\n})()\n"
+          },
+          "label": "Valid dates"
+        },
+        {
+          "id": "2665b48f830d410682a59d889b76dc3b",
+          "edgeType": "Edge",
+          "source": "491f5f2d64ba4b44a5d5e9f820001fd1",
+          "target": "4092cca3b6fc46ada3b3d43df905f680",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "fa074faca8c34e909a4bb42277d2502f",
+          "edgeType": "Edge",
+          "source": "85e9814d8ada43be9411a0ce03b6ba32",
+          "target": "f273ec14596d4e56bf00a3d0d706e1a2",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "7faf624b816f49519e4ea65dbf28cc88",
+          "edgeType": "Edge",
+          "source": "a534c8dbc56d4395915755538438fcb6",
+          "target": "fdf4af2c504e40e281eb387136063568",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "f5f8ee46e897457b9ad3b3e615eba0b5",
+          "edgeType": "Edge",
+          "source": "4092cca3b6fc46ada3b3d43df905f680",
+          "target": "a534c8dbc56d4395915755538438fcb6",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "ed12b64ee5d14106b96578eb8e4d7fe6",
+          "edgeType": "Edge",
+          "source": "e76f5a7af1214a41be0257f53879ce5e",
+          "target": "14eb8b72565c440da73413ca26a065a3",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "2b9341af31a44e6b92ae7f557380f0b1",
+          "edgeType": "Edge",
+          "source": "f273ec14596d4e56bf00a3d0d706e1a2",
+          "target": "2de82a53dd0040608abcca41cf61e708",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "4e32050a4ee54126a780274f05ee35cd",
+          "edgeType": "Edge",
+          "source": "2de82a53dd0040608abcca41cf61e708",
+          "target": "e76f5a7af1214a41be0257f53879ce5e",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "98739910d8e7404bb729db3124f66f25",
+          "edgeType": "Edge",
+          "source": "14eb8b72565c440da73413ca26a065a3",
+          "target": "7fbb5893fdba454492c5b479d91cab3d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "0275469273cc4d8f87ff8800a6f255ae",
+          "edgeType": "Edge",
+          "source": "7fbb5893fdba454492c5b479d91cab3d",
+          "target": "d8df1740a01d4891ba6912144859d420",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "9e2650b26d5c4e0a92c17a0461ffb996",
+          "edgeType": "Branch",
+          "source": "d8df1740a01d4891ba6912144859d420",
+          "target": "2de82a53dd0040608abcca41cf61e708",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n\n    */\n       var applies = vaVars.valid_dates == true ? false : true;\n       return applies;\n})()\n"
+          },
+          "label": "Not Valid Dates"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "f258f0af560f47b19d4507c68c79d71f": {
+      "category": "vaInputs",
+      "id": "f258f0af560f47b19d4507c68c79d71f",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "6fa52cc44c344c89ad773e1ea5cc4b75": {
+      "id": "6fa52cc44c344c89ad773e1ea5cc4b75",
+      "name": "leave_request_type",
+      "label": "Leave Request Type",
+      "varType": "choice",
+      "choices": [
+        {
+          "label": "Sick Leave",
+          "value": "sick_leaves"
+        },
+        {
+          "label": "Casual Leave",
+          "value": "casual_leaves"
+        }
+      ],
+      "category": "vaInputs"
+    },
+    "2dc1bcf110d647f9afd9318f2d24a6ba": {
+      "id": "2dc1bcf110d647f9afd9318f2d24a6ba",
+      "value": {
+        "value": "",
+        "mode": "simple"
+      },
+      "name": "no_of_days",
+      "label": "no_of_days",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "1629d3eede8e44afb14bea5f923a3863": {
+      "id": "1629d3eede8e44afb14bea5f923a3863",
+      "name": "from_date",
+      "label": "From Date",
+      "varType": "date_time",
+      "secure": false,
+      "category": "vaInputs",
+      "mode": "date"
+    },
+    "fda7055046f2481e85a8fa80592c40f9": {
+      "id": "fda7055046f2481e85a8fa80592c40f9",
+      "name": "to_date",
+      "label": "To Date",
+      "varType": "date_time",
+      "secure": false,
+      "category": "vaInputs",
+      "mode": "date"
+    },
+    "6a99c52c38724b78a94002a808090499": {
+      "id": "6a99c52c38724b78a94002a808090499",
+      "value": {
+        "mode": "simple",
+        "value": "false"
+      },
+      "name": "not_inserted",
+      "label": "not_inserted",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "bc3ae56950da4656af40cd5ec59aa3e7": {
+      "id": "bc3ae56950da4656af40cd5ec59aa3e7",
+      "value": {
+        "mode": "simple",
+        "value": "false"
+      },
+      "name": "not_updated",
+      "label": "not_updated",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "e37cd4253aac47939af06c1a60b9aec8": {
+      "id": "e37cd4253aac47939af06c1a60b9aec8",
+      "value": {
+        "value": "",
+        "mode": "simple"
+      },
+      "name": "valid_dates",
+      "label": "valid_dates",
+      "varType": "script",
+      "category": "vaVars"
+    }
+  }
+}</graph>
+        <name>Apply for leave</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-09 18:23:37</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>7f903eb52f4fd110049f2d6df699b6ca</sys_id>
+        <sys_name>FlowTopic</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_cb_design_topic_7f903eb52f4fd110049f2d6df699b6ca</sys_update_name>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
+</record_update>

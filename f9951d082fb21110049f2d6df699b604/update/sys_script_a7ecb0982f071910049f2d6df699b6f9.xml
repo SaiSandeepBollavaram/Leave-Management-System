@@ -15,7 +15,9 @@
         <condition/>
         <description/>
         <execute_function>false</execute_function>
-        <filter_condition/>
+        <filter_condition table="x_910737_timeoff_m_employee_leave_requests">stateNOT IN2,3,4^EQ<item display_value="2,3,4" endquery="false" field="state" goto="false" newquery="false" operator="NOT IN" or="false" value="2,3,4"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter_condition>
         <is_rest>false</is_rest>
         <message/>
         <name>Abort Leave Request for more days</name>
@@ -31,8 +33,26 @@
 
 	// Add your code here
 	var toUtils = new TOUtils();
-	if(!toUtils.canApplyLeave(current)){
-		gs.addErrorMessage("You do not have enough leave balances of " + current.getValue('type') + " type to apply leave request");
+	var empLeaveReqGr = new GlideRecord('x_910737_timeoff_m_employee_leave_requests');
+	empLeaveReqGr.addQuery('employee_name',current.getValue('employee_name'));
+	empLeaveReqGr.addQuery('type',current.getValue('type'));
+	empLeaveReqGr.addQuery('state','1');
+	empLeaveReqGr.query();
+	
+	var alreadyAppliedLeaves = 0;
+	while(empLeaveReqGr.next()){
+		if(empLeaveReqGr.getValue('sys_id') == current.getValue('sys_id')){
+			continue;
+		}
+		alreadyAppliedLeaves += parseInt(empLeaveReqGr.getValue('no_of_days'));
+	}
+	
+	if(!toUtils.isLeaveBalanceAvailable(current,alreadyAppliedLeaves)){
+		if(alreadyAppliedLeaves!=0){
+			gs.addErrorMessage('You have already applied for other enough leaves requests days of'+ current.getValue('type')   + ' type which is crossing your leave balances');
+		}else{
+			gs.addErrorMessage("You do not have enough leave balances of " + current.getValue('type') + " type to apply leave request");
+		}
 		current.setAbortAction(true);
 	}
 

@@ -146,47 +146,6 @@
             "value": ""
           }
         },
-        "8069c444c324488eb6996cf92bcfdcfe": {
-          "id": "8069c444c324488eb6996cf92bcfdcfe",
-          "stepType": "Prompt",
-          "name": "want to update record",
-          "prompt": {
-            "value": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "text": "Want to update the request ?"
-                  }
-                ]
-              }
-            ],
-            "mode": "simple"
-          },
-          "confirmMessage": {
-            "value": "",
-            "mode": "simple"
-          },
-          "acknowledgeMsg": {
-            "value": "",
-            "mode": "simple"
-          },
-          "applicability": {
-            "value": "",
-            "mode": "query"
-          },
-          "skippable": {
-            "value": "",
-            "mode": "query"
-          },
-          "defaultValue": {
-            "value": "",
-            "mode": "simple"
-          },
-          "withNluUserInput": false,
-          "skipIfFulfilled": false,
-          "variableId": "231d7979e0fb42659f2df4d51f5d1b93"
-        },
         "07150c7859654f6191a814d1b17d693a": {
           "id": "07150c7859654f6191a814d1b17d693a",
           "stepType": "Decision",
@@ -219,7 +178,7 @@
           },
           "condition": {
             "mode": "glide_scripted_query",
-            "value": "(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n       var gr = new GlideRecord(table);\n       gr.addQuery('employee_name',vaInputs.user);\n       gr.addQuery('type',vaInputs.leave_request_type);\n       gr.query();\n       if(gr.next()) {\n          return gr;\n       }\n})(table)\n"
+            "value": "(function execute(table) {\n    /* Write a glide record query, and return the glide record.\n       For example:\n\n       var gr = new GlideRecordSecure(table);\n       gr.addEncodedQuery('active=true^number=INC0010099');\n       gr.query();\n       if(gr.next()) {\n          return gr;\n    }\n    */\n       var gr = new GlideRecord(table);\n       gr.addQuery('employee_name',vaInputs.user);\n       gr.addQuery('type',vaInputs.leave_request_type);\n       gr.addQuery('from_date',vaInputs.from_date);\n       gr.addQuery('to_date',vaInputs.to_date);\n       gr.query();\n       if(gr.next()) {\n          return gr;\n       }\n})(table)\n"
           }
         },
         "0e65593adbb14969aebb160d78de9067": {
@@ -280,8 +239,8 @@
             "value": "(function execute() {\n\n       var applicability = vaVars.not_updated == false ? true : false;\n       return applicability;\n})()\n"
           },
           "condition": {
-            "mode": "glide_query",
-            "value": "employee_name={{vaInputs.user}}^type={{vaInputs.leave_request_type}}"
+            "mode": "glide_scripted_query",
+            "value": "(function execute(table) {\n       var gr = new GlideRecord(table);\n       gr.addQuery('employee_name',vaInputs.user);\n       gr.addQuery('type',vaInputs.leave_request_type);\n       gr.addQuery('from_date',vaInputs.change_from_date);\n       gr.addQuery('to_date',vaInputs.change_to_date);\n       gr.query();\n       if(gr.next()) {\n          return gr;\n       }\n})(table)\n"
           }
         },
         "596609a2e0c5475fbca4e1511890cff2": {
@@ -493,9 +452,66 @@
           "withNluUserInput": false,
           "skipIfFulfilled": false,
           "variableId": "6a32cd8063974ac5921f9d77063fe07e"
+        },
+        "451e1fa5519f4463a703049be7b214a2": {
+          "stepType": "ChoicePrompt",
+          "name": "update or create new",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Select an option"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "b530d61c2feb4e73b9c416f0d23d33a4",
+          "id": "451e1fa5519f4463a703049be7b214a2",
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
         }
       },
       "edges": [
+        {
+          "id": "73e16a2afaf94b348540e3f13c7113ab",
+          "edgeType": "Edge",
+          "source": "451e1fa5519f4463a703049be7b214a2",
+          "target": "07150c7859654f6191a814d1b17d693a",
+          "sourcePort": "",
+          "targetPort": ""
+        },
         {
           "id": "68c054d99adb4a539c35d567b6f39487",
           "edgeType": "Edge",
@@ -521,14 +537,6 @@
           "targetPort": ""
         },
         {
-          "id": "4d5d695f85d742008faf0190cd1ada95",
-          "edgeType": "Edge",
-          "source": "b5febe100ea2495d9e04b3f48e15cf6a",
-          "target": "8069c444c324488eb6996cf92bcfdcfe",
-          "sourcePort": "",
-          "targetPort": ""
-        },
-        {
           "id": "2c5c9499ed934289b5039111bba97809",
           "edgeType": "Edge",
           "source": "c03145463aaa4b0288449e3be6ef4985",
@@ -541,14 +549,6 @@
           "edgeType": "Edge",
           "source": "470339318bef417f92f73ae454d60f07",
           "target": "655f120d442c49a2a5c71efb5a9fb533",
-          "sourcePort": "",
-          "targetPort": ""
-        },
-        {
-          "id": "f8ded79039ab4ce79b0a4b15b636de3d",
-          "edgeType": "Edge",
-          "source": "8069c444c324488eb6996cf92bcfdcfe",
-          "target": "07150c7859654f6191a814d1b17d693a",
           "sourcePort": "",
           "targetPort": ""
         },
@@ -577,9 +577,9 @@
           "targetPort": "",
           "expression": {
             "mode": "script",
-            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var applies = vaInputs.want_to_update_record ? false : true;\n    return applies;\n})()\n"
+            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var applies = vaInputs.want_to_update_record == 'exit' ? true : false;\n    return applies;\n})()\n"
           },
-          "label": "No"
+          "label": "Exit"
         },
         {
           "id": "d12f6ded40084da1a8f52f97d30e1e9a",
@@ -664,9 +664,9 @@
           "targetPort": "",
           "expression": {
             "mode": "script",
-            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n    var applies = vaInputs.want_to_update_record ? true : false;\n    return applies;\n})()\n"
+            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n\n    */\n       var applies = vaInputs.update_or_create_new == 'update_request' ? true : false;\n       return applies;\n})()\n"
           },
-          "label": "Yes"
+          "label": "Update request"
         },
         {
           "id": "73940a888f2246c799698eea18714834",
@@ -675,6 +675,27 @@
           "target": "c6e62ccf1f714ec6a5bd7fe61bf81c8a",
           "sourcePort": "",
           "targetPort": ""
+        },
+        {
+          "id": "4d5d695f85d742008faf0190cd1ada95",
+          "edgeType": "Edge",
+          "source": "b5febe100ea2495d9e04b3f48e15cf6a",
+          "target": "451e1fa5519f4463a703049be7b214a2",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "3aec4e84a8924df18cf5ffd4529ae453",
+          "edgeType": "Branch",
+          "source": "07150c7859654f6191a814d1b17d693a",
+          "target": "b5d84bd0235f44899be9be3867b1dfdc",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    /* Return true or false to indicate the branch condition's applicability.\n       For example:\n\n       var applies = vaInputs.first_name == 'Bill' ? true : false;\n       return applies;\n    */\n       var applies = vaInputs.update_or_create_new == 'create_new_request' ? true : false;\n       return applies;\n})()\n"
+          },
+          "label": "Create New request"
         }
       ]
     }
@@ -711,14 +732,6 @@
       "label": "Look For Existing Requests",
       "varType": "reference",
       "table": "x_910737_timeoff_m_employee_leave_requests",
-      "category": "vaInputs"
-    },
-    "231d7979e0fb42659f2df4d51f5d1b93": {
-      "id": "231d7979e0fb42659f2df4d51f5d1b93",
-      "name": "want_to_update_record",
-      "label": "Want To Update Record",
-      "varType": "boolean",
-      "secure": false,
       "category": "vaInputs"
     },
     "2775dddb83744afc9a06b2cee2fe8926": {
@@ -800,6 +813,28 @@
       "label": "not_updated",
       "varType": "script",
       "category": "vaVars"
+    },
+    "b530d61c2feb4e73b9c416f0d23d33a4": {
+      "id": "b530d61c2feb4e73b9c416f0d23d33a4",
+      "name": "update_or_create_new",
+      "label": "Update Or Create New",
+      "varType": "choice",
+      "choices": [
+        {
+          "label": "Update Request",
+          "value": "update_request"
+        },
+        {
+          "label": "Create New Request",
+          "value": "create_new_request"
+        },
+        {
+          "label": "Exit",
+          "value": "exit",
+          "checked": true
+        }
+      ],
+      "category": "vaInputs"
     }
   }
 }</graph>

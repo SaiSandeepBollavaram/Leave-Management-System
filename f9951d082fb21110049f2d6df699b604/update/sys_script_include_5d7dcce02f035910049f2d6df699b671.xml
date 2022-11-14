@@ -16,7 +16,8 @@ GetNoOfDaysFromDates.prototype = Object.extendsObject(global.AbstractAjaxProcess
 		var dur = GlideDateTime.subtract(from_date,to_date);
 		var duration = dur.getNumericValue();
 		var durationSeconds = (duration/1000);
-		var durationDays = (durationSeconds/86400);
+		var durationDays = parseInt(durationSeconds/86400);
+		durationDays = durationDays + 1;
 		gs.info(dur.getDisplayValue());
 		gs.info(durationDays);
 		

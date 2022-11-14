@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module">
+    <sys_app_module action="DELETE">
+        <active>true</active>
+        <application display_value="Employee Info">27abd0182f7e1110049f2d6df699b694</application>
+        <assessment/>
+        <device_type/>
+        <filter/>
+        <hint/>
+        <homepage/>
+        <image/>
+        <link_type>LIST</link_type>
+        <map_page/>
+        <mobile_title>test module</mobile_title>
+        <mobile_view_name>Mobile</mobile_view_name>
+        <name>x_910737_timeoff_m_employee_info</name>
+        <order/>
+        <override_menu_roles>false</override_menu_roles>
+        <query/>
+        <report/>
+        <roles/>
+        <sys_class_name>sys_app_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-07 16:54:04</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>4ed884112fc75110049f2d6df699b695</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>test module</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_update_name>sys_app_module_4ed884112fc75110049f2d6df699b695</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-11-07 16:54:04</sys_updated_on>
+        <timeline_page/>
+        <title>test module</title>
+        <uncancelable>false</uncancelable>
+        <view_name/>
+        <window_name/>
+    </sys_app_module>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</application>
+        <file_path/>
+        <instance_id>6bd0c059db0f17c00e785d00cf961942</instance_id>
+        <instance_name>dev63088</instance_name>
+        <name>sys_app_module_4ed884112fc75110049f2d6df699b695</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module"><sys_app_module action="INSERT_OR_UPDATE"><active>true</active><application display_value="Employee Info">27abd0182f7e1110049f2d6df699b694</application><assessment/><device_type/><filter/><hint/><homepage/><image/><link_type>LIST</link_type><map_page/><mobile_title>test module</mobile_title><mobile_view_name>Mobile</mobile_view_name><name>x_910737_timeoff_m_employee_info</name><order/><override_menu_roles>false</override_menu_roles><query/><report/><roles/><sys_class_name>sys_app_module</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-11-07 16:54:04</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>4ed884112fc75110049f2d6df699b695</sys_id><sys_mod_count>0</sys_mod_count><sys_name>test module</sys_name><sys_overrides/><sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package><sys_policy/><sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope><sys_update_name>sys_app_module_4ed884112fc75110049f2d6df699b695</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-11-07 16:54:04</sys_updated_on><timeline_page/><title>test module</title><uncancelable>false</uncancelable><view_name/><window_name/></sys_app_module></record_update>]]></payload>
+        <payload_hash>-686871246</payload_hash>
+        <record_name>test module</record_name>
+        <reverted_from/>
+        <source>25ea00552fb61510049f2d6df699b609</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-07 16:54:04</sys_created_on>
+        <sys_id>a0f808112fc75110049f2d6df699b627</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18453036f4e0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-11-07 16:54:04</sys_updated_on>
+        <type>Module</type>
+        <update_guid>6cf880dd8b87511077082665e5171a49</update_guid>
+        <update_guid_history>6cf880dd8b87511077082665e5171a49:-686871246</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="test module">2fd51abd2fcbd110049f2d6df699b60a</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-09 16:26:43</sys_created_on>
+        <sys_db_object display_value="" name="sys_app_module">sys_app_module</sys_db_object>
+        <sys_id>2896524d97bf447591fa7596f127d8a1</sys_id>
+        <sys_metadata>4ed884112fc75110049f2d6df699b695</sys_metadata>
+        <sys_name>test module</sys_name>
+        <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Timeoff management system">f9951d082fb21110049f2d6df699b604</sys_scope>
+        <sys_scope_delete display_value="">04429d6beac949fc8039d7754c36f6c4</sys_scope_delete>
+        <sys_update_name>sys_app_module_4ed884112fc75110049f2d6df699b695</sys_update_name>
+        <sys_update_version display_value="sys_app_module_4ed884112fc75110049f2d6df699b695">a0f808112fc75110049f2d6df699b627</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

@@ -11,9 +11,10 @@
 TOUtils.prototype = {
 	initialize: function() {
 	},
-	canApplyLeave: function(empLeaveReqGr){
+	isLeaveBalanceAvailable: function(empLeaveReqGr, alreadyAppliedLeaves){
 		var empId = empLeaveReqGr.getValue('employee_name');
 		var leaveReqNoOfDays = parseInt(empLeaveReqGr.getValue('no_of_days'));
+		leaveReqNoOfDays += alreadyAppliedLeaves;
 		var leavesType = empLeaveReqGr.getValue('type');		
 		var leaveBalanceGr = new GlideRecord('x_910737_timeoff_m_leave_balances');
 		leaveBalanceGr.addQuery('employee_name.sys_id', empId);
@@ -50,7 +51,8 @@ TOUtils.prototype = {
 		var dur = GlideDateTime.subtract(fdt,tdt);
 		var duration = dur.getNumericValue();
 		var durationSeconds = (duration/1000);
-		var durationDays = (durationSeconds/86400);
+		var durationDays = parseInt(durationSeconds/86400);
+		durationDays = durationDays + 1;
 		gs.info(dur.getDisplayValue());
 		gs.info(durationDays);
 		

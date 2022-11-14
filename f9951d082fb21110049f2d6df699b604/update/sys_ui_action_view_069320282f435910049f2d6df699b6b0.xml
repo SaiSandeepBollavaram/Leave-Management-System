@@ -11,6 +11,6 @@
         <sys_ui_action display_value="Apply">bef0ac642f435910049f2d6df699b600</sys_ui_action>
         <sys_ui_view display_value="Concourse Notification Preferences" name="concourse_notification_preferences">0b7792f27f932200348ef0d8adfa9147</sys_ui_view>
         <sys_update_name>sys_ui_action_view_069320282f435910049f2d6df699b6b0</sys_update_name>
-        <visibility>include</visibility>
+        <visibility>exclude</visibility>
     </sys_ui_action_view>
 </record_update>

@@ -139,6 +139,8 @@
           "fields": [
             "employee_name",
             "type",
+            "from_date",
+            "to_date",
             "no_of_days"
           ],
           "cardDefinition": {
@@ -279,9 +281,63 @@
             "value": "",
             "mode": "query"
           }
+        },
+        "ee6ee8964ea944e78f92a6a9563c1a94": {
+          "id": "ee6ee8964ea944e78f92a6a9563c1a94",
+          "stepType": "Prompt",
+          "name": "Want to see another request",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Want to see another request ?"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "4dc55ab2a1b64f9d909123431ed38fe0"
+        },
+        "b1811f905e7c415bb9eea4e5253db8b3": {
+          "id": "b1811f905e7c415bb9eea4e5253db8b3",
+          "stepType": "Decision",
+          "name": "Another Request ?"
         }
       },
       "edges": [
+        {
+          "id": "c6bb56428dda4ba18a313ed93dd61f32",
+          "edgeType": "Edge",
+          "source": "18d250d1b4824857b88c703f077d043d",
+          "target": "ee6ee8964ea944e78f92a6a9563c1a94",
+          "sourcePort": "",
+          "targetPort": ""
+        },
         {
           "id": "d1456cc0ac9c47af91c935dafbd8b0e9",
           "edgeType": "Edge",
@@ -336,14 +392,6 @@
           "targetPort": ""
         },
         {
-          "id": "c6bb56428dda4ba18a313ed93dd61f32",
-          "edgeType": "Edge",
-          "source": "18d250d1b4824857b88c703f077d043d",
-          "target": "e98ab67c38664dce83cc090d33399d0f",
-          "sourcePort": "",
-          "targetPort": ""
-        },
-        {
           "id": "9a2936def76044cd9f11b6b9a380badf",
           "edgeType": "Branch",
           "source": "d9b010ade9f74d9fa1463b0b48637cbe",
@@ -368,9 +416,43 @@
           "id": "361a2b1da9884093bb949db551a57950",
           "edgeType": "Edge",
           "source": "4f52417c07d24a2ab521350499491289",
-          "target": "e98ab67c38664dce83cc090d33399d0f",
+          "target": "ee6ee8964ea944e78f92a6a9563c1a94",
           "sourcePort": "",
           "targetPort": ""
+        },
+        {
+          "id": "638ed338314647e39c06afa326e102ca",
+          "edgeType": "Edge",
+          "source": "ee6ee8964ea944e78f92a6a9563c1a94",
+          "target": "b1811f905e7c415bb9eea4e5253db8b3",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "803bf3987e6249b295073266a3400c21",
+          "edgeType": "Branch",
+          "source": "b1811f905e7c415bb9eea4e5253db8b3",
+          "target": "e98ab67c38664dce83cc090d33399d0f",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.want_to_see_another_request=",
+            "mode": "query"
+          },
+          "label": "No"
+        },
+        {
+          "id": "b46dea4701c54f11b4bd2eb3bf09826f",
+          "edgeType": "Branch",
+          "source": "b1811f905e7c415bb9eea4e5253db8b3",
+          "target": "0d5d702e34fc442fb5d8919c236dbd0c",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.want_to_see_another_request=true",
+            "mode": "query"
+          },
+          "label": "Yes"
         }
       ]
     }
@@ -407,6 +489,14 @@
           "value": "reject"
         }
       ],
+      "category": "vaInputs"
+    },
+    "4dc55ab2a1b64f9d909123431ed38fe0": {
+      "id": "4dc55ab2a1b64f9d909123431ed38fe0",
+      "name": "want_to_see_another_request",
+      "label": "Want To See Another Request",
+      "varType": "boolean",
+      "secure": false,
       "category": "vaInputs"
     }
   }

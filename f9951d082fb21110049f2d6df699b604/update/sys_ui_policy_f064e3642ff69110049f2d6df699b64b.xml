@@ -19,14 +19,14 @@
 
 }]]></script_true>
         <set_values/>
-        <short_description>make approver read only</short_description>
+        <short_description>make approving read only</short_description>
         <sys_class_name>sys_ui_policy</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-10-24 14:42:09</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>f064e3642ff69110049f2d6df699b64b</sys_id>
-        <sys_name>make approver read only</sys_name>
+        <sys_name>make approving read only</sys_name>
         <sys_overrides/>
         <sys_package display_value="Timeoff management system" source="x_910737_timeoff_m">f9951d082fb21110049f2d6df699b604</sys_package>
         <sys_policy/>

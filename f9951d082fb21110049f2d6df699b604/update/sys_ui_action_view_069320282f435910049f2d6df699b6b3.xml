@@ -11,6 +11,6 @@
         <sys_ui_action display_value="Apply">bef0ac642f435910049f2d6df699b600</sys_ui_action>
         <sys_ui_view display_value="Indicator picker" name="indicator_picker">17e095a4d77331007c45a3b20e610380</sys_ui_view>
         <sys_update_name>sys_ui_action_view_069320282f435910049f2d6df699b6b3</sys_update_name>
-        <visibility>include</visibility>
+        <visibility>exclude</visibility>
     </sys_ui_action_view>
 </record_update>

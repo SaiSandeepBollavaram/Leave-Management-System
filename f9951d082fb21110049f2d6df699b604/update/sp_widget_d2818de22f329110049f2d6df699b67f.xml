@@ -17,6 +17,8 @@
 				console.log(c.data.employee_name);
 				c.data.type = r.data.approval.type;
 				c.data.no_of_days = r.data.approval.no_of_days;
+				c.data.from_date = r.data.approval.from_date;
+				c.data.to_date = r.data.approval.to_date;
 				c.approvalId = $rootScope.approvalId;
 				c.actionNotTaken = true;
 				c.approved = false;
@@ -93,7 +95,7 @@
 					var state = leaveReqGR.getValue('state');
 					data.approval = {};
 					if(state == '1'){
-						$sp.getRecordDisplayValues(data.approval, leaveReqGR, 'employee_name,type,no_of_days');
+						$sp.getRecordDisplayValues(data.approval, leaveReqGR, 'employee_name,type,no_of_days,from_date,to_date');
 					}else{
 						data.state = state;
 					}
@@ -127,6 +129,10 @@
       <h3  id="approval-employee" ng-model="c.data.employee_name" >
         {{data.employee_name}} Requested for {{data.no_of_days}} days of {{data.type}}
       </h3>
+      <h4>
+        From date : {{data.from_date}} <br>
+        To date   : {{data.to_date}}
+      </h4>
       <div class="text-right">
         <button class="btn" ng-click="c.onReject()" type="button">${Reject}</button>
         <button class="btn btn-primary" ng-click="c.onApprove()" type="button">${Approve}</button>
